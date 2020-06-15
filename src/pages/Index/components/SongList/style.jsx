@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 export const List = styled.ul`
-  overflow: hidden;
-  overflow-y: auto;
 `;
 
 export const ListItem = styled.li`

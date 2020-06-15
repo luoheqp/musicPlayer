@@ -2,10 +2,11 @@ const initState = {
   mediaPlayNow: {},
 };
 
-// constant
+// >>>>>> constant
 const SET_MEDIA_PLAY_NOW = "SET_MEDIA_PLAY_NOW";
 
-// action
+// >>>>>> action
+
 export const handleSetMediaPlayNow = (data) => ({
   type: SET_MEDIA_PLAY_NOW,
   data: data,

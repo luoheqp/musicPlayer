@@ -16,9 +16,11 @@ export const Header = styled.div`
   }
 `;
 
-export const ListContent = styled.ul`
+export const ListContent = styled.div`
   flex: 1;
   padding: 0 10px;
+  overflow: hidden;
+  overflow-y: auto;
 `;
 
 export const PlayerContent = styled.div`
@@ -26,4 +28,5 @@ export const PlayerContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 10px 20px #333;
 `;
