@@ -21,10 +21,16 @@ const Index = (props) => {
   const [playerSrc, setPlayerSrc] = useState("");
   const audioTarget = useRef();
 
+  // action
   const handleGetSongPathById = (id) => {
     return fakeData.filter((item) => item.id === id)[0];
   };
 
+  const handleRefreshMediaNowPlay = (data) => {
+    dispatch(handleSetMediaPlayNow(data));
+  };
+
+  // methods
   const handlePlayThisSong = (id) => {
     let targetObj = handleGetSongPathById(id);
     let path = `./music/${targetObj.fullName}`;
@@ -32,7 +38,16 @@ const Index = (props) => {
     handleRefreshMediaNowPlay(targetObj);
   };
 
-  const handleChangeCurrentSong = () => {};
+  const handleChangeCurrentSong = (difference) => {
+    let { listPos } = mediaPlayNow;
+    listPos += difference;
+
+    if (listPos < 0 || listPos > listData.length) {
+      return;
+    }
+
+    handlePlayThisSong(listData[listPos].id);
+  };
 
   const togglePlayerState = () => {
     const { current } = audioTarget;
@@ -48,18 +63,18 @@ const Index = (props) => {
     }
   };
 
-  const handleRefreshMediaNowPlay = (data) => {
-    dispatch(handleSetMediaPlayNow(data));
+  const initPlayer = () => {
+    // 绑定 audio 相关触发事件
+    audioTarget.current.addEventListener("canplay", (e) => {
+      audioTarget.current.play();
+    });
   };
 
   useEffect(() => {
     // 初始化列表数据
     dispatch(handleSetMusicList(fakeData));
 
-    // 绑定 audio 相关触发事件
-    audioTarget.current.addEventListener("canplay", (e) => {
-      audioTarget.current.play();
-    });
+    initPlayer();
   }, []);
 
   return (
