@@ -1,15 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import fakeData from "@/config/fakeData.js";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { handleSetMusicList } from "@r/common";
-import { handleSetMediaPlayNow } from "@r/player";
-import {
-  IndexContent,
-  Header,
-  ListContent,
-  ListItem,
-  PlayerContent,
-} from "./style";
+import { IndexContent, Header, ListContent, PlayerContent } from "./style";
+
+// components
+import SongList from "./components/SongList";
 
 const Index = (props) => {
   // store
@@ -18,25 +14,7 @@ const Index = (props) => {
   const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
 
   // data
-  const [playerSrc, setPlayerSrc] = useState("");
   const audioTarget = useRef();
-
-  // action
-  const handleGetSongPathById = (id) => {
-    return fakeData.filter((item) => item.id === id)[0];
-  };
-
-  const handleRefreshMediaNowPlay = (data) => {
-    dispatch(handleSetMediaPlayNow(data));
-  };
-
-  // methods
-  const handlePlayThisSong = (id) => {
-    let targetObj = handleGetSongPathById(id);
-    let path = `./music/${targetObj.fullName}`;
-    setPlayerSrc(path);
-    handleRefreshMediaNowPlay(targetObj);
-  };
 
   const handleChangeCurrentSong = (difference) => {
     let { listPos } = mediaPlayNow;
@@ -46,7 +24,7 @@ const Index = (props) => {
       return;
     }
 
-    handlePlayThisSong(listData[listPos].id);
+    // handlePlayThisSong(listData[listPos].id);
   };
 
   const togglePlayerState = () => {
@@ -83,15 +61,7 @@ const Index = (props) => {
         <h3>Hello.</h3>
       </Header>
       <ListContent>
-        {listData.map((item) => (
-          <ListItem
-            className={`${mediaPlayNow.id === item.id ? "playing" : ""}`}
-            key={item.id}
-            onClick={() => handlePlayThisSong(item.id)}
-          >
-            {item.name}
-          </ListItem>
-        ))}
+        <SongList />
       </ListContent>
       <PlayerContent>
         <input
@@ -105,7 +75,7 @@ const Index = (props) => {
           value=""
           onClick={() => handleChangeCurrentSong(1)}
         />
-        <audio src={playerSrc} ref={audioTarget}></audio>
+        <audio src={`./music/${mediaPlayNow}`} ref={audioTarget}></audio>
       </PlayerContent>
     </IndexContent>
   );
