@@ -7,17 +7,23 @@ const MusicProgress = (props) => {
   const currentTime = useSelector(({ player }) => player.currentTime);
 
   const [progress, setProgress] = useState(0);
+  const [isMouseDown, setIsMouseDown] = useState(false);
+  const [mouseDownPos, setMouseDownPos] = useState(0);
 
-  const handleMouseDownInProgress = (e) => {
-    console.log(e);
+  const handleMouseDownInProgress = ({ clientX }) => {
+    setMouseDownPos(clientX);
+    setIsMouseDown(true);
   };
 
-  const handleMouseMoveInProgress = (e) => {
-    console.log(e);
+  const handleMouseMoveInProgress = ({ clientX }) => {
+    if (!isMouseDown) {
+      return;
+    }
+    console.log(clientX - mouseDownPos);
   };
 
   const handleMouseUpInProgress = (e) => {
-    console.log(e);
+    setIsMouseDown(false);
   };
 
   useEffect(() => {
