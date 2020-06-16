@@ -1,38 +1,38 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { handleSetMediaPlayNow } from "@r/player";
 import { MiniPlayerContent, ControllerGroup, MusicProgress } from "./style";
 
 const MiniPlayer = () => {
   const dispatch = useDispatch();
-  const listData = useSelector(({ common }) => common.musicList, shallowEqual);
-  const mediaPlayNow = useSelector(
-    ({ player }) => player.mediaPlayNow,
-    shallowEqual
-  );
+  const listData = useSelector(({ common }) => common.musicList);
+  const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
 
   const [progress, setProgress] = useState(0);
 
   const audioTarget = useRef();
 
   // 更改当前歌曲 => 上一首 / 下一首
-  const handleChangeCurrentSong = (difference) => {
-    debugger;
-    let { listPos } = mediaPlayNow;
+  const handleChangeCurrentSong = useCallback(
+    (difference) => {
+      debugger;
+      let { listPos } = mediaPlayNow;
 
-    let len = listData.length;
-    listPos += difference;
+      let len = listData.length;
+      listPos += difference;
 
-    if (listPos < 0) {
-      listPos = len - 1;
-    }
+      if (listPos < 0) {
+        listPos = len - 1;
+      }
 
-    if (listPos >= len) {
-      listPos = 0;
-    }
+      if (listPos >= len) {
+        listPos = 0;
+      }
 
-    dispatch(handleSetMediaPlayNow(listData[listPos]));
-  };
+      dispatch(handleSetMediaPlayNow(listData[listPos]));
+    },
+    [dispatch, listData, mediaPlayNow]
+  );
 
   // 更改当前播放状态 => 暂停 / 开始
   const togglePlayerState = () => {
@@ -50,29 +50,29 @@ const MiniPlayer = () => {
     }
   };
 
-  const initPlayer = () => {
+  const initPlayer = useCallback(() => {
     const { current } = audioTarget;
 
     // 加载完后自动播放
-    current.addEventListener("canplay", (e) => {
+    current.addEventListener("canplay", () => {
       const { duration } = current;
 
-      current.addEventListener("timeupdate", (e) => {
+      current.addEventListener("timeupdate", () => {
         let { currentTime } = current;
         setProgress(Number((currentTime / duration) * 100).toFixed());
       });
 
-      current.addEventListener("ended", (e) => {
+      current.addEventListener("ended", () => {
         handleChangeCurrentSong(1);
       });
 
       current.play();
     });
-  };
+  }, [handleChangeCurrentSong]);
 
   useEffect(() => {
     initPlayer();
-  }, []);
+  }, [initPlayer]);
 
   return (
     <MiniPlayerContent>
