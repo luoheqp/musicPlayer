@@ -19,12 +19,6 @@ export const ControllerGroup = styled.div`
   }
 `;
 
-export const MusicProgress = styled.div`
+export const MusicProgressContent = styled.div`
   width: 80%;
-  height: 3px;
-  background-image: linear-gradient(
-    to right,
-    rgba(51, 51, 51, 1) ${(props) => `${props.progress}%`},
-    rgba(51, 51, 51, 0.2) ${(props) => `${props.progress}%`}
-  );
 `;

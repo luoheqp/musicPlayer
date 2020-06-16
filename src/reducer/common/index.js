@@ -23,10 +23,10 @@ export const handleSetMusicList = () => {
   };
 };
 
-const reducer = (state = initState, { type, data }) => {
-  switch (type) {
+const reducer = (state = initState, action) => {
+  switch (action.type) {
     case SET_MUSIC_LIST:
-      return { ...state, musicList: data };
+      return { ...state, musicList: action.data };
     default:
       return state;
   }

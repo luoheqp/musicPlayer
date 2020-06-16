@@ -17,12 +17,17 @@ const Index = (props) => {
 
   return (
     <IndexContent>
+      {/* header */}
       <Header>
         <h3>Hello.</h3>
       </Header>
+
+      {/* list */}
       <ListContent>
         <SongList />
       </ListContent>
+
+      {/* player */}
       <PlayerContent>
         <MiniPlayer />
       </PlayerContent>

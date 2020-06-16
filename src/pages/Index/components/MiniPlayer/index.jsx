@@ -1,21 +1,29 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleSetMediaPlayNow } from "@r/player";
-import { MiniPlayerContent, ControllerGroup, MusicProgress } from "./style";
+import {
+  handleSetMediaPlayNow,
+  handleSetMediaDuration,
+  handleSetMediaCurrentTime,
+} from "@r/player";
+import {
+  MiniPlayerContent,
+  ControllerGroup,
+  MusicProgressContent,
+} from "./style";
+
+// components
+import MusicProgress from "@/pages/Index/components/MusicProgress";
 
 const MiniPlayer = () => {
   const dispatch = useDispatch();
   const listData = useSelector(({ common }) => common.musicList);
   const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
 
-  const [progress, setProgress] = useState(0);
-
   const audioTarget = useRef();
 
   // 更改当前歌曲 => 上一首 / 下一首
   const handleChangeCurrentSong = useCallback(
     (difference) => {
-      debugger;
       let { listPos } = mediaPlayNow;
 
       let len = listData.length;
@@ -50,33 +58,27 @@ const MiniPlayer = () => {
     }
   };
 
-  const initPlayer = useCallback(() => {
-    const { current } = audioTarget;
+  // audio canplay event
+  const handleAudioCanPlay = () => {
+    dispatch(handleSetMediaDuration(audioTarget.current.duration));
+    audioTarget.current.play();
+  };
 
-    // 加载完后自动播放
-    current.addEventListener("canplay", () => {
-      const { duration } = current;
-
-      current.addEventListener("timeupdate", () => {
-        let { currentTime } = current;
-        setProgress(Number((currentTime / duration) * 100).toFixed());
-      });
-
-      current.addEventListener("ended", () => {
-        handleChangeCurrentSong(1);
-      });
-
-      current.play();
-    });
-  }, [handleChangeCurrentSong]);
-
-  useEffect(() => {
-    initPlayer();
-  }, [initPlayer]);
+  // audio timeupdate event
+  const handleRefreshProgress = () => {
+    let { currentTime } = audioTarget.current;
+    dispatch(handleSetMediaCurrentTime(currentTime));
+  };
 
   return (
     <MiniPlayerContent>
-      <audio src={`./music/${mediaPlayNow.fullName}`} ref={audioTarget}></audio>
+      <audio
+        src={`./music/${mediaPlayNow.fullName}`}
+        ref={audioTarget}
+        onCanPlay={handleAudioCanPlay}
+        onTimeUpdate={handleRefreshProgress}
+        onEnded={() => handleChangeCurrentSong(1)}
+      ></audio>
       <ControllerGroup>
         <input
           type="button"
@@ -97,9 +99,9 @@ const MiniPlayer = () => {
           onClick={() => handleChangeCurrentSong(1)}
         />
       </ControllerGroup>
-      <MusicProgress progress={progress}>
-        <div className="move-point"></div>
-      </MusicProgress>
+      <MusicProgressContent>
+        <MusicProgress />
+      </MusicProgressContent>
     </MiniPlayerContent>
   );
 };
