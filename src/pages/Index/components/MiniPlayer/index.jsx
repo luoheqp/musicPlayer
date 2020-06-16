@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { handleSetMediaPlayNow } from "@r/player";
 import { MiniPlayerContent, ControllerGroup, MusicProgress } from "./style";
 
 const MiniPlayer = () => {
   const dispatch = useDispatch();
-  const listData = useSelector(({ common }) => common.musicList);
-  const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
+  const listData = useSelector(({ common }) => common.musicList, shallowEqual);
+  const mediaPlayNow = useSelector(
+    ({ player }) => player.mediaPlayNow,
+    shallowEqual
+  );
 
   const [progress, setProgress] = useState(0);
 
@@ -14,6 +17,7 @@ const MiniPlayer = () => {
 
   // 更改当前歌曲 => 上一首 / 下一首
   const handleChangeCurrentSong = (difference) => {
+    debugger;
     let { listPos } = mediaPlayNow;
 
     let len = listData.length;
@@ -58,13 +62,11 @@ const MiniPlayer = () => {
         setProgress(Number((currentTime / duration) * 100).toFixed());
       });
 
-      current.play();
-    });
+      current.addEventListener("ended", (e) => {
+        handleChangeCurrentSong(1);
+      });
 
-    current.addEventListener("ended", (e) => {
-      debugger;
-      console.log(mediaPlayNow);
-      handleChangeCurrentSong(1);
+      current.play();
     });
   };
 

@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import fakeData from "@/config/fakeData.js";
 import { useDispatch } from "react-redux";
 import { handleSetMusicList } from "@r/common";
 import { IndexContent, Header, ListContent, PlayerContent } from "./style";
@@ -13,7 +12,7 @@ const Index = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(handleSetMusicList(fakeData));
+    dispatch(handleSetMusicList());
   }, [dispatch]);
 
   return (

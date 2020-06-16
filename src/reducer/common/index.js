@@ -1,3 +1,5 @@
+import fakeData from "@/config/fakeData.js";
+
 const initState = {
   musicList: [],
 };
@@ -7,11 +9,10 @@ const SET_MUSIC_LIST = "SET_MUSIC_LIST";
 
 // >>>>>> action
 
-/**
- * 设置播放歌曲在列表的位置
- * @param {listPos} data 在列表的位置
- */
-export const handleSetMusicList = (data) => {
+// 设置播放歌曲列表
+export const handleSetMusicList = () => {
+  let data = fakeData;
+
   data.forEach((element, index) => {
     element.listPos = index;
   });

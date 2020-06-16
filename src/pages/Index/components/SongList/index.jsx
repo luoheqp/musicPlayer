@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import fakeData from "@/config/fakeData.js";
 import { handleSetMediaPlayNow } from "@r/player";
 import { List, ListItem } from "./style";
 
@@ -11,11 +10,10 @@ const SongList = (props) => {
   const listData = useSelector(({ common }) => common.musicList);
 
   // data
-  const [playerSrc, setPlayerSrc] = useState("");
 
   // action
   const handleGetSongPathById = (id) => {
-    return fakeData.filter((item) => item.id === id)[0];
+    return listData.filter((item) => item.id === id)[0];
   };
 
   const handleRefreshMediaNowPlay = (data) => {
@@ -25,8 +23,6 @@ const SongList = (props) => {
   // methods
   const handlePlayThisSong = (id) => {
     let targetObj = handleGetSongPathById(id);
-    let path = `./music/${targetObj.fullName}`;
-    setPlayerSrc(path);
     handleRefreshMediaNowPlay(targetObj);
   };
 
