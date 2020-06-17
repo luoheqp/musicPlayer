@@ -2,12 +2,14 @@ const initState = {
   mediaPlayNow: {},
   duration: 0,
   currentTime: 0,
+  changeCurrentTime: 0,
 };
 
 // >>>>>> constant
 const SET_MEDIA_PLAY_NOW = "SET_MEDIA_PLAY_NOW";
 const SET_MEDIA_DURATION = "SET_MEDIA_DURATION";
 const SET_MEDIA_CURRENT_TIME = "SET_MEDIA_CURRENT_TIME";
+const SET_CHANGE_CURRENT_TIME = "SET_CHANGE_CURRENT_TIME";
 
 // >>>>>> action
 
@@ -26,6 +28,11 @@ export const handleSetMediaCurrentTime = (data) => ({
   data: data,
 });
 
+export const handleSetMediaChangeCurrentTime = (data) => ({
+  type: SET_CHANGE_CURRENT_TIME,
+  data: data,
+});
+
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case SET_MEDIA_PLAY_NOW:
@@ -34,6 +41,8 @@ const reducer = (state = initState, action) => {
       return { ...state, duration: action.data };
     case SET_MEDIA_CURRENT_TIME:
       return { ...state, currentTime: action.data };
+    case SET_CHANGE_CURRENT_TIME:
+      return { ...state, changeCurrentTime: action.data };
     default:
       return state;
   }

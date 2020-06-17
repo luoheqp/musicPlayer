@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { MusicProgressContent } from "./style";
+import { handleSetMediaChangeCurrentTime } from "@r/player";
 
 const MusicProgress = (props) => {
+  const dispatch = useDispatch();
   const duration = useSelector(({ player }) => player.duration);
   const currentTime = useSelector(({ player }) => player.currentTime);
 
@@ -38,6 +40,7 @@ const MusicProgress = (props) => {
     setIsDraging(false);
 
     let newCurrentTime = Number((duration * progress) / 100).toFixed();
+    dispatch(handleSetMediaChangeCurrentTime(newCurrentTime));
   };
 
   // 未拖动状态下同步音频进度
@@ -50,7 +53,7 @@ const MusicProgress = (props) => {
     // TODO: NaN 问题 ?
     let progress = Number((currentTime / duration) * 100).toFixed();
     setProgress(isNaN(progress) ? 0 : progress);
-  }, [currentTime, duration]);
+  }, [currentTime, duration, isDraging]);
 
   return (
     <>

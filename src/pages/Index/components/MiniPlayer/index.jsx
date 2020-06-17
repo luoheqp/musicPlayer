@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from "react";
+import React, { useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   handleSetMediaPlayNow,
@@ -13,13 +13,14 @@ import {
 
 // components
 import MusicProgress from "@/pages/Index/components/MusicProgress";
-import { useEffect } from "react";
 
 const MiniPlayer = () => {
   const dispatch = useDispatch();
   const listData = useSelector(({ common }) => common.musicList);
   const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
-  const currentTime = useSelector(({ player }) => player.currentTime);
+  const changeCurrentTime = useSelector(
+    ({ player }) => player.changeCurrentTime
+  );
 
   const audioRef = useRef();
 
@@ -71,6 +72,11 @@ const MiniPlayer = () => {
     let { currentTime } = audioRef.current;
     dispatch(handleSetMediaCurrentTime(currentTime));
   };
+
+  // 同步 store 中的 currentTime 修改
+  useEffect(() => {
+    audioRef.current.currentTime = changeCurrentTime;
+  }, [changeCurrentTime]);
 
   return (
     <MiniPlayerContent>
