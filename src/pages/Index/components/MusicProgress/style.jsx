@@ -19,17 +19,17 @@ export const MusicProgressContent = styled.div`
       height: 10px;
     }
   }
-`;
 
-export const MovePoint = styled.div`
-  width: ${({ isDraging }) => `${isDraging ? "10px" : "0px"}`};
-  height: ${({ isDraging }) => `${isDraging ? "10px" : "0px"}`};
-  background-color: #333;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.1s cubic-bezier(1, 0, 0, 2),
-    height 0.1s cubic-bezier(1, 0, 0, 2);
-  position: absolute;
-  top: 50%;
-  left: ${(props) => `${props.progress}%`};
+  .move-point {
+    width: ${({ isDraging }) => `${isDraging ? "10px" : "0px"}`};
+    height: ${({ isDraging }) => `${isDraging ? "10px" : "0px"}`};
+    background-color: #333;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.1s cubic-bezier(1, 0, 0, 2),
+      height 0.1s cubic-bezier(1, 0, 0, 2);
+    position: absolute;
+    top: 50%;
+    left: ${(props) => `${props.progress}%`};
+  }
 `;

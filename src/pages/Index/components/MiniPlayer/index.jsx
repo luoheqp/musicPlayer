@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useEffect } from "react";
+import React, { useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   handleSetMediaPlayNow,
@@ -13,13 +13,15 @@ import {
 
 // components
 import MusicProgress from "@/pages/Index/components/MusicProgress";
+import { useEffect } from "react";
 
 const MiniPlayer = () => {
   const dispatch = useDispatch();
   const listData = useSelector(({ common }) => common.musicList);
   const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
+  const currentTime = useSelector(({ player }) => player.currentTime);
 
-  const audioTarget = useRef();
+  const audioRef = useRef();
 
   // 更改当前歌曲 => 上一首 / 下一首
   const handleChangeCurrentSong = useCallback(
@@ -44,7 +46,7 @@ const MiniPlayer = () => {
 
   // 更改当前播放状态 => 暂停 / 开始
   const togglePlayerState = () => {
-    const { current } = audioTarget;
+    const { current } = audioRef;
 
     // 判断当前是否有歌曲选中
     if (!current.currentSrc) {
@@ -60,13 +62,13 @@ const MiniPlayer = () => {
 
   // audio canplay event
   const handleAudioCanPlay = () => {
-    dispatch(handleSetMediaDuration(audioTarget.current.duration));
-    audioTarget.current.play();
+    dispatch(handleSetMediaDuration(audioRef.current.duration));
+    audioRef.current.play();
   };
 
   // audio timeupdate event
   const handleRefreshProgress = () => {
-    let { currentTime } = audioTarget.current;
+    let { currentTime } = audioRef.current;
     dispatch(handleSetMediaCurrentTime(currentTime));
   };
 
@@ -74,7 +76,7 @@ const MiniPlayer = () => {
     <MiniPlayerContent>
       <audio
         src={`./music/${mediaPlayNow.fullName}`}
-        ref={audioTarget}
+        ref={audioRef}
         onCanPlay={handleAudioCanPlay}
         onTimeUpdate={handleRefreshProgress}
         onEnded={() => handleChangeCurrentSong(1)}
