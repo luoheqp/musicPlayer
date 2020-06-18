@@ -7,7 +7,5 @@ export const formatTime = (timeStemp) => {
   if (minute < 10) minute = `0${minute}`;
   if (hour < 10) hour = `0${hour}`;
 
-  console.log(second, minute, hour);
-
-  return `${hour === "00" ? hour + ":" : ""}${minute}:${second}`;
+  return `${hour === "00" ? "" : hour + ":"}${minute}:${second}`;
 };

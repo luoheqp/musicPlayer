@@ -7,10 +7,25 @@ export const MiniPlayerContent = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+
+  .control-area {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
 `;
 
-export const ControllerGroup = styled.div`
-  margin-bottom: 10px;
+export const PlayerCycleControl = styled.input.attrs((props) => ({
+  type: "button",
+}))`
+  appearance: none;
+  background-color: unset;
+  border: unset;
+`;
+
+export const PlayerStateControl = styled.div`
+  flex: 1;
 
   .btn {
     appearance: none;

@@ -1,6 +1,18 @@
 import styled from "styled-components";
 
-export const MusicProgressContent = styled.div`
+export const MusicProgressContent = styled.div `
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  .time {
+    font-size: 12px;
+    margin-top: 5px;
+  }
+`
+
+export const ProgressBar = styled.div`
   width: 100%;
   height: 4px;
   border-radius: 2px;

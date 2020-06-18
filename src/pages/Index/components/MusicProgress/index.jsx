@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { MusicProgressContent } from "./style";
+import { MusicProgressContent, ProgressBar } from "./style";
 import { handleSetMediaChangeCurrentTime } from "@r/player";
 import { formatTime } from "../../../../utils";
 
@@ -57,8 +57,8 @@ const MusicProgress = (props) => {
   }, [currentTime, duration, isDraging]);
 
   return (
-    <>
-      <MusicProgressContent
+    <MusicProgressContent>
+      <ProgressBar
         progress={progress}
         onMouseDown={handleMouseDownInProgress}
         onMouseMove={handleChangeAudioProgress}
@@ -67,11 +67,11 @@ const MusicProgress = (props) => {
         ref={progressRef}
       >
         <div className="move-point"></div>
-      </MusicProgressContent>
+      </ProgressBar>
       <div className="time">
         {formatTime(currentTime)} / {formatTime(duration)}
       </div>
-    </>
+    </MusicProgressContent>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   handleSetMediaPlayNow,
@@ -7,8 +7,9 @@ import {
 } from "@r/player";
 import {
   MiniPlayerContent,
-  ControllerGroup,
+  PlayerStateControl,
   MusicProgressContent,
+  PlayerCycleControl,
 } from "./style";
 
 // components
@@ -21,6 +22,8 @@ const MiniPlayer = () => {
   const changeCurrentTime = useSelector(
     ({ player }) => player.changeCurrentTime
   );
+
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const audioRef = useRef();
 
@@ -50,7 +53,9 @@ const MiniPlayer = () => {
     const { current } = audioRef;
 
     // 判断当前是否有歌曲选中
-    if (!current.currentSrc) {
+    if (!mediaPlayNow.name) {
+      setIsPlaying(true);
+      dispatch(handleSetMediaPlayNow(listData[0]));
       return;
     }
 
@@ -59,6 +64,8 @@ const MiniPlayer = () => {
     } else {
       current.pause();
     }
+
+    setIsPlaying(!current.paused);
   };
 
   // audio canplay event
@@ -79,7 +86,7 @@ const MiniPlayer = () => {
   }, [changeCurrentTime]);
 
   return (
-    <MiniPlayerContent>
+    <>
       <audio
         src={`./music/${mediaPlayNow.fullName}`}
         ref={audioRef}
@@ -87,30 +94,35 @@ const MiniPlayer = () => {
         onTimeUpdate={handleRefreshProgress}
         onEnded={() => handleChangeCurrentSong(1)}
       ></audio>
-      <ControllerGroup>
-        <input
-          type="button"
-          value="上一首"
-          className="btn pre"
-          onClick={() => handleChangeCurrentSong(-1)}
-        />
-        <input
-          type="button"
-          value="暂停"
-          className="btn state"
-          onClick={togglePlayerState}
-        />
-        <input
-          type="button"
-          value="下一首"
-          className="btn next"
-          onClick={() => handleChangeCurrentSong(1)}
-        />
-      </ControllerGroup>
-      <MusicProgressContent>
-        <MusicProgress />
-      </MusicProgressContent>
-    </MiniPlayerContent>
+      <MiniPlayerContent>
+        <div className="control-area">
+          <PlayerCycleControl value="循环" onClick={handleChangePlayerCycleState} />
+          <PlayerStateControl>
+            <input
+              type="button"
+              value="上一首"
+              className="btn pre"
+              onClick={() => handleChangeCurrentSong(-1)}
+            />
+            <input
+              type="button"
+              value="暂停"
+              className="btn state"
+              onClick={togglePlayerState}
+            />
+            <input
+              type="button"
+              value="下一首"
+              className="btn next"
+              onClick={() => handleChangeCurrentSong(1)}
+            />
+          </PlayerStateControl>
+        </div>
+        <MusicProgressContent>
+          <MusicProgress />
+        </MusicProgressContent>
+      </MiniPlayerContent>
+    </>
   );
 };
 
