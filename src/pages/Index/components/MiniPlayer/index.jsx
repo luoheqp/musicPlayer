@@ -1,9 +1,12 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { CYCLE_MODE_LIST } from "@/config/playerConfig";
 import {
   handleSetMediaPlayNow,
   handleSetMediaDuration,
   handleSetMediaCurrentTime,
+  handleChangeMediaCycleMode,
+  handleChangeMediaMuteState,
 } from "@r/player";
 import {
   MiniPlayerContent,
@@ -22,6 +25,8 @@ const MiniPlayer = () => {
   const changeCurrentTime = useSelector(
     ({ player }) => player.changeCurrentTime
   );
+  const cycleMode = useSelector(({ player }) => player.cycleMode);
+  const muteState = useSelector(({ player }) => player.muteState);
 
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -30,7 +35,7 @@ const MiniPlayer = () => {
   // 更改当前歌曲 => 上一首 / 下一首
   const handleChangeCurrentSong = useCallback(
     (difference) => {
-      let { listPos } = mediaPlayNow;
+      let { listPos = 0 } = mediaPlayNow;
 
       let len = listData.length;
       listPos += difference;
@@ -43,6 +48,7 @@ const MiniPlayer = () => {
         listPos = 0;
       }
 
+      setIsPlaying(true);
       dispatch(handleSetMediaPlayNow(listData[listPos]));
     },
     [dispatch, listData, mediaPlayNow]
@@ -80,10 +86,34 @@ const MiniPlayer = () => {
     dispatch(handleSetMediaCurrentTime(currentTime));
   };
 
+  // audio ended event
+  const handleAudioEnded = () => {
+    // 单曲
+    if (cycleMode === 1) {
+      audioRef.current.currentTime = 0;
+      return;
+    }
+
+    handleChangeCurrentSong(1);
+  };
+
+  // 切换播放循环状态
+  const handleChangePlayerCycleState = () => {
+    dispatch(handleChangeMediaCycleMode());
+  };
+
+  const handleChangePlayerMuteState = () => {
+    dispatch(handleChangeMediaMuteState());
+  };
+
   // 同步 store 中的 currentTime 修改
   useEffect(() => {
     audioRef.current.currentTime = changeCurrentTime;
   }, [changeCurrentTime]);
+
+  useEffect(() => {
+    audioRef.current.muted = muteState;
+  }, [muteState]);
 
   return (
     <>
@@ -92,11 +122,14 @@ const MiniPlayer = () => {
         ref={audioRef}
         onCanPlay={handleAudioCanPlay}
         onTimeUpdate={handleRefreshProgress}
-        onEnded={() => handleChangeCurrentSong(1)}
+        onEnded={handleAudioEnded}
       ></audio>
       <MiniPlayerContent>
         <div className="control-area">
-          <PlayerCycleControl value="循环" onClick={handleChangePlayerCycleState} />
+          <PlayerCycleControl
+            value={CYCLE_MODE_LIST[cycleMode]}
+            onClick={handleChangePlayerCycleState}
+          />
           <PlayerStateControl>
             <input
               type="button"
@@ -106,7 +139,7 @@ const MiniPlayer = () => {
             />
             <input
               type="button"
-              value="暂停"
+              value={isPlaying ? "暂停" : "播放"}
               className="btn state"
               onClick={togglePlayerState}
             />
@@ -117,6 +150,10 @@ const MiniPlayer = () => {
               onClick={() => handleChangeCurrentSong(1)}
             />
           </PlayerStateControl>
+          <PlayerCycleControl
+            value={muteState ? "恢复" : "静音"}
+            onClick={handleChangePlayerMuteState}
+          />
         </div>
         <MusicProgressContent>
           <MusicProgress />

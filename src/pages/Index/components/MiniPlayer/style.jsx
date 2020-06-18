@@ -9,10 +9,13 @@ export const MiniPlayerContent = styled.div`
   height: 100%;
 
   .control-area {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 5px;
+    padding: 0 40px;
+    box-sizing: border-box;
   }
 `;
 
@@ -26,6 +29,9 @@ export const PlayerCycleControl = styled.input.attrs((props) => ({
 
 export const PlayerStateControl = styled.div`
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   .btn {
     appearance: none;
