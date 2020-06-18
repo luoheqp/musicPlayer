@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { MusicProgressContent } from "./style";
 import { handleSetMediaChangeCurrentTime } from "@r/player";
+import { formatTime } from "../../../../utils";
 
 const MusicProgress = (props) => {
   const dispatch = useDispatch();
@@ -67,6 +68,9 @@ const MusicProgress = (props) => {
       >
         <div className="move-point"></div>
       </MusicProgressContent>
+      <div className="time">
+        {formatTime(currentTime)} / {formatTime(duration)}
+      </div>
     </>
   );
 };
