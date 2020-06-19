@@ -8,11 +8,28 @@ export const IndexContent = styled.div`
 `;
 
 export const Header = styled.div`
+  flex: 0 0 56px;
+  height: 56px;
+  display: flex;
+  align-items: flex-end;
   padding: 10px;
+  box-sizing: border-box;
 
-  h3 {
-    font-size: 36px;
-    color: #333;
+  .item {
+    font-size: 20px;
+    line-height: 36px;
+    color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: all 0.1s linear;
+
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+
+    &.active {
+      font-size: 36px;
+      color: rgb(51, 51, 51);
+    }
   }
 `;
 

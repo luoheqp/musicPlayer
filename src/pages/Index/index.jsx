@@ -6,10 +6,22 @@ import { IndexContent, Header, ListContent, PlayerContent } from "./style";
 // components
 import SongList from "./components/SongList";
 import MiniPlayer from "./components/MiniPlayer";
+import { useState } from "react";
+
+const HEADER_ITEM_LIST = ["Hello.", "Player.", "Mine."];
 
 const Index = (props) => {
   // store
   const dispatch = useDispatch();
+
+  const [activeHeader, setActiveHeader] = useState(0);
+
+  const handleChangeActiveHeaderItem = ({ target }) => {
+    const { sign } = target.dataset;
+    if (sign) {
+      setActiveHeader(sign);
+    }
+  };
 
   useEffect(() => {
     dispatch(handleSetMusicList());
@@ -18,8 +30,16 @@ const Index = (props) => {
   return (
     <IndexContent>
       {/* header */}
-      <Header>
-        <h3>Hello.</h3>
+      <Header onClick={handleChangeActiveHeaderItem}>
+        {HEADER_ITEM_LIST.map((item, index) => (
+          <h3
+            className={`item ${+activeHeader === index ? "active" : ""}`}
+            data-sign={index}
+            key={index}
+          >
+            {item}
+          </h3>
+        ))}
       </Header>
 
       {/* list */}
