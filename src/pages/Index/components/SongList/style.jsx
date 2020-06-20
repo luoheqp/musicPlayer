@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-export const List = styled.ul`
-`;
+export const List = styled.ul``;
 
 export const ListItem = styled.li`
   height: 42px;
@@ -9,6 +8,7 @@ export const ListItem = styled.li`
   color: #333;
   font-size: 14px;
   padding: 11px;
+  box-sizing: border-box;
   transition: all 0.1s linear;
   cursor: pointer;
   line-height: 20px;
@@ -23,6 +23,7 @@ export const ListItem = styled.li`
     border: 1px solid #333;
     border-bottom: 10px solid #333;
     border-right: 10px solid #333;
+    box-sizing: border-box;
     clip-path: polygon(
       0 0,
       calc(100% - 10px) 0,

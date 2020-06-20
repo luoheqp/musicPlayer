@@ -12,9 +12,8 @@ export const MiniPlayerContent = styled.div`
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     margin-bottom: 5px;
-    padding: 0 40px;
     box-sizing: border-box;
   }
 `;
@@ -28,10 +27,10 @@ export const PlayerCycleControl = styled.input.attrs((props) => ({
 `;
 
 export const PlayerStateControl = styled.div`
-  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 20px;
 
   .btn {
     appearance: none;

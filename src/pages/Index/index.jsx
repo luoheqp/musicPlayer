@@ -1,12 +1,21 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { handleSetMusicList } from "@r/common";
-import { IndexContent, Header, ListContent, PlayerContent } from "./style";
+import {
+  IndexContent,
+  Header,
+  SlideContent,
+  ListContent,
+  PlayerContent,
+  MineContent,
+  MiniPlayerContent,
+} from "./style";
 
 // components
 import SongList from "./components/SongList";
 import MiniPlayer from "./components/MiniPlayer";
 import { useState } from "react";
+import { Transition } from "react-transition-group";
 
 const HEADER_ITEM_LIST = ["Hello.", "Player.", "Mine."];
 
@@ -42,15 +51,27 @@ const Index = (props) => {
         ))}
       </Header>
 
-      {/* list */}
-      <ListContent>
-        <SongList />
-      </ListContent>
+      <Transition>
+        {(state) => (
+          <SlideContent state={state} active={activeHeader}>
+            {/* list */}
+            <ListContent>
+              <SongList />
+            </ListContent>
+
+            {/* player */}
+            <PlayerContent>player</PlayerContent>
+
+            {/* mine */}
+            <MineContent>mine</MineContent>
+          </SlideContent>
+        )}
+      </Transition>
 
       {/* player */}
-      <PlayerContent>
+      <MiniPlayerContent>
         <MiniPlayer />
-      </PlayerContent>
+      </MiniPlayerContent>
     </IndexContent>
   );
 };

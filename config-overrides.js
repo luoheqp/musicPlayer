@@ -15,7 +15,7 @@ const PostcssPxToViewport = require("postcss-px-to-viewport");
 const PostcssNormalize = require("postcss-normalize");
 
 // 图片压缩
-const ImageminPlugin = require("imagemin-webpack-plugin").default;
+// const ImageminPlugin = require("imagemin-webpack-plugin").default;
 
 module.exports = {
   webpack: override(
@@ -38,12 +38,12 @@ module.exports = {
       }),
     ]),
 
-    addWebpackPlugin(
-      new ImageminPlugin({
-        test: /\.(jpe?g|png|gif|svg)$/i,
-        cacheFolder: path.resolve(__dirname, "./imgCache"),
-      })
-    ),
+    // addWebpackPlugin(
+    //   new ImageminPlugin({
+    //     test: /\.(jpe?g|png|gif|svg)$/i,
+    //     cacheFolder: path.resolve(__dirname, "./imgCache"),
+    //   })
+    // ),
 
     // 修改环境变量
     overrideProcessEnv({
