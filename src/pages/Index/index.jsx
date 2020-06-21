@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Transition } from "react-transition-group";
 import { useDispatch } from "react-redux";
 import { handleSetMusicList } from "@r/common";
 import {
@@ -12,10 +13,9 @@ import {
 } from "./style";
 
 // components
-import SongList from "./components/SongList";
 import MiniPlayer from "./components/MiniPlayer";
-import { useState } from "react";
-import { Transition } from "react-transition-group";
+import SongList from "@/pages/SongList";
+import Player from "@/pages/Player";
 
 const HEADER_ITEM_LIST = ["Hello.", "Player.", "Mine."];
 
@@ -23,7 +23,7 @@ const Index = (props) => {
   // store
   const dispatch = useDispatch();
 
-  const [activeHeader, setActiveHeader] = useState(0);
+  const [activeHeader, setActiveHeader] = useState(1);
 
   const handleChangeActiveHeaderItem = ({ target }) => {
     const { sign } = target.dataset;
@@ -51,21 +51,26 @@ const Index = (props) => {
         ))}
       </Header>
 
-      <Transition>
-        {(state) => (
-          <SlideContent state={state} active={activeHeader}>
-            {/* list */}
-            <ListContent>
-              <SongList />
-            </ListContent>
+      {/* TODO: timeout 有何用 ??? */}
+      <Transition timeout={0}>
+        {(state) => {
+          return (
+            <SlideContent state={state} active={activeHeader}>
+              {/* list */}
+              <ListContent>
+                <SongList />
+              </ListContent>
 
-            {/* player */}
-            <PlayerContent>player</PlayerContent>
+              {/* player */}
+              <PlayerContent>
+                <Player />
+              </PlayerContent>
 
-            {/* mine */}
-            <MineContent>mine</MineContent>
-          </SlideContent>
-        )}
+              {/* mine */}
+              <MineContent>mine</MineContent>
+            </SlideContent>
+          );
+        }}
       </Transition>
 
       {/* player */}

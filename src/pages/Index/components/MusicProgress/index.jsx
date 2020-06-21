@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { MusicProgressContent, ProgressBar } from "./style";
 import { handleSetMediaChangeCurrentTime } from "@r/player";
-import { formatTime } from "../../../../utils";
+import { formatTime } from "@/utils";
 
 const MusicProgress = (props) => {
   const dispatch = useDispatch();

@@ -37,7 +37,6 @@ export const Header = styled.div`
 
 export const SlideContent = styled.div`
   flex: 1;
-  width: 300vw;
   position: relative;
   transition: transform 0.1s linear;
   transform: translateX(
@@ -47,7 +46,7 @@ export const SlideContent = styled.div`
   );
 `;
 
-export const ListContent = styled.div`
+const BasicContent = styled.div`
   position: absolute;
   top: 0;
   bottom: 0;
@@ -58,28 +57,16 @@ export const ListContent = styled.div`
   overflow-y: auto;
 `;
 
-export const PlayerContent = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
+export const ListContent = styled(BasicContent)`
+  left: 0;
+`;
+
+export const PlayerContent = styled(BasicContent)`
   left: 100vw;
-  width: 100vw;
-  padding: 0 10px;
-  box-sizing: border-box;
-  overflow: hidden;
-  overflow-y: auto;
 `;
 
-export const MineContent = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
+export const MineContent = styled(BasicContent)`
   left: 200vw;
-  width: 100vw;
-  padding: 0 10px;
-  box-sizing: border-box;
-  overflow: hidden;
-  overflow-y: auto;
 `;
 
 export const MiniPlayerContent = styled.div`

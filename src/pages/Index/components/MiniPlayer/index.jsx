@@ -4,6 +4,7 @@ import { CYCLE_MODE_LIST } from "@/config/playerConfig";
 import {
   handleSetMediaPlayNow,
   handleSetMediaDuration,
+  handleSetMediaSource,
   handleSetMediaCurrentTime,
   handleChangeMediaCycleMode,
   handleChangeMediaMuteState,
@@ -76,6 +77,7 @@ const MiniPlayer = () => {
 
   // audio canplay event
   const handleAudioCanPlay = () => {
+    dispatch(handleSetMediaSource(audioRef.current));
     dispatch(handleSetMediaDuration(audioRef.current.duration));
     audioRef.current.play();
   };
