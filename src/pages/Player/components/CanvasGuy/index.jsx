@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import rough from "roughjs/bundled/rough.esm";
 import { CanvasGuyContent } from "./style";
 import { useSelector } from "react-redux";
 
 const CanvasGuy = (props) => {
-  const LINE_CYCLE_COUNT = 200;
+  const LINE_CYCLE_COUNT = 60;
 
   const source = useSelector(({ player }) => player.source);
   const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
@@ -14,27 +15,29 @@ const CanvasGuy = (props) => {
   const canvasRef = useRef();
 
   const handleAudioAnimation = (ctx, analyser) => {
-    console.log("object");
     const { current } = canvasRef;
+    const roughCanvas = rough.canvas(current);
 
-    ctx.clearRect(0, 0, current.width, current.height);
+    const render = () => {
+      requestAnimationFrame(render);
+      ctx.clearRect(0, 0, current.width, current.height);
+      let dataArray = new Uint8Array(analyser.frequencyBinCount);
+      analyser.getByteFrequencyData(dataArray);
 
-    let dataArray = new Uint8Array(analyser.frequencyBinCount);
-    analyser.getByteFrequencyData(dataArray);
+      ctx.save();
+      ctx.beginPath();
+      ctx.translate(current.offsetWidth / 2, current.offsetHeight / 2);
+      for (let i = 0; i < LINE_CYCLE_COUNT; i++) {
+        ctx.rotate((i * Math.PI) / LINE_CYCLE_COUNT);
+        let value = dataArray[6 * i];
+        roughCanvas.rectangle(-2, 100, 4, value / 10);
+        roughCanvas.rectangle(-2, 100, 4, 1);
+      }
 
-    ctx.save();
-    ctx.beginPath();
-    ctx.translate(current.offsetWidth / 2, current.offsetHeight / 2);
-    for (let i = 0; i < LINE_CYCLE_COUNT; i++) {
-      ctx.rotate((i * Math.PI) / LINE_CYCLE_COUNT);
-      let value = dataArray[6 * i];
-      ctx.fillStyle = "#333";
-      ctx.fillRect(0, 100, 2, value / 10);
-    }
+      ctx.restore();
+    };
 
-    ctx.restore();
-
-    requestAnimationFrame(() => handleAudioAnimation(ctx, analyser));
+    render();
   };
 
   const handleInitAudioContext = (audioCtx) => {
@@ -48,8 +51,6 @@ const CanvasGuy = (props) => {
 
     const { current } = canvasRef;
     let ctx = current.getContext("2d");
-    ctx.lineWidth = 2;
-
     handleAudioAnimation(ctx, analyser);
   };
 
