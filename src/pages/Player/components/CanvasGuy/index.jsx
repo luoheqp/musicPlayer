@@ -24,17 +24,16 @@ const CanvasGuy = (props) => {
       let dataArray = new Uint8Array(analyser.frequencyBinCount);
       analyser.getByteFrequencyData(dataArray);
 
-      ctx.save();
-      ctx.beginPath();
-      ctx.translate(current.offsetWidth / 2, current.offsetHeight / 2);
       for (let i = 0; i < LINE_CYCLE_COUNT; i++) {
-        ctx.rotate((i * Math.PI) / LINE_CYCLE_COUNT);
+        ctx.save();
+        let deg = (2 * Math.PI) / 360;
+        ctx.translate(current.offsetWidth / 2, current.offsetHeight / 2);
+        ctx.rotate(deg * (360 / LINE_CYCLE_COUNT) * i);
         let value = dataArray[6 * i];
-        roughCanvas.rectangle(-2, 100, 4, value / 10);
-        roughCanvas.rectangle(-2, 100, 4, 1);
+        value = value < 5 ? 5 : value;
+        roughCanvas.rectangle(-2, 100, 4, value / 5);
+        ctx.restore();
       }
-
-      ctx.restore();
     };
 
     render();
@@ -43,6 +42,7 @@ const CanvasGuy = (props) => {
   const handleInitAudioContext = (audioCtx) => {
     // 创建 AnalyserNode 节点
     let analyser = audioCtx.createAnalyser();
+    // analyser.fftSize = 256;
 
     // 链接节点
     let audioSource = audioCtx.createMediaElementSource(source);
@@ -51,6 +51,7 @@ const CanvasGuy = (props) => {
 
     const { current } = canvasRef;
     let ctx = current.getContext("2d");
+
     handleAudioAnimation(ctx, analyser);
   };
 
