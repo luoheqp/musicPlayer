@@ -10,30 +10,34 @@ const CanvasGuy = (props) => {
   const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
 
   const [audioContext, setAudioContext] = useState();
+  const [roughCanvas, setRoughCanvas] = useState();
 
   const outerBoxRef = useRef();
   const canvasRef = useRef();
 
+  const handleDraw = (ctx, current, dataArray) => {
+    for (let i = 0; i < LINE_CYCLE_COUNT; i++) {
+      ctx.save();
+      ctx.translate(current.offsetWidth / 2, current.offsetHeight / 2);
+      let deg = (2 * Math.PI) / 360;
+      ctx.rotate(deg * (360 / LINE_CYCLE_COUNT) * i);
+      let value = dataArray[6 * i];
+      value = value < 5 ? 5 : value;
+      roughCanvas.rectangle(-2, 100, 4, value / 5);
+      ctx.restore();
+    }
+  };
+
   const handleAudioAnimation = (ctx, analyser) => {
     const { current } = canvasRef;
-    const roughCanvas = rough.canvas(current);
-
+    
     const render = () => {
       requestAnimationFrame(render);
       ctx.clearRect(0, 0, current.width, current.height);
       let dataArray = new Uint8Array(analyser.frequencyBinCount);
       analyser.getByteFrequencyData(dataArray);
 
-      for (let i = 0; i < LINE_CYCLE_COUNT; i++) {
-        ctx.save();
-        let deg = (2 * Math.PI) / 360;
-        ctx.translate(current.offsetWidth / 2, current.offsetHeight / 2);
-        ctx.rotate(deg * (360 / LINE_CYCLE_COUNT) * i);
-        let value = dataArray[6 * i];
-        value = value < 5 ? 5 : value;
-        roughCanvas.rectangle(-2, 100, 4, value / 5);
-        ctx.restore();
-      }
+      handleDraw(ctx, current, dataArray);
     };
 
     render();
@@ -65,6 +69,13 @@ const CanvasGuy = (props) => {
   };
 
   useEffect(() => {
+    const { current } = canvasRef;
+    const roughCanvas = rough.canvas(current);
+    setRoughCanvas(roughCanvas);
+  }, [canvasRef, rough]);
+
+  // 初始化音频处理
+  useEffect(() => {
     if (mediaPlayNow.name && source && !audioContext) {
       let audioContext = new (window.AudioContext ||
         window.webkitAudioContext)();
@@ -73,9 +84,10 @@ const CanvasGuy = (props) => {
     }
   }, [mediaPlayNow, source, audioContext, handleInitAudioContext]);
 
+  // 页面初始化 挂载 resize 事件
   useEffect(() => {
     handleWindowResize();
-    window.onresize = handleWindowResize();
+    window.onresize = handleWindowResize;
   }, []);
 
   return (
