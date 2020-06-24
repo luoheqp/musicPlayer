@@ -40,7 +40,7 @@ const Index = (props) => {
     <IndexContent>
       {/* header */}
       <Header onClick={handleChangeActiveHeaderItem}>
-        {/* {HEADER_ITEM_LIST.map((item, index) => (
+        {HEADER_ITEM_LIST.map((item, index) => (
           <h3
             className={`item ${+activeHeader === index ? "active" : ""}`}
             data-sign={index}
@@ -48,7 +48,7 @@ const Index = (props) => {
           >
             {item}
           </h3>
-        ))} */}
+        ))}
       </Header>
 
       {/* TODO: timeout 有何用 ??? */}

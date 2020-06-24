@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import rough from "roughjs/bundled/rough.esm";
 import { CanvasGuyContent } from "./style";
 import { useSelector } from "react-redux";
@@ -39,21 +39,24 @@ const CanvasGuy = (props) => {
     render();
   };
 
-  const handleInitAudioContext = (audioCtx) => {
-    // 创建 AnalyserNode 节点
-    let analyser = audioCtx.createAnalyser();
-    // analyser.fftSize = 256;
+  const handleInitAudioContext = useCallback(
+    (audioCtx) => {
+      // 创建 AnalyserNode 节点
+      let analyser = audioCtx.createAnalyser();
+      // analyser.fftSize = 256;
 
-    // 链接节点
-    let audioSource = audioCtx.createMediaElementSource(source);
-    audioSource.connect(analyser);
-    audioSource.connect(audioCtx.destination);
+      // 链接节点
+      let audioSource = audioCtx.createMediaElementSource(source);
+      audioSource.connect(analyser);
+      audioSource.connect(audioCtx.destination);
 
-    const { current } = canvasRef;
-    let ctx = current.getContext("2d");
+      const { current } = canvasRef;
+      let ctx = current.getContext("2d");
 
-    handleAudioAnimation(ctx, analyser);
-  };
+      handleAudioAnimation(ctx, analyser);
+    },
+    [source]
+  );
 
   const handleWindowResize = () => {
     const { current } = outerBoxRef;
@@ -68,7 +71,7 @@ const CanvasGuy = (props) => {
       setAudioContext(audioContext);
       handleInitAudioContext(audioContext);
     }
-  }, [mediaPlayNow, source, audioContext]);
+  }, [mediaPlayNow, source, audioContext, handleInitAudioContext]);
 
   useEffect(() => {
     handleWindowResize();
