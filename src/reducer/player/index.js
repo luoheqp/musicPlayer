@@ -9,6 +9,7 @@ import {
   CHANGE_PLAY_STATE,
   CHANGE_CYCLE_MODE,
   CHANGE_MUTE_STATE,
+  SET_LYRIC_FOR_THIS_SONG,
 } from "./constant";
 
 const initState = {
@@ -20,6 +21,7 @@ const initState = {
   changeCurrentTime: 0, // 修改后的时间点
   cycleMode: 0, // 播放模式
   muteState: false, // 是否静音
+  lyricForThisSong: [{}], // 当前歌曲歌词
 };
 
 const reducer = (state = initState, action) => {
@@ -43,6 +45,8 @@ const reducer = (state = initState, action) => {
       return { ...state, cycleMode: cycleMode };
     case CHANGE_MUTE_STATE:
       return { ...state, muteState: !state.muteState };
+    case SET_LYRIC_FOR_THIS_SONG:
+      return { ...state, lyricForThisSong: action.data };
     default:
       return state;
   }

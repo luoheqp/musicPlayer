@@ -7,14 +7,24 @@ const request = axios.create({
 });
 
 request.interceptors.response.use(
-  ({ data: { data, code } }) =>
+  (res) =>
     new Promise((resolve, reject) => {
-      if (code === 200) {
-        if (typeJudgment(data, "array") && data.length === 1) {
-          data = data[0];
-        }
+      let { data } = res;
+      let { code } = data;
 
-        resolve(data);
+      if (code === 200) {
+        // if 字段中存在 data
+        if (data.data) {
+          // if data 为只含有单个内容的数组
+          let info = data.data;
+          if (typeJudgment(info, "array") && info.length === 1) {
+            info = info[0];
+          }
+
+          resolve(info);
+        } else {
+          resolve(data);
+        }
       }
     })
 );

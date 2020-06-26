@@ -1,3 +1,4 @@
+import { splitLyric } from "@/utils";
 import { Song as SongApi } from "@/server/apis";
 
 import {
@@ -9,11 +10,12 @@ import {
   CHANGE_PLAY_STATE,
   CHANGE_CYCLE_MODE,
   CHANGE_MUTE_STATE,
+  SET_LYRIC_FOR_THIS_SONG,
 } from "./constant";
+import { balanceLyricTime } from "../../utils";
 
 export const handleSetMediaPlayNow = (data) => async (dispatch) => {
   const songData = await SongApi.getSongUrl(data.id);
-  console.log(songData);
   data.url = songData.url;
 
   dispatch({
@@ -54,3 +56,22 @@ export const handleChangeMediaCycleMode = () => ({
 export const handleChangeMediaMuteState = () => ({
   type: CHANGE_MUTE_STATE,
 });
+
+export const handleSetLyricForThisSong = (id) => async (dispatch) => {
+  let {
+    lrc: { lyric },
+  } = await SongApi.getSongLyric(id);
+
+  lyric = lyric.split("\n").map((item) => {
+    return splitLyric(item);
+  });
+
+  // 过滤空内容 & 前置时间处理
+  lyric = lyric.filter((item) => item.content);
+  lyric = balanceLyricTime(lyric);
+
+  dispatch({
+    type: SET_LYRIC_FOR_THIS_SONG,
+    data: lyric,
+  });
+};
