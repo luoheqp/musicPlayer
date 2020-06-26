@@ -9,4 +9,15 @@ export const PlayerContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  padding-top: 20px;
+`;
+
+export const EffectBox = styled.div`
+  flex: 0 0 300px;
+`;
+
+export const LyricBox = styled.div`
+  flex: 1;
+  margin-top: 20px;
 `;

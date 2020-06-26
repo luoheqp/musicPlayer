@@ -1,10 +1,19 @@
 import React from "react";
-import { PlayerContent } from "./style";
+import { PlayerContent, EffectBox, LyricBox } from "./style";
+
+// components
 import CanvasGuy from "./components/CanvasGuy";
+import LyricGuy from "./components/LyricGuy";
+
 const Player = (props) => {
   return (
     <PlayerContent>
-      <CanvasGuy />
+      <EffectBox>
+        <CanvasGuy />
+      </EffectBox>
+      <LyricBox>
+        <LyricGuy />
+      </LyricBox>
     </PlayerContent>
   );
 };

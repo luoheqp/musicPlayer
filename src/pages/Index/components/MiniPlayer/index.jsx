@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CYCLE_MODE_LIST } from "@/config/playerConfig";
 import {
@@ -6,9 +6,10 @@ import {
   handleSetMediaDuration,
   handleSetMediaSource,
   handleSetMediaCurrentTime,
+  handleChangePlayState,
   handleChangeMediaCycleMode,
   handleChangeMediaMuteState,
-} from "@r/player";
+} from "@r/player/action";
 import {
   MiniPlayerContent,
   PlayerStateControl,
@@ -21,6 +22,7 @@ import MusicProgress from "@/pages/Index/components/MusicProgress";
 
 const MiniPlayer = () => {
   const dispatch = useDispatch();
+
   const listData = useSelector(({ common }) => common.musicList);
   const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
   const changeCurrentTime = useSelector(
@@ -28,8 +30,7 @@ const MiniPlayer = () => {
   );
   const cycleMode = useSelector(({ player }) => player.cycleMode);
   const muteState = useSelector(({ player }) => player.muteState);
-
-  const [isPlaying, setIsPlaying] = useState(false);
+  const playState = useSelector(({ player }) => player.playState);
 
   const audioRef = useRef();
 
@@ -49,7 +50,7 @@ const MiniPlayer = () => {
         listPos = 0;
       }
 
-      setIsPlaying(true);
+      dispatch(handleChangePlayState(true));
       dispatch(handleSetMediaPlayNow(listData[listPos]));
     },
     [dispatch, listData, mediaPlayNow]
@@ -61,7 +62,7 @@ const MiniPlayer = () => {
 
     // 判断当前是否有歌曲选中
     if (!mediaPlayNow.name) {
-      setIsPlaying(true);
+      dispatch(handleChangePlayState(true));
       dispatch(handleSetMediaPlayNow(listData[0]));
       return;
     }
@@ -72,7 +73,7 @@ const MiniPlayer = () => {
       current.pause();
     }
 
-    setIsPlaying(!current.paused);
+    dispatch(handleChangePlayState(!current.paused));
   };
 
   // audio canplay event
@@ -120,8 +121,9 @@ const MiniPlayer = () => {
   return (
     <>
       <audio
-        src={`./music/${mediaPlayNow.fullName}`}
+        src={mediaPlayNow.url}
         ref={audioRef}
+        crossOrigin="anonymous"
         onCanPlay={handleAudioCanPlay}
         onTimeUpdate={handleRefreshProgress}
         onEnded={handleAudioEnded}
@@ -141,7 +143,7 @@ const MiniPlayer = () => {
             />
             <input
               type="button"
-              value={isPlaying ? "暂停" : "播放"}
+              value={playState ? "暂停" : "播放"}
               className="btn state"
               onClick={togglePlayerState}
             />

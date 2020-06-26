@@ -1,13 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleSetMediaPlayNow } from "@r/player";
+import { handleSetMediaPlayNow, handleChangePlayState } from "@r/player/action";
 import { List, ListItem } from "./style";
 
 const SongList = (props) => {
   // state
   const dispatch = useDispatch();
-  const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
+
   const listData = useSelector(({ common }) => common.musicList);
+  const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
 
   // data
 
@@ -24,6 +25,7 @@ const SongList = (props) => {
   const handlePlayThisSong = (id) => {
     let targetObj = handleGetSongPathById(id);
     handleRefreshMediaNowPlay(targetObj);
+    dispatch(handleChangePlayState(true));
   };
 
   return (
