@@ -19,6 +19,7 @@ export const EffectBox = styled.div`
 
 export const LyricBox = styled.div`
   flex: 1;
+  width: 100%;
   margin: 20px 0;
-  overflow-y: auto;
+  position: relative;
 `;

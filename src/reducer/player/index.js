@@ -21,7 +21,7 @@ const initState = {
   changeCurrentTime: 0, // 修改后的时间点
   cycleMode: 0, // 播放模式
   muteState: false, // 是否静音
-  lyricForThisSong: [{}], // 当前歌曲歌词
+  lyricForThisSong: [{}, {}], // 当前歌曲歌词
 };
 
 const reducer = (state = initState, action) => {
