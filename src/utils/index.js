@@ -13,7 +13,7 @@ export const formatTime = (timeStemp) => {
 
 // 歌词时间解析
 export const splitLyric = (lrc) => {
-  const timeReg = /\[([0-9]{2}:[0-9]{2}.[0-9]{3})\]/;
+  const timeReg = /\[([0-9]{2}:[0-9]{2}.[0-9]+?)\]/;
 
   let time = lrc.match(timeReg);
 

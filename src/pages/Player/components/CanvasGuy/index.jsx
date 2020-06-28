@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, memo } from "react";
 import rough from "roughjs/bundled/rough.esm";
 import { CanvasGuyContent } from "./style";
 import { useSelector } from "react-redux";
@@ -15,33 +15,39 @@ const CanvasGuy = (props) => {
   const outerBoxRef = useRef();
   const canvasRef = useRef();
 
-  const handleDraw = (ctx, current, dataArray) => {
-    for (let i = 0; i < LINE_CYCLE_COUNT; i++) {
-      ctx.save();
-      ctx.translate(current.offsetWidth / 2, current.offsetHeight / 2);
-      let deg = (2 * Math.PI) / 360;
-      ctx.rotate(deg * (360 / LINE_CYCLE_COUNT) * i);
-      let value = dataArray[6 * i];
-      value = value < 5 ? 5 : value;
-      roughCanvas.rectangle(-2, 100, 4, value / 5);
-      ctx.restore();
-    }
-  };
+  const handleDraw = useCallback(
+    (ctx, current, dataArray) => {
+      for (let i = 0; i < LINE_CYCLE_COUNT; i++) {
+        ctx.save();
+        ctx.translate(current.offsetWidth / 2, current.offsetHeight / 2);
+        let deg = (2 * Math.PI) / 360;
+        ctx.rotate(deg * (360 / LINE_CYCLE_COUNT) * i);
+        let value = dataArray[6 * i];
+        value = value < 5 ? 5 : value;
+        roughCanvas.rectangle(-2, 100, 4, value / 5);
+        ctx.restore();
+      }
+    },
+    [roughCanvas]
+  );
 
-  const handleAudioAnimation = (ctx, analyser) => {
-    const { current } = canvasRef;
-    
-    const render = () => {
-      requestAnimationFrame(render);
-      ctx.clearRect(0, 0, current.width, current.height);
-      let dataArray = new Uint8Array(analyser.frequencyBinCount);
-      analyser.getByteFrequencyData(dataArray);
+  const handleAudioAnimation = useCallback(
+    (ctx, analyser) => {
+      const { current } = canvasRef;
 
-      handleDraw(ctx, current, dataArray);
-    };
+      const render = () => {
+        requestAnimationFrame(render);
+        ctx.clearRect(0, 0, current.width, current.height);
+        let dataArray = new Uint8Array(analyser.frequencyBinCount);
+        analyser.getByteFrequencyData(dataArray);
 
-    render();
-  };
+        handleDraw(ctx, current, dataArray);
+      };
+
+      render();
+    },
+    [handleDraw]
+  );
 
   const handleInitAudioContext = useCallback(
     (audioCtx) => {
@@ -59,7 +65,7 @@ const CanvasGuy = (props) => {
 
       handleAudioAnimation(ctx, analyser);
     },
-    [source]
+    [handleAudioAnimation, source]
   );
 
   const handleWindowResize = () => {
@@ -97,4 +103,4 @@ const CanvasGuy = (props) => {
   );
 };
 
-export default CanvasGuy;
+export default memo(CanvasGuy);
