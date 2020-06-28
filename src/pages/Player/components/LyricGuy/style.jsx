@@ -5,6 +5,22 @@ export const LyricGuyContent = styled.div`
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
+
+  .mask {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: linear-gradient(
+      to bottom,
+      #fff 0%,
+      transparent 30%,
+      transparent 70%,
+      #fff 100%
+    );
+    z-index: 1;
+  }
 `;
 
 export const LyricBox = styled.div`
@@ -13,8 +29,15 @@ export const LyricBox = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  transition: transform 1s linear;
+  transition: transform 0.2s linear;
   transform: ${({ pos }) => `translateY(${pos}px)`};
+  background-image: linear-gradient(
+    to bottom,
+    #fff,
+    transparent 30%,
+    transparent 70%,
+    #fff 100%
+  );
 `;
 
 export const LyricItem = styled.p`
@@ -31,6 +54,8 @@ export const LyricItem = styled.p`
   background-size: 300%;
   background-position: 100%;
   transition: background-position 0.1s linear;
+  padding: 0 10px;
+  box-sizing: border-box;
 
   &:not(:last-child) {
     margin-bottom: 20px;

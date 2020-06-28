@@ -19,12 +19,13 @@ const LyricGuy = ({ songId }) => {
 
   // 歌词节点变更
   useEffect(() => {
+    // 不存在歌词
     if (!lyricForThisSong.length) {
       return;
     }
 
+    // 歌曲有变 进行重置
     if (songId !== savedSongId) {
-      console.log('object')
       setLyricMovePos(lyricRef.current.offsetHeight / 2);
       setActiveIndex(0);
       return;
@@ -35,6 +36,7 @@ const LyricGuy = ({ songId }) => {
       return;
     }
 
+    // 进行歌词移动
     if (currentTime > lyricForThisSong[activeIndex + 1].time) {
       const {
         current: { offsetHeight },
@@ -59,18 +61,22 @@ const LyricGuy = ({ songId }) => {
     }
   }, [dispatch, songId]);
 
+  // 初始化位置
+  useEffect(() => {
+    setLyricMovePos(lyricRef.current.offsetHeight / 2);
+  }, [lyricRef]);
+
   return (
     <LyricGuyContent ref={lyricRef}>
+      <div className="mask"></div>
       <LyricBox pos={lyricMovePos}>
         {lyricForThisSong.map(({ content }, index) =>
           activeIndex === index ? (
             <LyricItem key={index} className="active" ref={activeLyricRef}>
-              {activeIndex} === {index} {content}
+              {content}
             </LyricItem>
           ) : (
-            <LyricItem key={index}>
-              {activeIndex} === {index} {content}
-            </LyricItem>
+            <LyricItem key={index}>{content}</LyricItem>
           )
         )}
       </LyricBox>
