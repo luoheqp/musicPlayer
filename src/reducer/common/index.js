@@ -1,4 +1,4 @@
-import fakeData from "@/config/fakeData.js";
+import { Song as SongApi } from "@/server/apis";
 
 const initState = {
   musicList: [],
@@ -10,17 +10,25 @@ const SET_MUSIC_LIST = "SET_MUSIC_LIST";
 // >>>>>> action
 
 // 设置播放歌曲列表
-export const handleSetMusicList = () => {
-  let data = fakeData;
+export const handleSetMusicList = (id = 0) => async (dispatch) => {
+  let {
+    playlist: { trackIds },
+  } = await SongApi.getSongList(440434590);
+  let getTrackIds = trackIds.slice(0, 20).map((item) => item.id);
 
-  data.forEach((element, index) => {
-    element.listPos = index;
-  });
+  let { songs } = await SongApi.getSongDetail(getTrackIds);
 
-  return {
+  let data = songs.map((item, index) => ({
+    name: item.name,
+    id: item.id,
+    listPos: index,
+    picUrl: item.al.picUrl
+  }));
+
+  dispatch({
     type: SET_MUSIC_LIST,
     data: data,
-  };
+  });
 };
 
 const reducer = (state = initState, action) => {

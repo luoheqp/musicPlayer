@@ -1,7 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { LyricGuyContent, LyricBox, LyricItem } from "./style";
 import { useDispatch, useSelector } from "react-redux";
-import { handleSetLyricForThisSong } from "@r/player/action";
+import {
+  handleSetLyricForThisSong,
+  handleSetMediaChangeCurrentTime,
+} from "@r/player/action";
 
 const LyricGuy = ({ songId }) => {
   const dispatch = useDispatch();
@@ -27,8 +30,8 @@ const LyricGuy = ({ songId }) => {
       return;
     }
 
-    if (changeCurrentTime && changeCurrentTime < currentTime) {
-      console.log(changeCurrentTime, currentTime)
+    if (changeCurrentTime && +changeCurrentTime < Math.floor(currentTime)) {
+      dispatch(handleSetMediaChangeCurrentTime(0));
       let mark = 0;
       let movePos = 0;
       let moveRecord = [];

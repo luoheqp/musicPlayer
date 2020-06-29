@@ -97,7 +97,7 @@ const CanvasGuy = (props) => {
   }, []);
 
   return (
-    <CanvasGuyContent ref={outerBoxRef}>
+    <CanvasGuyContent bg={mediaPlayNow.picUrl} ref={outerBoxRef}>
       <canvas ref={canvasRef}></canvas>
     </CanvasGuyContent>
   );

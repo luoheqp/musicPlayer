@@ -19,6 +19,7 @@ import {
 
 // components
 import MusicProgress from "@/pages/Index/components/MusicProgress";
+import { handleSetMediaChangeCurrentTime } from "../../../../reducer/player/action";
 
 const MiniPlayer = () => {
   const dispatch = useDispatch();
