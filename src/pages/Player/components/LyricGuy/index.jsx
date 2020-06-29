@@ -8,15 +8,10 @@ const LyricGuy = ({ songId }) => {
 
   const currentTime = useSelector(({ player }) => player.currentTime);
   const lyricForThisSong = useSelector(({ player }) => player.lyricForThisSong);
-  const changeCurrentTime = useSelector(
-    ({ player }) => player.changeCurrentTime
-  );
 
   // 歌词移动相关 config
   const [activeIndex, setActiveIndex] = useState(0);
   const [lyricMovePos, setLyricMovePos] = useState(0);
-
-  console.log(currentTime, activeIndex);
 
   const lyricRef = useRef();
   const activeLyricRef = useRef();

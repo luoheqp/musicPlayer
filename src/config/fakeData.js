@@ -23,14 +23,4 @@ module.exports = [
     fullName: "Adam Green - We're Not Supposed To Be Lovers.mp3",
   },
   { name: "ONE", id: 1357775530, fullName: "Aimer - ONE.mp3" },
-  {
-    name: "枕元にゴースト",
-    id: 36924842,
-    fullName: "Aiobahn Yunomi - 枕元にゴースト.mp3",
-  },
-  {
-    name: "銀河鉄道のペンギン",
-    id: 403012075,
-    fullName: "Aiobahn Yunomi nicamoq - 銀河鉄道のペンギン.mp3",
-  },
 ];
