@@ -19,7 +19,6 @@ import {
 
 // components
 import MusicProgress from "@/pages/Index/components/MusicProgress";
-import { handleSetMediaChangeCurrentTime } from "../../../../reducer/player/action";
 
 const MiniPlayer = () => {
   const dispatch = useDispatch();
@@ -112,7 +111,9 @@ const MiniPlayer = () => {
 
   // 同步 store 中的 currentTime 修改
   useEffect(() => {
-    audioRef.current.currentTime = changeCurrentTime;
+    if (changeCurrentTime) {
+      audioRef.current.currentTime = changeCurrentTime;
+    }
   }, [changeCurrentTime]);
 
   useEffect(() => {
@@ -136,22 +137,24 @@ const MiniPlayer = () => {
             onClick={handleChangePlayerCycleState}
           />
           <PlayerStateControl>
-            <input
+            {/* <input
               type="button"
               value="上一首"
               className="btn pre"
               onClick={() => handleChangeCurrentSong(-1)}
+            /> */}
+            <i
+              className="iconfont icon-shangyishou"
+              onClick={() => handleChangeCurrentSong(-1)}
             />
-            <input
-              type="button"
-              value={playState ? "暂停" : "播放"}
-              className="btn state"
+            <i
+              className={`iconfont ${
+                playState ? "icon-zanting_o" : "icon-bofang_o"
+              }`}
               onClick={togglePlayerState}
             />
-            <input
-              type="button"
-              value="下一首"
-              className="btn next"
+            <i
+              className="iconfont icon-xiayishou"
               onClick={() => handleChangeCurrentSong(1)}
             />
           </PlayerStateControl>

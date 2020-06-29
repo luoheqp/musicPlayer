@@ -37,6 +37,10 @@ export const PlayerStateControl = styled.div`
     background-color: unset;
     border: unset;
   }
+
+  .iconfont {
+    font-size: 30px;
+  }
 `;
 
 export const MusicProgressContent = styled.div`
