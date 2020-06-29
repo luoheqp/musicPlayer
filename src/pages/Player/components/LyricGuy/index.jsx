@@ -8,29 +8,21 @@ const LyricGuy = ({ songId }) => {
 
   const currentTime = useSelector(({ player }) => player.currentTime);
   const lyricForThisSong = useSelector(({ player }) => player.lyricForThisSong);
+  const changeCurrentTime = useSelector(
+    ({ player }) => player.changeCurrentTime
+  );
 
   // 歌词移动相关 config
-  const [savedSongId, setSavedSongId] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [lyricMovePos, setLyricMovePos] = useState(0);
+
+  console.log(currentTime, activeIndex);
 
   const lyricRef = useRef();
   const activeLyricRef = useRef();
 
   // 歌词节点变更
   useEffect(() => {
-    // 不存在歌词
-    if (!lyricForThisSong.length) {
-      return;
-    }
-
-    // 歌曲有变 进行重置
-    if (songId !== savedSongId) {
-      setLyricMovePos(lyricRef.current.offsetHeight / 2);
-      setActiveIndex(0);
-      return;
-    }
-
     // 判断是否还有下一句歌词
     if (!lyricForThisSong[activeIndex + 1]) {
       return;
@@ -44,27 +36,20 @@ const LyricGuy = ({ songId }) => {
       setActiveIndex(activeIndex + 1);
       setLyricMovePos(lyricMovePos - offsetHeight - 20);
     }
-  }, [
-    activeIndex,
-    currentTime,
-    lyricForThisSong,
-    lyricMovePos,
-    savedSongId,
-    songId,
-  ]);
+  }, [activeIndex, currentTime, lyricForThisSong, lyricMovePos]);
 
   // 获取歌词信息
   useEffect(() => {
     if (songId) {
       dispatch(handleSetLyricForThisSong(songId));
-      setSavedSongId(songId);
     }
   }, [dispatch, songId]);
 
   // 初始化位置
   useEffect(() => {
     setLyricMovePos(lyricRef.current.offsetHeight / 2);
-  }, [lyricRef]);
+    setActiveIndex(0);
+  }, [lyricForThisSong]);
 
   return (
     <LyricGuyContent ref={lyricRef}>
