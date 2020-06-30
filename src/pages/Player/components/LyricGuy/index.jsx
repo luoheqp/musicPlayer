@@ -1,10 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { LyricGuyContent, LyricBox, LyricItem } from "./style";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  handleSetLyricForThisSong,
-  handleSetMediaChangeCurrentTime,
-} from "@r/player/action";
+import { handleSetLyricForThisSong } from "@r/player/action";
 
 const LyricGuy = ({ songId }) => {
   const dispatch = useDispatch();

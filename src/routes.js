@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 
 // page
 const Index = lazy(() => import("@/pages/Index"));
+const MainPage = lazy(() => import("@/pages/MainPage"));
 const Playground = lazy(() => import("@/pages/Playground"));
 
 const suspenseComponent = (Component) => (props) => (
@@ -24,6 +25,10 @@ const routes = [
   {
     path: "/playground",
     component: suspenseComponent(Playground),
+  },
+  {
+    path: "/mainPage",
+    component: suspenseComponent(MainPage),
   },
 ];
 

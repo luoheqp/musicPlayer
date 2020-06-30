@@ -5,7 +5,6 @@ const {
   override,
   addWebpackAlias,
   addPostcssPlugins,
-  addWebpackPlugin,
   fixBabelImports,
 } = require("customize-cra");
 const { overrideProcessEnv } = require("./src/utils/cli");

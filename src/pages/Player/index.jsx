@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { PlayerContent, EffectBox, LyricBox } from "./style";
 import { useSelector } from "react-redux";
 
@@ -9,9 +9,15 @@ import LyricGuy from "./components/LyricGuy";
 const Player = (props) => {
   const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
 
+  const [isEffectBoxShow, setIsEffectBoxShow] = useState(true);
+
+  const handleToggleEffectBox = () => {
+    setIsEffectBoxShow(!isEffectBoxShow);
+  };
+
   return (
-    <PlayerContent>
-      <EffectBox>
+    <PlayerContent onClick={handleToggleEffectBox}>
+      <EffectBox showState={isEffectBoxShow}>
         <CanvasGuy />
       </EffectBox>
       <LyricBox>
