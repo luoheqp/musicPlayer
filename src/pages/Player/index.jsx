@@ -16,12 +16,12 @@ const Player = (props) => {
   };
 
   return (
-    <PlayerContent onClick={handleToggleEffectBox}>
+    <PlayerContent>
       <EffectBox showState={isEffectBoxShow}>
         <CanvasGuy />
       </EffectBox>
       <LyricBox>
-        <LyricGuy songId={mediaPlayNow.id} />
+        <LyricGuy songId={mediaPlayNow.id} clickLyric={handleToggleEffectBox} />
       </LyricBox>
     </PlayerContent>
   );

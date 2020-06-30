@@ -2,8 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import { LyricGuyContent, LyricBox, LyricItem } from "./style";
 import { useDispatch, useSelector } from "react-redux";
 import { handleSetLyricForThisSong } from "@r/player/action";
+import { useCallback } from "react";
 
-const LyricGuy = ({ songId }) => {
+const LyricGuy = ({ songId, clickLyric }) => {
   const dispatch = useDispatch();
 
   const currentTime = useSelector(({ player }) => player.currentTime);
@@ -17,6 +18,10 @@ const LyricGuy = ({ songId }) => {
 
   const lyricRef = useRef();
   const activeLyricRef = useRef();
+
+  const handleClickContent = () => {
+    clickLyric && clickLyric();
+  };
 
   // 进行歌词移动
   useEffect(() => {
@@ -61,7 +66,7 @@ const LyricGuy = ({ songId }) => {
     let movePos = lyricMovePosRecord.reduce((pre, cur) => pre + cur, 0);
     setLyricMovePos(lyricRef.current.offsetHeight / 2 - movePos);
     setActiveIndex(lyricMovePosRecord.length);
-  }, [lyricMovePosRecord]);
+  }, [lyricMovePosRecord, lyricRef.current && lyricRef.current.offsetHeight]);
 
   // 获取歌词信息
   useEffect(() => {
@@ -76,7 +81,7 @@ const LyricGuy = ({ songId }) => {
   }, [lyricForThisSong]);
 
   return (
-    <LyricGuyContent ref={lyricRef}>
+    <LyricGuyContent ref={lyricRef} onClick={handleClickContent}>
       <div className="mask"></div>
       <LyricBox pos={lyricMovePos}>
         {lyricForThisSong.map(({ content }, index) =>
