@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback, memo } from "react";
 import rough from "roughjs/bundled/rough.esm";
-import { CanvasGuyContent } from "./style";
+import { CanvasGuyContent, CoverContent } from "./style";
 import { useSelector } from "react-redux";
+import anime from "animejs";
 
 const CanvasGuy = (props) => {
   const LINE_CYCLE_COUNT = 60;
@@ -14,6 +15,17 @@ const CanvasGuy = (props) => {
 
   const outerBoxRef = useRef();
   const canvasRef = useRef();
+  const coverRef = useRef();
+
+  const coverAnime = () => {
+    console.log('object')
+
+    anime({
+      targets: '.cover',
+      scale: 1.2,
+      duration: 100,
+    });
+  };
 
   const handleDraw = useCallback(
     (ctx, current, dataArray) => {
@@ -24,7 +36,9 @@ const CanvasGuy = (props) => {
         ctx.rotate(deg * (360 / LINE_CYCLE_COUNT) * i);
         let value = dataArray[6 * i];
         value = value < 5 ? 5 : value;
-        roughCanvas.rectangle(-2, 100, 4, value / 5);
+        // roughCanvas.rectangle(-2, 100, 4, value / 5);
+        ctx.fillRect(-2, 100, 4, value / 5);
+        value > 250 && coverAnime();
         ctx.restore();
       }
     },
@@ -99,6 +113,9 @@ const CanvasGuy = (props) => {
   return (
     <CanvasGuyContent bg={mediaPlayNow.picUrl} ref={outerBoxRef}>
       <canvas ref={canvasRef}></canvas>
+      <CoverContent bg={mediaPlayNow.picUrl}>
+        <div className="cover" ref={coverRef}></div>
+      </CoverContent>
     </CanvasGuyContent>
   );
 };
