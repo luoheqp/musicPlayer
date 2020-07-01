@@ -20,11 +20,11 @@ const CanvasGuy = (props) => {
   const coverAnime = () => {
     console.log('object')
 
-    anime({
-      targets: '.cover',
-      scale: 1.2,
-      duration: 100,
-    });
+    // anime({
+    //   targets: '.cover',
+    //   scale: 1.2,
+    //   duration: 100,
+    // });
   };
 
   const handleDraw = useCallback(
