@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { LyricGuyContent, LyricBox, LyricItem } from "./style";
 import { useDispatch, useSelector } from "react-redux";
 import { handleSetLyricForThisSong } from "@r/player/action";
-import { useCallback } from "react";
 
 const LyricGuy = ({ songId, clickLyric }) => {
   const dispatch = useDispatch();
@@ -59,13 +58,14 @@ const LyricGuy = ({ songId, clickLyric }) => {
         setLyricMovePosRecord([...lyricMovePosRecord, offsetHeight + 20]);
       }
     }
-  }, [activeIndex, currentTime, lyricForThisSong]);
+  }, [activeIndex, currentTime, lyricForThisSong, lyricMovePosRecord, savedCurrentTime]);
 
   // 歌词移动逻辑
   useEffect(() => {
     let movePos = lyricMovePosRecord.reduce((pre, cur) => pre + cur, 0);
     setLyricMovePos(lyricRef.current.offsetHeight / 2 - movePos);
     setActiveIndex(lyricMovePosRecord.length);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lyricMovePosRecord, lyricRef.current && lyricRef.current.offsetHeight]);
 
   // 获取歌词信息
