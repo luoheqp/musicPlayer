@@ -17,8 +17,8 @@ export const CanvasGuyContent = styled.div`
 `;
 
 export const CoverContent = styled.div`
-  width: 180px;
-  height: 180px;
+  width: 160px;
+  height: 160px;
   position: absolute;
   top: 50%;
   left: 50%;

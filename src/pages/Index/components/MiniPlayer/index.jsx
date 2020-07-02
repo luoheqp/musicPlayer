@@ -137,12 +137,6 @@ const MiniPlayer = () => {
             onClick={handleChangePlayerCycleState}
           />
           <PlayerStateControl>
-            {/* <input
-              type="button"
-              value="上一首"
-              className="btn pre"
-              onClick={() => handleChangeCurrentSong(-1)}
-            /> */}
             <i
               className="iconfont icon-shangyishou"
               onClick={() => handleChangeCurrentSong(-1)}

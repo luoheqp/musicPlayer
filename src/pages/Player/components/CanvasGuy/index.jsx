@@ -3,6 +3,7 @@ import rough from "roughjs/bundled/rough.esm";
 import { CanvasGuyContent, CoverContent } from "./style";
 import { useSelector } from "react-redux";
 import anime from "animejs";
+import { throttle } from "@/utils";
 
 const CanvasGuy = (props) => {
   const LINE_CYCLE_COUNT = 60;
@@ -10,6 +11,7 @@ const CanvasGuy = (props) => {
   const source = useSelector(({ player }) => player.source);
   const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
 
+  const [animeInstance, setAnimeInstance] = useState();
   const [audioContext, setAudioContext] = useState();
   const [roughCanvas, setRoughCanvas] = useState();
 
@@ -17,15 +19,7 @@ const CanvasGuy = (props) => {
   const canvasRef = useRef();
   const coverRef = useRef();
 
-  const coverAnime = () => {
-    console.log('object')
-
-    // anime({
-    //   targets: '.cover',
-    //   scale: 1.2,
-    //   duration: 100,
-    // });
-  };
+  const coverAnime = throttle(() => animeInstance.restart(), 300);
 
   const handleDraw = useCallback(
     (ctx, current, dataArray) => {
@@ -38,7 +32,7 @@ const CanvasGuy = (props) => {
         value = value < 5 ? 5 : value;
         // roughCanvas.rectangle(-2, 100, 4, value / 5);
         ctx.fillRect(-2, 100, 4, value / 5);
-        value > 250 && coverAnime();
+        value > 230 && coverAnime();
         ctx.restore();
       }
     },
@@ -93,6 +87,24 @@ const CanvasGuy = (props) => {
     const roughCanvas = rough.canvas(current);
     setRoughCanvas(roughCanvas);
   }, [canvasRef, rough]);
+
+  useEffect(() => {
+    let animeTimeLink = anime
+      .timeline({
+        targets: ".cover",
+        loop: false,
+      })
+      .add({
+        scale: 1.1,
+        duration: 500,
+      })
+      .add({
+        scale: 1,
+        duration: 500,
+      });
+
+    setAnimeInstance(animeTimeLink);
+  }, []);
 
   // 初始化音频处理
   useEffect(() => {
