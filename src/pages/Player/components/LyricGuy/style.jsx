@@ -23,14 +23,17 @@ export const LyricGuyContent = styled.div`
   }
 `;
 
-export const LyricBox = styled.div`
+export const LyricBox = styled.div.attrs(({ pos }) => ({
+  style: {
+    transform: `translateY(${pos}px)`,
+  },
+}))`
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  transition: transform 0.2s linear;
-  transform: ${({ pos }) => `translateY(${pos}px)`};
+  /* transition: transform 0.2s linear; */
   background-image: linear-gradient(
     to bottom,
     #fff,

@@ -9,11 +9,17 @@ const LyricGuy = ({ songId, clickLyric }) => {
   const currentTime = useSelector(({ player }) => player.currentTime);
   const lyricForThisSong = useSelector(({ player }) => player.lyricForThisSong);
 
-  // 歌词移动相关 config
+  // 歌词自然移动相关 config
   const [savedCurrentTime, setSavedCurrentTime] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
   const [lyricMovePos, setLyricMovePos] = useState(0);
   const [lyricMovePosRecord, setLyricMovePosRecord] = useState([]);
+
+  // 歌词 touch 移动相关 config
+  const [isTouch, setIsTouch] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchPos, setTouchPos] = useState(0);
+  const [touchOffset, setTouchOffset] = useState(0);
 
   const lyricRef = useRef();
   const activeLyricRef = useRef();
@@ -22,8 +28,58 @@ const LyricGuy = ({ songId, clickLyric }) => {
     clickLyric && clickLyric();
   };
 
+  const handleTouchStart = (e) => {
+    setIsTouch(true);
+    setTouchStart(e.touches[0].pageY);
+  };
+
+  const handleTouchMove = (e) => {
+    console.log("touch move");
+
+    let touchNow = e.touches[0].pageY; // 在页面上点击的位置
+    let offset = touchNow - touchStart; // 计算拖动偏移
+
+    setTouchOffset(offset);
+  };
+
+  const handleTouchEnd = (e) => {
+    setIsTouch(false);
+
+    // 保存拖动位置
+    setTouchPos(touchPos + touchOffset);
+    let offset = touchOffset;
+    setTouchOffset(0);
+
+    // 上拉趋势
+    // let topOffset = scroll.current.offsetTop;
+    // if (touchPos <= topOffset && offset < 0) {
+    //   setIsInList(true);
+    //   setTouchPos(-topOffset);
+    //   return;
+    // }
+
+    // // 下拉趋势
+    // if (touchPos <= topOffset && offset > 0) {
+    //   setIsInList(false);
+    //   setTouchPos(0);
+    //   return;
+    // }
+
+    // // 超出下拉上限
+    // if (touchPos + offset > 0) {
+    //   setIsInList(false);
+    //   setTouchPos(0);
+    //   return;
+    // }
+  };
+
   // 进行歌词移动
   useEffect(() => {
+    if (isTouch) {
+      return;
+    }
+    console.log("进行歌词移动");
+
     // 不存在歌词 & 歌词已到最后
     if (!lyricForThisSong.length || !lyricForThisSong[activeIndex + 1]) {
       return;
@@ -58,14 +114,27 @@ const LyricGuy = ({ songId, clickLyric }) => {
         setLyricMovePosRecord([...lyricMovePosRecord, offsetHeight + 20]);
       }
     }
-  }, [activeIndex, currentTime, lyricForThisSong, lyricMovePosRecord, savedCurrentTime]);
+  }, [
+    activeIndex,
+    currentTime,
+    lyricForThisSong,
+    lyricMovePosRecord,
+    savedCurrentTime,
+  ]);
 
   // 歌词移动逻辑
   useEffect(() => {
+    setActiveIndex(lyricMovePosRecord.length);
+
+    if (isTouch) {
+      return;
+    }
+
+    console.log("歌词移动逻辑");
+
     let movePos = lyricMovePosRecord.reduce((pre, cur) => pre + cur, 0);
     setLyricMovePos(lyricRef.current.offsetHeight / 2 - movePos);
-    setActiveIndex(lyricMovePosRecord.length);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lyricMovePosRecord, lyricRef.current && lyricRef.current.offsetHeight]);
 
   // 获取歌词信息
@@ -81,9 +150,15 @@ const LyricGuy = ({ songId, clickLyric }) => {
   }, [lyricForThisSong]);
 
   return (
-    <LyricGuyContent ref={lyricRef} onClick={handleClickContent}>
+    <LyricGuyContent
+      ref={lyricRef}
+      onClick={handleClickContent}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       <div className="mask"></div>
-      <LyricBox pos={lyricMovePos}>
+      <LyricBox pos={lyricMovePos + touchOffset}>
         {lyricForThisSong.map(({ content }, index) =>
           activeIndex === index ? (
             <LyricItem key={index} className="active" ref={activeLyricRef}>
