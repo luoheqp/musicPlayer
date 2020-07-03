@@ -1,25 +1,24 @@
 import React, { useState, useEffect, useRef, useCallback, memo } from "react";
 import rough from "roughjs/bundled/rough.esm";
-import { CanvasGuyContent, CoverContent } from "./style";
+import { CanvasGuyContent } from "./style";
 import { useSelector } from "react-redux";
 import anime from "animejs";
-import { throttle } from "@/utils";
+
+// components
+import PopCover from "./components/PopCover";
+
+const LINE_CYCLE_COUNT = 60;
 
 const CanvasGuy = (props) => {
-  const LINE_CYCLE_COUNT = 60;
-
   const source = useSelector(({ player }) => player.source);
   const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
 
-  const [animeInstance, setAnimeInstance] = useState();
   const [audioContext, setAudioContext] = useState();
   const [roughCanvas, setRoughCanvas] = useState();
+  const [coverPopRange, setCoverPopRange] = useState(0);
 
   const outerBoxRef = useRef();
   const canvasRef = useRef();
-  const coverRef = useRef();
-
-  const coverAnime = throttle(() => animeInstance.restart(), 300);
 
   const handleDraw = useCallback(
     (ctx, current, dataArray) => {
@@ -30,9 +29,8 @@ const CanvasGuy = (props) => {
         ctx.rotate(deg * (360 / LINE_CYCLE_COUNT) * i);
         let value = dataArray[6 * i];
         value = value < 5 ? 5 : value;
-        // roughCanvas.rectangle(-2, 100, 4, value / 5);
-        ctx.fillRect(-2, 100, 4, value / 5);
-        value > 230 && coverAnime();
+        roughCanvas.rectangle(-2, 100, 4, value / 5);
+        value > 230 && setCoverPopRange(value - 230);
         ctx.restore();
       }
     },
@@ -61,7 +59,6 @@ const CanvasGuy = (props) => {
     (audioCtx) => {
       // 创建 AnalyserNode 节点
       let analyser = audioCtx.createAnalyser();
-      // analyser.fftSize = 256;
 
       // 链接节点
       let audioSource = audioCtx.createMediaElementSource(source);
@@ -88,24 +85,6 @@ const CanvasGuy = (props) => {
     setRoughCanvas(roughCanvas);
   }, [canvasRef, rough]);
 
-  useEffect(() => {
-    let animeTimeLink = anime
-      .timeline({
-        targets: ".cover",
-        loop: false,
-      })
-      .add({
-        scale: 1.1,
-        duration: 500,
-      })
-      .add({
-        scale: 1,
-        duration: 500,
-      });
-
-    setAnimeInstance(animeTimeLink);
-  }, []);
-
   // 初始化音频处理
   useEffect(() => {
     if (mediaPlayNow.name && source && !audioContext) {
@@ -123,11 +102,9 @@ const CanvasGuy = (props) => {
   }, []);
 
   return (
-    <CanvasGuyContent bg={mediaPlayNow.picUrl} ref={outerBoxRef}>
+    <CanvasGuyContent ref={outerBoxRef}>
       <canvas ref={canvasRef}></canvas>
-      <CoverContent bg={mediaPlayNow.picUrl}>
-        <div className="cover" ref={coverRef}></div>
-      </CoverContent>
+      <PopCover bg={mediaPlayNow.picUrl} range={coverPopRange} />
     </CanvasGuyContent>
   );
 };

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { LyricGuyContent, LyricBox, LyricItem } from "./style";
 import { useDispatch, useSelector } from "react-redux";
 import { handleSetLyricForThisSong } from "@r/player/action";
+// import { throttle } from "@/utils";
 
 const LyricGuy = ({ songId, clickLyric }) => {
   const dispatch = useDispatch();
@@ -34,8 +35,6 @@ const LyricGuy = ({ songId, clickLyric }) => {
   };
 
   const handleTouchMove = (e) => {
-    console.log("touch move");
-
     let touchNow = e.touches[0].pageY; // 在页面上点击的位置
     let offset = touchNow - touchStart; // 计算拖动偏移
 
@@ -43,43 +42,13 @@ const LyricGuy = ({ songId, clickLyric }) => {
   };
 
   const handleTouchEnd = (e) => {
+    // 重置状态
     setIsTouch(false);
-
-    // 保存拖动位置
-    setTouchPos(touchPos + touchOffset);
-    let offset = touchOffset;
     setTouchOffset(0);
-
-    // 上拉趋势
-    // let topOffset = scroll.current.offsetTop;
-    // if (touchPos <= topOffset && offset < 0) {
-    //   setIsInList(true);
-    //   setTouchPos(-topOffset);
-    //   return;
-    // }
-
-    // // 下拉趋势
-    // if (touchPos <= topOffset && offset > 0) {
-    //   setIsInList(false);
-    //   setTouchPos(0);
-    //   return;
-    // }
-
-    // // 超出下拉上限
-    // if (touchPos + offset > 0) {
-    //   setIsInList(false);
-    //   setTouchPos(0);
-    //   return;
-    // }
   };
 
   // 进行歌词移动
   useEffect(() => {
-    if (isTouch) {
-      return;
-    }
-    console.log("进行歌词移动");
-
     // 不存在歌词 & 歌词已到最后
     if (!lyricForThisSong.length || !lyricForThisSong[activeIndex + 1]) {
       return;
@@ -126,11 +95,7 @@ const LyricGuy = ({ songId, clickLyric }) => {
   useEffect(() => {
     setActiveIndex(lyricMovePosRecord.length);
 
-    if (isTouch) {
-      return;
-    }
-
-    console.log("歌词移动逻辑");
+    if (isTouch) return;
 
     let movePos = lyricMovePosRecord.reduce((pre, cur) => pre + cur, 0);
     setLyricMovePos(lyricRef.current.offsetHeight / 2 - movePos);
