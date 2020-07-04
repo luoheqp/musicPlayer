@@ -22,6 +22,8 @@ const CanvasGuy = (props) => {
 
   const handleDraw = useCallback(
     (ctx, current, dataArray) => {
+      let voiceArr = [];
+
       for (let i = 0; i < LINE_CYCLE_COUNT; i++) {
         ctx.save();
         ctx.translate(current.offsetWidth / 2, current.offsetHeight / 2);
@@ -29,10 +31,12 @@ const CanvasGuy = (props) => {
         ctx.rotate(deg * (360 / LINE_CYCLE_COUNT) * i);
         let value = dataArray[6 * i];
         value = value < 5 ? 5 : value;
+        value > 230 && voiceArr.push(value);
         roughCanvas.rectangle(-2, 100, 4, value / 5);
-        value > 230 && setCoverPopRange(value - 230);
         ctx.restore();
       }
+
+      setCoverPopRange(Math.max.apply(null, voiceArr) || 0);
     },
     [roughCanvas]
   );

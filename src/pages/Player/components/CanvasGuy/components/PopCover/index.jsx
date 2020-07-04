@@ -3,7 +3,7 @@ import { PopCoverContent } from "./style";
 import anime from "animejs";
 import { throttle } from "@/utils";
 
-const RANGE_BASE = 50;
+const RANGE_BASE = 10;
 
 const PopCover = ({ bg, range }) => {
   const coverRef = useRef();
@@ -11,15 +11,18 @@ const PopCover = ({ bg, range }) => {
   const coverAnime = () => {
     let calcRange = range > RANGE_BASE ? RANGE_BASE : range;
 
+    console.log((0.2 * calcRange) / RANGE_BASE);
+
+    anime.remove(".cover");
+
     anime({
-      target: ".cover",
+      targets: ".cover",
       scale: 1 + (0.2 * calcRange) / RANGE_BASE,
-      direction: "alternate",
     });
   };
 
   useEffect(() => {
-    throttle(coverAnime());
+    coverAnime();
   }, [range]);
 
   return (
