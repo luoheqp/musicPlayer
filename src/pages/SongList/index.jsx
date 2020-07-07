@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleSetMediaPlayNow, handleChangePlayState } from "@r/player/action";
-import { List, ListItem } from "./style";
+import { SongListContent, CoverList, CoverItem, List, ListItem } from "./style";
+
+// components
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper.scss";
 
 const SongList = (props) => {
   // state
@@ -11,6 +15,7 @@ const SongList = (props) => {
   const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
 
   // data
+  const [swiperActive, setSwiperActive] = useState(0);
 
   // action
   const handleGetSongPathById = (id) => {
@@ -28,18 +33,45 @@ const SongList = (props) => {
     dispatch(handleChangePlayState(true));
   };
 
+  const handleOnSlideChange = (realIndex) => {
+    setSwiperActive(realIndex);
+  };
+
+  useEffect(() => {
+    listData[swiperActive] && handlePlayThisSong(listData[swiperActive].id);
+  }, [swiperActive]);
+
   return (
-    <List>
-      {listData.map((item) => (
-        <ListItem
-          className={`${mediaPlayNow.id === item.id ? "playing" : ""}`}
-          key={item.id}
-          onClick={() => handlePlayThisSong(item.id)}
+    <SongListContent>
+      <CoverList>
+        {/* <CoverItem /> */}
+
+        <Swiper
+          className="swiper-wrap"
+          slidesPerView="auto"
+          onSlideChange={({ realIndex }) => handleOnSlideChange(realIndex)}
         >
-          {item.name}
-        </ListItem>
-      ))}
-    </List>
+          {listData?.map((item) => (
+            <SwiperSlide key={item.id}>
+              <img src={item.picUrl} alt="" />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </CoverList>
+      <List>
+        <div className="list-wrap">
+          {listData.map((item) => (
+            <ListItem
+              className={`${mediaPlayNow.id === item.id ? "playing" : ""}`}
+              key={item.id}
+              onClick={() => handlePlayThisSong(item.id)}
+            >
+              {item.name}
+            </ListItem>
+          ))}
+        </div>
+      </List>
+    </SongListContent>
   );
 };
 

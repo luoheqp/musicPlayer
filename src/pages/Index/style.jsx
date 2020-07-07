@@ -57,16 +57,20 @@ const BasicContent = styled.div`
   overflow-y: auto;
 `;
 
-export const ListContent = styled(BasicContent)`
-  left: 0;
+export const HelloContent = styled(BasicContent)`
+  left: 0vw;
 `;
 
-export const PlayerContent = styled(BasicContent)`
+export const ListContent = styled(BasicContent)`
   left: 100vw;
 `;
 
-export const MineContent = styled(BasicContent)`
+export const PlayerContent = styled(BasicContent)`
   left: 200vw;
+`;
+
+export const MineContent = styled(BasicContent)`
+  left: 300vw;
 `;
 
 export const MiniPlayerContent = styled.div`

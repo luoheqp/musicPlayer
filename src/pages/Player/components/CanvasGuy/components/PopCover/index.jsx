@@ -1,32 +1,28 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import { PopCoverContent } from "./style";
 import anime from "animejs";
+import { useState } from "react";
 import { throttle } from "@/utils";
 
-const RANGE_BASE = 10;
+const RANGE_BASE = 100;
 
 const PopCover = ({ bg, range }) => {
   const coverRef = useRef();
 
-  const coverAnime = () => {
-    let calcRange = range > RANGE_BASE ? RANGE_BASE : range;
+  const [calcRange, setCalcRange] = useState(0);
 
-    console.log((0.2 * calcRange) / RANGE_BASE);
-
-    anime.remove(".cover");
-
-    anime({
-      targets: ".cover",
-      scale: 1 + (0.2 * calcRange) / RANGE_BASE,
-    });
-  };
-
-  useEffect(() => {
-    coverAnime();
+  const handleDoAnime = useCallback(() => {
+    let data = range - 150;
+    data = data > RANGE_BASE ? RANGE_BASE : data;
+    setCalcRange(1 + (0.4 * data) / RANGE_BASE);
   }, [range]);
 
+  useEffect(() => {
+    handleDoAnime();
+  }, [handleDoAnime, range]);
+
   return (
-    <PopCoverContent bg={bg}>
+    <PopCoverContent bg={bg} range={calcRange}>
       <div className="cover" ref={coverRef}></div>
     </PopCoverContent>
   );

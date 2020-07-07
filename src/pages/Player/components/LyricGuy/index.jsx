@@ -19,7 +19,7 @@ const LyricGuy = ({ songId, clickLyric }) => {
   // 歌词 touch 移动相关 config
   const [isTouch, setIsTouch] = useState(false);
   const [touchStart, setTouchStart] = useState(0);
-  const [touchPos, setTouchPos] = useState(0);
+  // const [touchPos, setTouchPos] = useState(0);
   const [touchOffset, setTouchOffset] = useState(0);
 
   const lyricRef = useRef();
@@ -123,7 +123,7 @@ const LyricGuy = ({ songId, clickLyric }) => {
       onTouchEnd={handleTouchEnd}
     >
       <div className="mask"></div>
-      <LyricBox pos={lyricMovePos + touchOffset}>
+      <LyricBox pos={lyricMovePos + touchOffset} isTouching={isTouch}>
         {lyricForThisSong.map(({ content }, index) =>
           activeIndex === index ? (
             <LyricItem key={index} className="active" ref={activeLyricRef}>

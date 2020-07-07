@@ -1,8 +1,68 @@
 import styled from "styled-components";
 
-export const List = styled.ul``;
+export const SongListContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+`;
 
-export const ListItem = styled.li`
+export const CoverList = styled.div`
+  flex: 0 0 200px;
+  width: 100%;
+  padding-left: 10px;
+  box-sizing: border-box;
+
+  .swiper-container {
+    height: 200px;
+
+    .swiper-slide {
+      background-color: rgba();
+      width: 270px;
+      border-radius: 22px;
+      overflow: hidden;
+      transform: scale(0.9);
+      transform-origin: bottom;
+      transition: transform 0.1s linear;
+
+      &-active {
+        transform: scale(1);
+        border-radius: 20px;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+`;
+
+export const CoverItem = styled.div``;
+
+export const List = styled.div`
+  flex: 1;
+  width: 100%;
+  position: relative;
+
+  .list-wrap {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+    padding: 10px 0;
+  }
+`;
+
+export const ListItem = styled.div`
   height: 42px;
   box-sizing: border-box;
   color: #333;
@@ -24,6 +84,7 @@ export const ListItem = styled.li`
     border-bottom: 10px solid #333;
     border-right: 10px solid #333;
     box-sizing: border-box;
+    margin: 0 10px;
     clip-path: polygon(
       0 0,
       calc(100% - 10px) 0,

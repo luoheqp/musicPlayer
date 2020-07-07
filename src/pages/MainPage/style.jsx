@@ -1,22 +1,24 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
-const bigTitleAnimation = keyframes`
-  to {
-    background-position: left top;
+export const MainPageContent = styled.div`
+  height: 100vh;
+  padding: 10px;
+  box-sizing: border-box;
+
+  .list-item-wrap {
+    &:not(:last-child) {
+      margin-bottom: 10px
+    }
   }
 `;
 
-export const MainPageContent = styled.div`
-  padding: 10px;
-`;
-
-export const BigTitle = styled.h3`
-  font-size: 80px;
-  background-size: 600%;
-  background-position: right top;
-  background-clip: text;
-  -webkit-background-clip: text;
-  background-image: linear-gradient(-45deg, #ffa63d, #ff3d77, #338aff, #3cf0c5);
-  color: transparent;
-  animation: ${bigTitleAnimation} 5s linear alternate infinite;
+export const ListItem = styled.div`
+  font-size: 26px;
+  background-color: rgb(255, 211, 39);
+  padding: 20px 10px;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: bold;
+  letter-spacing: 2px;
+  word-spacing: 5px;
 `;

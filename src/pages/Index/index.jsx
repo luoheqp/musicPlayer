@@ -6,6 +6,7 @@ import {
   IndexContent,
   Header,
   SlideContent,
+  HelloContent,
   ListContent,
   PlayerContent,
   MineContent,
@@ -17,7 +18,7 @@ import MiniPlayer from "./components/MiniPlayer";
 import SongList from "@/pages/SongList";
 import Player from "@/pages/Player";
 
-const HEADER_ITEM_LIST = ["Hello.", "Player.", "Mine."];
+const HEADER_ITEM_LIST = ["Hello.", "List.", "Player.", "Mine."];
 
 const Index = (props) => {
   // store
@@ -51,11 +52,15 @@ const Index = (props) => {
         ))}
       </Header>
 
-      {/* TODO: timeout 有何用 ??? */}
       <Transition timeout={0}>
         {(state) => {
           return (
             <SlideContent state={state} active={activeHeader}>
+              {/* hello */}
+              <HelloContent>
+                <div>hello page</div>
+              </HelloContent>
+
               {/* list */}
               <ListContent>
                 <SongList />

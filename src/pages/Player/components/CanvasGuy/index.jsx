@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback, memo } from "react";
 import rough from "roughjs/bundled/rough.esm";
 import { CanvasGuyContent } from "./style";
 import { useSelector } from "react-redux";
-import anime from "animejs";
 
 // components
 import PopCover from "./components/PopCover";
@@ -31,12 +30,12 @@ const CanvasGuy = (props) => {
         ctx.rotate(deg * (360 / LINE_CYCLE_COUNT) * i);
         let value = dataArray[6 * i];
         value = value < 5 ? 5 : value;
-        value > 230 && voiceArr.push(value);
+        value > 200 && voiceArr.push(value);
         roughCanvas.rectangle(-2, 100, 4, value / 5);
         ctx.restore();
       }
 
-      setCoverPopRange(Math.max.apply(null, voiceArr) || 0);
+      setCoverPopRange(voiceArr.length ? Math.max.apply(null, voiceArr) : 210);
     },
     [roughCanvas]
   );
@@ -44,6 +43,8 @@ const CanvasGuy = (props) => {
   const handleAudioAnimation = useCallback(
     (ctx, analyser) => {
       const { current } = canvasRef;
+
+      console.log('object')
 
       const render = () => {
         requestAnimationFrame(render);

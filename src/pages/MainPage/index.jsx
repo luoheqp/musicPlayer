@@ -1,10 +1,36 @@
 import React from "react";
-import { MainPageContent, BigTitle } from "./style";
+import { useHistory } from "react-router-dom";
+import { MainPageContent, ListItem } from "./style";
 
-const MainPage = (props) => {
+const LIST_ITEM = [
+  {
+    name: "MUSIC LIST",
+    target: "musicList",
+  },
+  {
+    name: "MUSIC PLAYER",
+    target: "musicPlayer",
+  },
+];
+
+const MainPage = () => {
+  const history = useHistory();
+
+  const handlePageJump = (target) => {
+    history.push(`/${target}`);
+  };
+
   return (
     <MainPageContent>
-      <BigTitle>MUSIC!</BigTitle>
+      {LIST_ITEM.map(({ name, target }) => (
+        <div
+          className="list-item-wrap"
+          key={target}
+          onClick={() => handlePageJump(target)}
+        >
+          <ListItem>{name}</ListItem>
+        </div>
+      ))}
     </MainPageContent>
   );
 };

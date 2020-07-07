@@ -23,9 +23,10 @@ export const LyricGuyContent = styled.div`
   }
 `;
 
-export const LyricBox = styled.div.attrs(({ pos }) => ({
+export const LyricBox = styled.div.attrs(({ pos, isTouching }) => ({
   style: {
     transform: `translateY(${pos}px)`,
+    transition: `${isTouching ? "unset" : "transform .1s linear"}`,
   },
 }))`
   position: absolute;
@@ -33,7 +34,6 @@ export const LyricBox = styled.div.attrs(({ pos }) => ({
   bottom: 0;
   left: 0;
   right: 0;
-  /* transition: transform 0.2s linear; */
   background-image: linear-gradient(
     to bottom,
     #fff,

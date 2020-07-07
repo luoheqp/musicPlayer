@@ -9,13 +9,16 @@ const DiskRotate = keyframes`
   }
 `;
 
-export const PopCoverContent = styled.div`
-  width: 160px;
-  height: 160px;
+export const PopCoverContent = styled.div.attrs(({ range }) => ({
+  style: {
+    zoom: range,
+  },
+}))`
+  width: 120px;
+  height: 120px;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   animation: ${DiskRotate} 30s linear infinite;
 
   .cover {
