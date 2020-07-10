@@ -1,11 +1,13 @@
-import { Song as SongApi } from "@/server/apis";
+import { SongList as SongListApi, Song as SongApi } from "@/server/apis";
 
 const initState = {
   musicList: [],
+  songCatList: [],
 };
 
 // >>>>>> constant
 const SET_MUSIC_LIST = "SET_MUSIC_LIST";
+const SET_SONG_CAT_LIST = "SET_SONG_CAT_LIST";
 
 // >>>>>> action
 
@@ -13,7 +15,7 @@ const SET_MUSIC_LIST = "SET_MUSIC_LIST";
 export const handleSetMusicList = (id = 0) => async (dispatch) => {
   let {
     playlist: { trackIds },
-  } = await SongApi.getSongList(440434590);
+  } = await SongListApi.getSongList(440434590);
   let getTrackIds = trackIds.slice(0, 20).map((item) => item.id);
 
   let { songs } = await SongApi.getSongDetail(getTrackIds);
@@ -22,7 +24,7 @@ export const handleSetMusicList = (id = 0) => async (dispatch) => {
     name: item.name,
     id: item.id,
     listPos: index,
-    picUrl: item.al.picUrl
+    picUrl: item.al.picUrl,
   }));
 
   dispatch({
@@ -31,10 +33,22 @@ export const handleSetMusicList = (id = 0) => async (dispatch) => {
   });
 };
 
+// 设置播放歌曲列表
+export const handleGetSongCatList = () => async (dispatch) => {
+  let { sub = [] } = await SongListApi.getSongCatList();
+
+  dispatch({
+    type: SET_SONG_CAT_LIST,
+    data: sub,
+  });
+};
+
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case SET_MUSIC_LIST:
       return { ...state, musicList: action.data };
+    case SET_SONG_CAT_LIST:
+      return { ...state, songCatList: action.data };
     default:
       return state;
   }

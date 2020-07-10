@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleSetMediaPlayNow, handleChangePlayState } from "@r/player/action";
-import { SongListContent, CoverList, CoverItem, List, ListItem } from "./style";
+import { SongListContent, CoverList, List, ListItem } from "./style";
 
 // components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -15,6 +15,7 @@ const SongList = (props) => {
   const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
 
   // data
+  const [swiperInstance, setSwiperInstance] = useState(null);
   const [swiperActive, setSwiperActive] = useState(0);
 
   // action
@@ -29,6 +30,7 @@ const SongList = (props) => {
   // methods
   const handlePlayThisSong = (id) => {
     let targetObj = handleGetSongPathById(id);
+    swiperInstance.slideTo(targetObj.listPos, 300);
     handleRefreshMediaNowPlay(targetObj);
     dispatch(handleChangePlayState(true));
   };
@@ -38,18 +40,21 @@ const SongList = (props) => {
   };
 
   useEffect(() => {
+    console.log("effect");
     listData[swiperActive] && handlePlayThisSong(listData[swiperActive].id);
   }, [swiperActive]);
 
   return (
     <SongListContent>
       <CoverList>
-        {/* <CoverItem /> */}
-
         <Swiper
           className="swiper-wrap"
           slidesPerView="auto"
+          slideToClickedSlide={true}
           onSlideChange={({ realIndex }) => handleOnSlideChange(realIndex)}
+          onSwiper={(swiperInstance) => {
+            setSwiperInstance(swiperInstance);
+          }}
         >
           {listData?.map((item) => (
             <SwiperSlide key={item.id}>

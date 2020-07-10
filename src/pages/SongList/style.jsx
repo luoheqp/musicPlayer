@@ -16,6 +16,7 @@ export const CoverList = styled.div`
   flex: 0 0 200px;
   width: 100%;
   padding-left: 10px;
+  margin-bottom: 10px;
   box-sizing: border-box;
 
   .swiper-container {
@@ -44,8 +45,6 @@ export const CoverList = styled.div`
   }
 `;
 
-export const CoverItem = styled.div``;
-
 export const List = styled.div`
   flex: 1;
   width: 100%;
@@ -58,7 +57,7 @@ export const List = styled.div`
     left: 0;
     right: 0;
     overflow-y: auto;
-    padding: 10px 0;
+    padding-bottom: 10px;
   }
 `;
 

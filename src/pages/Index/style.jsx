@@ -63,6 +63,7 @@ export const HelloContent = styled(BasicContent)`
 
 export const ListContent = styled(BasicContent)`
   left: 100vw;
+  margin-bottom: 10px;
 `;
 
 export const PlayerContent = styled(BasicContent)`
@@ -74,9 +75,13 @@ export const MineContent = styled(BasicContent)`
 `;
 
 export const MiniPlayerContent = styled.div`
-  flex: 0 0 100px;
+  flex: ${({ state }) => (state === "entered" ? "0 0 0px" : "0 0 100px")};
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 10px 20px #333;
+  transform: ${({ state }) =>
+    state === "entered" ? "translateY(100%)" : "unset"};
+  background-color: #fff;
+  transition: transform 0.1s linear;
 `;

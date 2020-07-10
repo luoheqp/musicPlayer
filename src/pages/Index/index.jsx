@@ -15,6 +15,7 @@ import {
 
 // components
 import MiniPlayer from "./components/MiniPlayer";
+import Hello from "@/pages/Hello";
 import SongList from "@/pages/SongList";
 import Player from "@/pages/Player";
 
@@ -24,12 +25,12 @@ const Index = (props) => {
   // store
   const dispatch = useDispatch();
 
-  const [activeHeader, setActiveHeader] = useState(1);
+  const [activeHeader, setActiveHeader] = useState(0);
 
   const handleChangeActiveHeaderItem = ({ target }) => {
     const { sign } = target.dataset;
     if (sign) {
-      setActiveHeader(sign);
+      setActiveHeader(+sign);
     }
   };
 
@@ -58,7 +59,7 @@ const Index = (props) => {
             <SlideContent state={state} active={activeHeader}>
               {/* hello */}
               <HelloContent>
-                <div>hello page</div>
+                <Hello />
               </HelloContent>
 
               {/* list */}
@@ -79,9 +80,13 @@ const Index = (props) => {
       </Transition>
 
       {/* player */}
-      <MiniPlayerContent>
-        <MiniPlayer />
-      </MiniPlayerContent>
+      <Transition in={!activeHeader} timeout={0}>
+        {(value) => (
+          <MiniPlayerContent state={value}>
+            <MiniPlayer />
+          </MiniPlayerContent>
+        )}
+      </Transition>
     </IndexContent>
   );
 };
