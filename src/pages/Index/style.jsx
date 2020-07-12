@@ -76,6 +76,7 @@ export const MineContent = styled(BasicContent)`
 
 export const MiniPlayerContent = styled.div`
   flex: ${({ state }) => (state === "entered" ? "0 0 0px" : "0 0 100px")};
+  /* height: ${({ state }) => (state === "entered" ? "0" : "fit-content")}; */
   display: flex;
   align-items: center;
   justify-content: center;
