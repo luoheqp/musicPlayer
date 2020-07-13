@@ -3,11 +3,13 @@ import { SongList as SongListApi, Song as SongApi } from "@/server/apis";
 const initState = {
   musicList: [],
   songCatList: [],
+  songList: [],
 };
 
 // >>>>>> constant
 const SET_MUSIC_LIST = "SET_MUSIC_LIST";
 const SET_SONG_CAT_LIST = "SET_SONG_CAT_LIST";
+const SET_SONG_LIST = "SET_SONG_LIST";
 
 // >>>>>> action
 
@@ -33,7 +35,7 @@ export const handleSetMusicList = (id = 0) => async (dispatch) => {
   });
 };
 
-// 设置播放歌曲列表
+// 获取歌单分类列表
 export const handleGetSongCatList = () => async (dispatch) => {
   let { sub = [] } = await SongListApi.getSongCatList();
 
@@ -43,12 +45,24 @@ export const handleGetSongCatList = () => async (dispatch) => {
   });
 };
 
+// 根据分类获取歌单
+export const handleGetSongList = (cat = "全部") => async (dispatch) => {
+  let { playlists = [] } = await SongListApi.getSongListByCat(cat);
+
+  dispatch({
+    type: SET_SONG_LIST,
+    data: playlists,
+  });
+};
+
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case SET_MUSIC_LIST:
       return { ...state, musicList: action.data };
     case SET_SONG_CAT_LIST:
       return { ...state, songCatList: action.data };
+    case SET_SONG_LIST:
+      return { ...state, songList: action.data };
     default:
       return state;
   }

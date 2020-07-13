@@ -7,6 +7,9 @@ export const SongList = {};
 SongList.getSongCatList = () => request.get("/playlist/catlist");
 
 // 获取歌单
+SongList.getSongListByCat = (cat) => request.get(`/top/playlist?cat=${cat}`);
+
+// 获取歌单
 SongList.getSongList = (id) => request.get(`playlist/detail?id=${id}`);
 
 // 根据关键字查询歌曲

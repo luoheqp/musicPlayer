@@ -75,14 +75,15 @@ export const MineContent = styled(BasicContent)`
 `;
 
 export const MiniPlayerContent = styled.div`
-  flex: ${({ state }) => (state === "entered" ? "0 0 0px" : "0 0 100px")};
-  /* height: ${({ state }) => (state === "entered" ? "0" : "fit-content")}; */
+  flex: ${({ state }) => (state === "entered" ? "0 0 100px" : "0")};
+  height: ${({ state }) => (state === "exited" ? "0" : "fit-content")};
+  transform: ${({ state }) =>
+    state === "entered" ? "scaleY(1)" : "scaleY(0)"};
+  transform-origin: bottom;
+  transition: transform 0.1s linear;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 10px 20px #333;
-  transform: ${({ state }) =>
-    state === "entered" ? "translateY(100%)" : "unset"};
   background-color: #fff;
-  transition: transform 0.1s linear;
 `;
