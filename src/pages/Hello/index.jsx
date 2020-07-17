@@ -3,6 +3,9 @@ import { HelloContent } from "./style";
 import { useDispatch, useSelector } from "react-redux";
 import { handleGetSongCatList, handleGetSongList } from "@r/common";
 
+// components
+import SlidePop from "./components/SlidePop";
+
 const Hello = (props) => {
   const dispatch = useDispatch();
 
@@ -27,6 +30,8 @@ const Hello = (props) => {
           {name}
         </li>
       ))}
+
+      <SlidePop />
     </HelloContent>
   );
 };

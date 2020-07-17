@@ -14,5 +14,11 @@ export const HelloContent = styled.ul`
     list-style: none;
     width: 50%;
     height: 30px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+
+    &:active {
+      box-shadow: 0 0 10px #333;
+    }
   }
 `;
