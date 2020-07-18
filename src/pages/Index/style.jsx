@@ -51,7 +51,6 @@ const BasicContent = styled.div`
   top: 0;
   bottom: 0;
   width: 100vw;
-  padding: 0 10px;
   box-sizing: border-box;
   overflow: hidden;
   overflow-y: auto;
