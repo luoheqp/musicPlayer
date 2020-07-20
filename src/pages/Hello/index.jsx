@@ -40,7 +40,11 @@ const Hello = (props) => {
 
       <Transition in={isSelectCat} timeout={0}>
         {(value) => (
-          <SlidePop title={activeCat} close={() => setIsSelectCat(false)} />
+          value !== 'exited' && <SlidePop
+            title={activeCat}
+            state={value}
+            close={() => setIsSelectCat(false)}
+          />
         )}
       </Transition>
     </HelloContent>

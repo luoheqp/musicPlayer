@@ -1,9 +1,9 @@
 import React from "react";
-import { SlidePopContent } from "./style";
+import { SlidePopContent, SongCollectList } from "./style";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
-const SlidePop = ({ title, close }) => {
+const SlidePop = ({ title, state, close }) => {
   const songList = useSelector(({ common }) => common.songList);
 
   useEffect(() => {
@@ -11,16 +11,16 @@ const SlidePop = ({ title, close }) => {
   }, [songList]);
 
   return (
-    <SlidePopContent onClick={close}>
+    <SlidePopContent onClick={close} state={state}>
       <div className="main">
         <h3 className="title">{title}</h3>
-        <div className="list-content">
+        <SongCollectList>
           {songList?.map((item) => (
             <div className="item">
-              <img src={item.coverImgUrl} alt="" />
+              <img src={`${item.coverImgUrl}?param=200y200`} alt="" />
             </div>
           ))}
-        </div>
+        </SongCollectList>
       </div>
     </SlidePopContent>
   );
