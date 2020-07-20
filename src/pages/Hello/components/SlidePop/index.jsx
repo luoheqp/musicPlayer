@@ -18,6 +18,7 @@ const SlidePop = ({ title, state, close }) => {
           {songList?.map((item) => (
             <div className="item">
               <img src={`${item.coverImgUrl}?param=200y200`} alt="" />
+              <p className="name">{item.name}</p>
             </div>
           ))}
         </SongCollectList>

@@ -39,18 +39,35 @@ export const SlidePopContent = styled.div`
 export const SongCollectList = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  padding: 0 15px;
+  margin-right: -15px;
 
   .item {
-    width: 45%;
-    margin-bottom: 20px;
-    border-radius: 20px;
-    overflow: hidden;
+    width: 100px;
+    margin-bottom: 15px;
+    margin-right: 15px;
+
+    &:last-child {
+      margin-right: auto;
+    }
 
     img {
       width: 100%;
-      height: 100%;
       object-fit: contain;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .name {
+      line-height: 20px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      margin-top: 5px;
+      font-size: 12px;
     }
   }
 `;
