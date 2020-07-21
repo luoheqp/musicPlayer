@@ -47,17 +47,15 @@ const Hello = ({ changeTab }) => {
         ))}
       </ul>
 
-      <Transition in={isSelectCat} timeout={0}>
-        {(value) =>
-          value !== "exited" && (
-            <SlidePop
-              title={activeCat}
-              state={value}
-              close={() => setIsSelectCat(false)}
-              clickTrigger={handleUpdateSongList}
-            />
-          )
-        }
+      <Transition in={isSelectCat} timeout={300}>
+        {(value) => (
+          <SlidePop
+            title={activeCat}
+            state={value}
+            close={() => setIsSelectCat(false)}
+            clickTrigger={handleUpdateSongList}
+          />
+        )}
       </Transition>
     </HelloContent>
   );

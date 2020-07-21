@@ -7,8 +7,10 @@ export const SlidePopContent = styled.div`
   bottom: 0;
   z-index: ${({ state }) => (state === "exited" ? -1 : 10)};
   background-color: ${({ state }) =>
-    state === "exited" ? "rgba(0, 0, 0, 0)" : "rgba(0, 0, 0, 0.3)"};
-  transition: background-color 0.1s linear;
+    state === "exited" || state === "exiting"
+      ? "rgba(0, 0, 0, 0)"
+      : "rgba(0, 0, 0, 0.3)"};
+  transition: background-color .3s linear;
 
   .main {
     width: 100%;
@@ -20,8 +22,10 @@ export const SlidePopContent = styled.div`
     background-color: #fff;
     overflow-y: auto;
     transform: ${({ state }) =>
-      state === "exited" ? "translateY(100%)" : "translateY(0%)"};
-    transition: transform 0.1s linear;
+      state === "exited" || state === "exiting"
+        ? "translateY(100%)"
+        : "translateY(0%)"};
+    transition: transform .3s linear;
 
     .title {
       font-size: 30px;
