@@ -27,11 +27,8 @@ const Index = (props) => {
 
   const [activeHeader, setActiveHeader] = useState(0);
 
-  const handleChangeActiveHeaderItem = ({ target }) => {
-    const { sign } = target.dataset;
-    if (sign) {
-      setActiveHeader(+sign);
-    }
+  const handleChangeActiveHeaderItem = (index) => {
+    setActiveHeader(index);
   };
 
   useEffect(() => {
@@ -41,11 +38,11 @@ const Index = (props) => {
   return (
     <IndexContent>
       {/* header */}
-      <Header onClick={handleChangeActiveHeaderItem}>
+      <Header>
         {HEADER_ITEM_LIST.map((item, index) => (
           <h3
+            onClick={() => handleChangeActiveHeaderItem(index)}
             className={`item ${+activeHeader === index ? "active" : ""}`}
-            data-sign={index}
             key={index}
           >
             {item}
@@ -59,7 +56,7 @@ const Index = (props) => {
             <SlideContent state={state} active={activeHeader}>
               {/* hello */}
               <HelloContent>
-                <Hello />
+                <Hello changeTab={handleChangeActiveHeaderItem} />
               </HelloContent>
 
               {/* list */}

@@ -15,9 +15,11 @@ const SET_SONG_LIST = "SET_SONG_LIST";
 
 // 设置播放歌曲列表
 export const handleSetMusicList = (id = 0) => async (dispatch) => {
+  console.log(id)
+
   let {
     playlist: { trackIds },
-  } = await SongListApi.getSongList(440434590);
+  } = await SongListApi.getSongList(id || 440434590);
   let getTrackIds = trackIds.slice(0, 20).map((item) => item.id);
 
   let { songs } = await SongApi.getSongDetail(getTrackIds);
@@ -28,6 +30,8 @@ export const handleSetMusicList = (id = 0) => async (dispatch) => {
     listPos: index,
     picUrl: item.al.picUrl,
   }));
+
+  console.log(songs)
 
   dispatch({
     type: SET_MUSIC_LIST,

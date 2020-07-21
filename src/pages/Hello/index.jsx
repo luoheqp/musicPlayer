@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { HelloContent } from "./style";
 import { useDispatch, useSelector } from "react-redux";
-import { handleGetSongCatList, handleGetSongList } from "@r/common";
+import {
+  handleSetMusicList,
+  handleGetSongCatList,
+  handleGetSongList,
+} from "@r/common";
 
 // components
 import SlidePop from "./components/SlidePop";
 import { Transition } from "react-transition-group";
 
-const Hello = (props) => {
+const Hello = ({ changeTab }) => {
   const dispatch = useDispatch();
   const songCatList = useSelector(({ common }) => common.songCatList);
 
@@ -18,6 +22,11 @@ const Hello = (props) => {
     setActiveCat(name);
     await dispatch(handleGetSongList(name));
     setIsSelectCat(true);
+  };
+
+  const handleUpdateSongList = async (id) => {
+    dispatch(handleSetMusicList(id));
+    changeTab(1);
   };
 
   useEffect(() => {
@@ -39,13 +48,16 @@ const Hello = (props) => {
       </ul>
 
       <Transition in={isSelectCat} timeout={0}>
-        {(value) => (
-          value !== 'exited' && <SlidePop
-            title={activeCat}
-            state={value}
-            close={() => setIsSelectCat(false)}
-          />
-        )}
+        {(value) =>
+          value !== "exited" && (
+            <SlidePop
+              title={activeCat}
+              state={value}
+              close={() => setIsSelectCat(false)}
+              clickTrigger={handleUpdateSongList}
+            />
+          )
+        }
       </Transition>
     </HelloContent>
   );

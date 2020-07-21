@@ -59,7 +59,7 @@ export const handleChangeMediaMuteState = () => ({
 
 export const handleSetLyricForThisSong = (id) => async (dispatch) => {
   let {
-    lrc: { lyric },
+    lrc: { lyric = "" },
   } = await SongApi.getSongLyric(id);
 
   lyric = lyric.split("\n").map((item) => {

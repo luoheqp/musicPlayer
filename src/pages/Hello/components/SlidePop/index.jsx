@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SlidePopContent, SongCollectList } from "./style";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 
-const SlidePop = ({ title, state, close }) => {
+const SlidePop = ({ title, state, close, clickTrigger }) => {
   const songList = useSelector(({ common }) => common.songList);
 
-  useEffect(() => {
-    console.log(songList);
-  }, [songList]);
+  const handleOnClick = (item) => {
+    clickTrigger(item.id);
+    close();
+  };
 
   return (
     <SlidePopContent onClick={close} state={state}>
@@ -16,7 +16,11 @@ const SlidePop = ({ title, state, close }) => {
         <h3 className="title">{title}</h3>
         <SongCollectList>
           {songList?.map((item) => (
-            <div className="item">
+            <div
+              className="item"
+              key={item.id}
+              onClick={() => handleOnClick(item)}
+            >
               <img src={`${item.coverImgUrl}?param=200y200`} alt="" />
               <p className="name">{item.name}</p>
             </div>
