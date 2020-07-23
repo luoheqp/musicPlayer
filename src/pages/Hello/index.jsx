@@ -7,11 +7,16 @@ import {
   handleGetSongList,
 } from "@r/common";
 
+// hooks
+import useLoading from "@/hooks/useLoading";
+
 // components
 import SlidePop from "./components/SlidePop";
 import { Transition } from "react-transition-group";
 
 const Hello = ({ changeTab }) => {
+  const [LoadingDom, loadingState, toggleLoading] = useLoading(true);
+
   const dispatch = useDispatch();
   const songCatList = useSelector(({ common }) => common.songCatList);
 
@@ -57,6 +62,10 @@ const Hello = ({ changeTab }) => {
           />
         )}
       </Transition>
+
+      <input type="button" value="click" onClick={toggleLoading} />
+
+      {LoadingDom}
     </HelloContent>
   );
 };
