@@ -57,8 +57,8 @@ export const SongCollectList = styled.div`
     }
 
     img {
-      width: 100%;
-      object-fit: contain;
+      width: 100px;
+      height: 100px;
       border-radius: 20px;
       overflow: hidden;
     }

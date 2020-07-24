@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { SlidePopContent, SongCollectList } from "./style";
 import { useSelector } from "react-redux";
 

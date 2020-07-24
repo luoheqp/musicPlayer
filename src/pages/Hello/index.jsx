@@ -15,7 +15,7 @@ import SlidePop from "./components/SlidePop";
 import { Transition } from "react-transition-group";
 
 const Hello = ({ changeTab }) => {
-  const [LoadingDom, loadingState, toggleLoading] = useLoading(true);
+  const [LoadingDom, toggleLoading] = useLoading(false);
 
   const dispatch = useDispatch();
   const songCatList = useSelector(({ common }) => common.songCatList);
@@ -25,12 +25,18 @@ const Hello = ({ changeTab }) => {
 
   const getSongListInThisCat = async (name) => {
     setActiveCat(name);
-    await dispatch(handleGetSongList(name));
+    try {
+      toggleLoading();
+      await dispatch(handleGetSongList(name));
+    } catch (e) {}
+    toggleLoading();
     setIsSelectCat(true);
   };
 
   const handleUpdateSongList = async (id) => {
-    dispatch(handleSetMusicList(id));
+    toggleLoading();
+    await dispatch(handleSetMusicList(id));
+    toggleLoading();
     changeTab(1);
   };
 
@@ -62,8 +68,6 @@ const Hello = ({ changeTab }) => {
           />
         )}
       </Transition>
-
-      <input type="button" value="click" onClick={toggleLoading} />
 
       {LoadingDom}
     </HelloContent>
