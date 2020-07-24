@@ -6,6 +6,7 @@ const {
   addWebpackAlias,
   addPostcssPlugins,
   fixBabelImports,
+  addBabelPlugin,
 } = require("customize-cra");
 const { overrideProcessEnv } = require("./src/utils/cli");
 
@@ -36,6 +37,9 @@ module.exports = {
         forceImport: "sanitize.css",
       }),
     ]),
+
+    // 添加 styled-components 类名解析
+    addBabelPlugin("babel-plugin-styled-components"),
 
     // addWebpackPlugin(
     //   new ImageminPlugin({
