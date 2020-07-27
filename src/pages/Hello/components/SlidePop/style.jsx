@@ -1,16 +1,24 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const slideInAnime = keyframes`
+  from {
+    transform: translateY(100%);
+  } to {
+    transform: translateY(0);
+  }
+`;
 
 export const SlidePopContent = styled.div`
   width: 100vw;
   height: 100vh;
   position: fixed;
   bottom: 0;
-  z-index: ${({ state }) => (state === "exited" ? -1 : 10)};
+  z-index: ${({ state }) => (state === "exited" ? -1 : 100)};
   background-color: ${({ state }) =>
     state === "exited" || state === "exiting"
       ? "rgba(0, 0, 0, 0)"
       : "rgba(0, 0, 0, 0.3)"};
-  transition: background-color .3s linear;
+  transition: background-color 0.3s linear;
 
   .main {
     width: 100%;
@@ -21,11 +29,14 @@ export const SlidePopContent = styled.div`
     border-top-right-radius: 30px;
     background-color: #fff;
     overflow-y: auto;
-    transform: ${({ state }) =>
-      state === "exited" || state === "exiting"
-        ? "translateY(100%)"
-        : "translateY(0%)"};
-    transition: transform .3s linear;
+    transform: translateY(100%);
+    transition: transform 0.3s linear;
+    animation: ${slideInAnime} 0.3s linear;
+
+    &.entered,
+    &.entering {
+      transform: translateY(0%);
+    }
 
     .title {
       font-size: 30px;

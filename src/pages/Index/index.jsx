@@ -18,6 +18,7 @@ import MiniPlayer from "./components/MiniPlayer";
 import Hello from "@/pages/Hello";
 import SongList from "@/pages/SongList";
 import Player from "@/pages/Player";
+import Mine from "@/pages/Mine";
 
 const HEADER_ITEM_LIST = ["Hello.", "List.", "Player.", "Mine."];
 
@@ -25,7 +26,7 @@ const Index = (props) => {
   // store
   const dispatch = useDispatch();
 
-  const [activeHeader, setActiveHeader] = useState(0);
+  const [activeHeader, setActiveHeader] = useState(3);
 
   const handleChangeActiveHeaderItem = (index) => {
     setActiveHeader(index);
@@ -70,7 +71,9 @@ const Index = (props) => {
               </PlayerContent>
 
               {/* mine */}
-              <MineContent>mine</MineContent>
+              <MineContent>
+                <Mine />
+              </MineContent>
             </SlideContent>
           );
         }}

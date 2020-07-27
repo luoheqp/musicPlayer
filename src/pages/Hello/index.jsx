@@ -12,7 +12,6 @@ import useLoading from "@/hooks/useLoading";
 
 // components
 import SlidePop from "./components/SlidePop";
-import { Transition } from "react-transition-group";
 
 const Hello = ({ changeTab }) => {
   const [LoadingDom, toggleLoading] = useLoading(false);
@@ -58,16 +57,12 @@ const Hello = ({ changeTab }) => {
         ))}
       </ul>
 
-      <Transition in={isSelectCat} timeout={300}>
-        {(value) => (
-          <SlidePop
-            title={activeCat}
-            state={value}
-            close={() => setIsSelectCat(false)}
-            clickTrigger={handleUpdateSongList}
-          />
-        )}
-      </Transition>
+      <SlidePop
+        title={activeCat}
+        state={isSelectCat}
+        close={() => setIsSelectCat(false)}
+        clickTrigger={handleUpdateSongList}
+      />
 
       {LoadingDom}
     </HelloContent>
