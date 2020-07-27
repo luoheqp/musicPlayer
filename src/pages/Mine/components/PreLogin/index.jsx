@@ -7,6 +7,7 @@ const PreLogin = (props) => {
     <PreLoginContent>
       <h3 className="title">Login If You Want</h3>
       <p className="btn-login">Login</p>
+      <Link to="playground">click</Link>
     </PreLoginContent>
   );
 };

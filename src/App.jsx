@@ -1,7 +1,16 @@
 import React, { useEffect } from "react";
 import routes from "@/routes.js";
 import { renderRoutes } from "react-router-config";
-import { HashRouter, Switch, useHistory } from "react-router-dom";
+import {
+  HashRouter,
+  Switch,
+  useHistory,
+  BrowserRouter,
+  Router,
+  Route,
+  Redirect,
+  withRouter,
+} from "react-router-dom";
 
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
@@ -10,6 +19,9 @@ import thunk from "redux-thunk";
 
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import styled from "styled-components";
+
+import Index from "@/pages/Index";
+import Playground from "@/pages/Playground";
 
 const store = createStore(
   reducer,
@@ -42,34 +54,32 @@ const RouterContainer = styled.div`
   }
 `;
 
-const AnimeRouter = () => {
-  const { location } = useHistory();
-
-  return (
-    <TransitionGroup>
+const AnimatedSwitch = withRouter(({ location }) => (
+  <RouterContainer>
+    <TransitionGroup className={"router-wrapper"}>
       <CSSTransition
-        key={location.pathname}
-        classNames="fade"
+        classNames={"fade"}
         appear={true}
-        unmountOnExit={true}
+        key={location.pathname}
         timeout={300}
+        unmountOnExit={true}
       >
-        <RouterContainer>
-          <Switch location={location}>{renderRoutes(routes)}</Switch>
-        </RouterContainer>
+        <Switch location={location}>
+          <Route exact path="/" render={() => <Redirect path="/index" />} />
+          <Route exact path="/index" component={Index} />
+          <Route exact path="/playground" component={Playground} />
+        </Switch>
       </CSSTransition>
     </TransitionGroup>
-  );
-};
+  </RouterContainer>
+));
 
 const App = () => {
   return (
     <Provider store={store}>
-      <div className="app-wrap">
-        <HashRouter>
-          <AnimeRouter />
-        </HashRouter>
-      </div>
+      <HashRouter>
+        <AnimatedSwitch />
+      </HashRouter>
     </Provider>
   );
 };

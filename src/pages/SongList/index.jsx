@@ -6,6 +6,7 @@ import { SongListContent, CoverList, List, ListItem } from "./style";
 // components
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.scss";
+import { useCallback } from "react";
 
 const SongList = (props) => {
   // state
@@ -19,30 +20,38 @@ const SongList = (props) => {
   const [swiperActive, setSwiperActive] = useState(0);
 
   // action
-  const handleGetSongPathById = (id) => {
-    return listData.filter((item) => item.id === id)[0];
-  };
+  const handleGetSongPathById = useCallback(
+    (id) => {
+      return listData.filter((item) => item.id === id)[0];
+    },
+    [listData]
+  );
 
-  const handleRefreshMediaNowPlay = (data) => {
-    dispatch(handleSetMediaPlayNow(data));
-  };
+  const handleRefreshMediaNowPlay = useCallback(
+    (data) => {
+      dispatch(handleSetMediaPlayNow(data));
+    },
+    [dispatch]
+  );
 
   // methods
-  const handlePlayThisSong = (id) => {
-    let targetObj = handleGetSongPathById(id);
-    swiperInstance.slideTo(targetObj.listPos, 300);
-    handleRefreshMediaNowPlay(targetObj);
-    dispatch(handleChangePlayState(true));
-  };
+  const handlePlayThisSong = useCallback(
+    (id) => {
+      let targetObj = handleGetSongPathById(id);
+      swiperInstance.slideTo(targetObj.listPos, 300);
+      handleRefreshMediaNowPlay(targetObj);
+      dispatch(handleChangePlayState(true));
+    },
+    [dispatch, handleGetSongPathById, handleRefreshMediaNowPlay, swiperInstance]
+  );
 
   const handleOnSlideChange = (realIndex) => {
     setSwiperActive(realIndex);
   };
 
-  useEffect(() => {
-    console.log("effect");
-    listData[swiperActive] && handlePlayThisSong(listData[swiperActive].id);
-  }, [swiperActive]);
+  // useEffect(() => {
+  //   listData[swiperActive] && handlePlayThisSong(listData[swiperActive].id);
+  // }, [handlePlayThisSong, listData, swiperActive]);
 
   return (
     <SongListContent>
