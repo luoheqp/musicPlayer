@@ -1,5 +1,6 @@
 import React from "react";
 import { PreLoginContent } from "./style";
+import { Link } from "react-router-dom";
 
 const PreLogin = (props) => {
   return (
