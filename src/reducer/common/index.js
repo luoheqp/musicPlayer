@@ -1,4 +1,8 @@
-import { SongList as SongListApi, Song as SongApi } from "@/server/apis";
+import {
+  SongList as SongListApi,
+  Song as SongApi,
+  Common as CommonApi,
+} from "@/server/apis";
 
 const initState = {
   musicList: [],
@@ -15,7 +19,7 @@ const SET_SONG_LIST = "SET_SONG_LIST";
 
 // 设置播放歌曲列表
 export const handleSetMusicList = (id = 0) => async (dispatch) => {
-  console.log(id)
+  console.log(id);
 
   let {
     playlist: { trackIds },
@@ -31,7 +35,7 @@ export const handleSetMusicList = (id = 0) => async (dispatch) => {
     picUrl: item.al.picUrl,
   }));
 
-  console.log(songs)
+  console.log(songs);
 
   dispatch({
     type: SET_MUSIC_LIST,
@@ -57,6 +61,11 @@ export const handleGetSongList = (cat = "全部") => async (dispatch) => {
     type: SET_SONG_LIST,
     data: playlists,
   });
+};
+
+export const handlePostToLogin = ({ email, password }) => async (dispatch) => {
+  let info = await CommonApi.postToLogin({ email, password });
+  console.log(info);
 };
 
 const reducer = (state = initState, action) => {
