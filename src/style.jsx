@@ -57,4 +57,9 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Poppins', sans-serif;
     user-select:none;
   }
+
+  a {
+    color: #333;
+    text-decoration: unset;
+  }
 `;

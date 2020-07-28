@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const RouterContainer = styled.div`
+export const AnimeRouterSwitchContainer = styled.div`
   .fade-enter,
   .fade-appear {
     opacity: 0;

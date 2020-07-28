@@ -1,8 +1,12 @@
 import React from "react";
-import { LoginContent } from "./style";
+import { LoginContent, BigTitle } from "./style";
 
 const Login = (props) => {
-  return <LoginContent>Login</LoginContent>;
+  return (
+    <LoginContent>
+      <BigTitle>Welcome.</BigTitle>
+    </LoginContent>
+  );
 };
 
 export default Login;

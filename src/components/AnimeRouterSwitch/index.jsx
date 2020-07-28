@@ -2,12 +2,12 @@ import React from "react";
 import { Switch, withRouter } from "react-router-dom";
 
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import { RouterContainer } from "./style";
+import { AnimeRouterSwitchContainer } from "./style";
 
-const AnimatedSwitch = withRouter(({ location, children }) => {
+const AnimeRouterSwitch = withRouter(({ location, children }) => {
   return (
-    <RouterContainer>
-      <TransitionGroup className={"router-wrapper"}>
+    <AnimeRouterSwitchContainer>
+      <TransitionGroup>
         <CSSTransition
           classNames={"fade"}
           appear={true}
@@ -18,8 +18,8 @@ const AnimatedSwitch = withRouter(({ location, children }) => {
           <Switch location={location}>{children}</Switch>
         </CSSTransition>
       </TransitionGroup>
-    </RouterContainer>
+    </AnimeRouterSwitchContainer>
   );
 });
 
-export default AnimatedSwitch;
+export default AnimeRouterSwitch;
