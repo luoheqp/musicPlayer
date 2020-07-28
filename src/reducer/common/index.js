@@ -14,6 +14,7 @@ const initState = {
 const SET_MUSIC_LIST = "SET_MUSIC_LIST";
 const SET_SONG_CAT_LIST = "SET_SONG_CAT_LIST";
 const SET_SONG_LIST = "SET_SONG_LIST";
+const SET_LOGIN_INFO = "SET_LOGIN_INFO";
 
 // >>>>>> action
 
@@ -63,9 +64,8 @@ export const handleGetSongList = (cat = "全部") => async (dispatch) => {
   });
 };
 
-export const handlePostToLogin = ({ email, password }) => async (dispatch) => {
-  let info = await CommonApi.postToLogin({ email, password });
-  console.log(info);
+export const handlePostToLogin = ({ phone, password }) => async (dispatch) => {
+  let { cookie } = await CommonApi.postToLogin({ phone, password });
 };
 
 const reducer = (state = initState, action) => {

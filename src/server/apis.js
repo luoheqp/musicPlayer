@@ -27,5 +27,5 @@ SongList.getSongListByCat = (cat) => request.get(`/top/playlist?cat=${cat}`);
 SongList.getSongList = (id) => request.get(`playlist/detail?id=${id}`);
 
 // 登录
-Common.postToLogin = ({ email, password }) =>
-  request.post(`/login?email=${email}&password=${password}`);
+Common.postToLogin = ({ phone, password }) =>
+  request.post(`/login/cellphone?phone=${phone}&password=${password}`);

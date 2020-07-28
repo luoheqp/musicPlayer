@@ -2,7 +2,6 @@ import axios from "axios";
 import { typeJudgment } from "@/utils";
 
 const request = axios.create({
-  // baseURL: "http://localhost:3000",
   baseURL: window.location.origin.replace(/[0-9]{4}$/, "3000"),
   timeout: 3000,
 });

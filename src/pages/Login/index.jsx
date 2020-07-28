@@ -1,12 +1,24 @@
 import React, { useState } from "react";
 import { LoginContent, ContentPart } from "./style";
+import { useDispatch } from "react-redux";
+import { handlePostToLogin } from "@r/common";
 
 const Login = (props) => {
-  const [email, setEmail] = useState("");
+  const dispatch = useDispatch();
+
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
 
   const handleInputChange = ({ value }, type) => {
-    console.log(value);
+    if (type === "phone") {
+      setPhone(value);
+    } else {
+      setPassword(value);
+    }
+  };
+
+  const handleLogin = () => {
+    dispatch(handlePostToLogin({ phone, password }));
   };
 
   return (
@@ -52,9 +64,9 @@ const Login = (props) => {
         <input
           type="text"
           className="input-item"
-          value={email}
+          value={phone}
           onChange={({ currentTarget }) =>
-            handleInputChange(currentTarget, "email")
+            handleInputChange(currentTarget, "phone")
           }
         />
         <input
@@ -65,7 +77,7 @@ const Login = (props) => {
             handleInputChange(currentTarget, "password")
           }
         />
-        <input type="button" value="login" />
+        <input type="button" value="login" onClick={handleLogin} />
       </ContentPart>
     </LoginContent>
   );
