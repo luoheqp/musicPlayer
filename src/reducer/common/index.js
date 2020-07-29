@@ -14,7 +14,7 @@ const initState = {
 const SET_MUSIC_LIST = "SET_MUSIC_LIST";
 const SET_SONG_CAT_LIST = "SET_SONG_CAT_LIST";
 const SET_SONG_LIST = "SET_SONG_LIST";
-const SET_LOGIN_INFO = "SET_LOGIN_INFO";
+const SET_LOGIN_TOKEN = "SET_LOGIN_TOKEN";
 
 // >>>>>> action
 
@@ -35,8 +35,6 @@ export const handleSetMusicList = (id = 0) => async (dispatch) => {
     listPos: index,
     picUrl: item.al.picUrl,
   }));
-
-  console.log(songs);
 
   dispatch({
     type: SET_MUSIC_LIST,
@@ -65,7 +63,12 @@ export const handleGetSongList = (cat = "全部") => async (dispatch) => {
 };
 
 export const handlePostToLogin = ({ phone, password }) => async (dispatch) => {
-  let { cookie } = await CommonApi.postToLogin({ phone, password });
+  let { cookie: token } = await CommonApi.postToLogin({ phone, password });
+
+  dispatch({
+    type: SET_LOGIN_TOKEN,
+    data: token,
+  });
 };
 
 const reducer = (state = initState, action) => {

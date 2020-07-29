@@ -49,9 +49,9 @@ const SongList = (props) => {
     setSwiperActive(realIndex);
   };
 
-  // useEffect(() => {
-  //   listData[swiperActive] && handlePlayThisSong(listData[swiperActive].id);
-  // }, [handlePlayThisSong, listData, swiperActive]);
+  useEffect(() => {
+    listData[swiperActive] && handlePlayThisSong(listData[swiperActive].id);
+  }, [handlePlayThisSong, swiperActive]);
 
   return (
     <SongListContent>
