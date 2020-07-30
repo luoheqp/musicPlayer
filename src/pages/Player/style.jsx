@@ -14,8 +14,8 @@ export const PlayerContent = styled.div`
 `;
 
 export const EffectBox = styled.div`
-  flex: 0 0 ${({ showState }) => (showState ? "300px" : "0")};
-  height: ${({ showState }) => (showState ? "unset" : "0")};
+  /* flex: 0 0 ${({ showState }) => (showState ? "300px" : "0")}; */
+  height: ${({ showState }) => (showState ? "300px" : "0")};
   opacity: ${({ showState }) => (showState ? 1 : 0)};
   transition: all 0.3s linear;
 `;

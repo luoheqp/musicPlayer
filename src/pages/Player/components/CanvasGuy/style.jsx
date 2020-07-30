@@ -5,4 +5,9 @@ export const CanvasGuyContent = styled.div`
   height: 100%;
   position: relative;
   display: flex;
+
+  canvas {
+    width: 300px;
+    height: 300px;
+  }
 `;

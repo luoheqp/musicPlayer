@@ -44,8 +44,6 @@ const CanvasGuy = (props) => {
     (ctx, analyser) => {
       const { current } = canvasRef;
 
-      console.log('object')
-
       const render = () => {
         requestAnimationFrame(render);
         ctx.clearRect(0, 0, current.width, current.height);
@@ -88,7 +86,7 @@ const CanvasGuy = (props) => {
     const { current } = canvasRef;
     const roughCanvas = rough.canvas(current);
     setRoughCanvas(roughCanvas);
-  }, [canvasRef, rough]);
+  }, [canvasRef]);
 
   // 初始化音频处理
   useEffect(() => {

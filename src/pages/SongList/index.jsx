@@ -51,7 +51,13 @@ const SongList = (props) => {
 
   useEffect(() => {
     listData[swiperActive] && handlePlayThisSong(listData[swiperActive].id);
-  }, [handlePlayThisSong, swiperActive]);
+  }, [handlePlayThisSong, listData, swiperActive]);
+
+  useEffect(() => {
+    if (!swiperInstance) return;
+    
+    swiperInstance.slideTo(mediaPlayNow.listPos, 300);
+  }, [mediaPlayNow.listPos, swiperInstance]);
 
   return (
     <SongListContent>

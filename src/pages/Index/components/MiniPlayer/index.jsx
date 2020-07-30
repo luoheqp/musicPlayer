@@ -1,6 +1,7 @@
 import React, { useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CYCLE_MODE_LIST } from "@/config/playerConfig";
+import { throttle } from "@/utils";
 import {
   handleSetMediaPlayNow,
   handleSetMediaDuration,
@@ -127,7 +128,7 @@ const MiniPlayer = () => {
         ref={audioRef}
         crossOrigin="anonymous"
         onCanPlay={handleAudioCanPlay}
-        onTimeUpdate={handleRefreshProgress}
+        onTimeUpdate={throttle(handleRefreshProgress, 1000)}
         onEnded={handleAudioEnded}
       ></audio>
       <MiniPlayerContent>
