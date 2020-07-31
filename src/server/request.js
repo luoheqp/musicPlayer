@@ -4,6 +4,7 @@ import { typeJudgment } from "@/utils";
 const request = axios.create({
   baseURL: window.location.origin.replace(/[0-9]{4}$/, "3000"),
   timeout: 3000,
+  withCredentials: true, // 网易云 API 特殊字段
 });
 
 request.interceptors.response.use(
