@@ -26,6 +26,9 @@ request.interceptors.response.use(
         } else {
           resolve(data);
         }
+      } else {
+        // TODO: 全局错误提示
+        reject({ msg: res.msg || res.message });
       }
     })
 );

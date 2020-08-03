@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { LoginContent, ContentPart } from "./style";
 import { useDispatch } from "react-redux";
 import { handlePostToLogin } from "@r/common";
-import anime from "animejs";
+// import anime from "animejs";
 
 const Login = (props) => {
   const dispatch = useDispatch();

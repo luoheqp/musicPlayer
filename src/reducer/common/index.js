@@ -63,12 +63,14 @@ export const handleGetSongList = (cat = "全部") => async (dispatch) => {
 };
 
 export const handlePostToLogin = ({ phone, password }) => async (dispatch) => {
-  let { cookie: token } = await CommonApi.postToLogin({ phone, password });
+  try {
+    let { cookie: token } = await CommonApi.postToLogin({ phone, password });
 
-  dispatch({
-    type: SET_LOGIN_TOKEN,
-    data: token,
-  });
+    dispatch({
+      type: SET_LOGIN_TOKEN,
+      data: token,
+    });
+  } catch (e) {}
 };
 
 const reducer = (state = initState, action) => {
