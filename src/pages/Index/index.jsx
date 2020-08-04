@@ -80,7 +80,7 @@ const Index = (props) => {
       </Transition>
 
       {/* player */}
-      <Transition in={activeHeader !== 0} timeout={0}>
+      <Transition in={![0, 3].includes(activeHeader)} timeout={0}>
         {(value) => (
           <MiniPlayerContent state={value}>
             <MiniPlayer />

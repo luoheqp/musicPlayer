@@ -8,6 +8,7 @@ const initState = {
   musicList: [],
   songCatList: [],
   songList: [],
+  profile: {},
 };
 
 // >>>>>> constant
@@ -15,6 +16,7 @@ const SET_MUSIC_LIST = "SET_MUSIC_LIST";
 const SET_SONG_CAT_LIST = "SET_SONG_CAT_LIST";
 const SET_SONG_LIST = "SET_SONG_LIST";
 const SET_LOGIN_TOKEN = "SET_LOGIN_TOKEN";
+const SET_USER_PROFILE = "SET_USER_PROFILE";
 
 // >>>>>> action
 
@@ -62,6 +64,7 @@ export const handleGetSongList = (cat = "全部") => async (dispatch) => {
   });
 };
 
+// 登录接口
 export const handlePostToLogin = ({ phone, password }) => async (dispatch) => {
   try {
     let { cookie: token } = await CommonApi.postToLogin({ phone, password });
@@ -69,6 +72,17 @@ export const handlePostToLogin = ({ phone, password }) => async (dispatch) => {
     dispatch({
       type: SET_LOGIN_TOKEN,
       data: token,
+    });
+  } catch (e) {}
+};
+
+// 获取登录状态
+export const handleGetLoginStatus = () => async (dispatch) => {
+  try {
+    const { profile } = await CommonApi.getLoginStatus();
+    dispatch({
+      type: SET_USER_PROFILE,
+      data: profile,
     });
   } catch (e) {}
 };
@@ -81,6 +95,8 @@ const reducer = (state = initState, action) => {
       return { ...state, songCatList: action.data };
     case SET_SONG_LIST:
       return { ...state, songList: action.data };
+    case SET_USER_PROFILE:
+      return { ...state, profile: action.data };
     default:
       return state;
   }

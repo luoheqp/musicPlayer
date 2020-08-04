@@ -29,3 +29,5 @@ SongList.getSongList = (id) => request.get(`playlist/detail?id=${id}`);
 // 登录
 Common.postToLogin = ({ phone, password }) =>
   request.post(`/login/cellphone?phone=${phone}&password=${password}`);
+
+Common.getLoginStatus = () => request.get("/login/status");

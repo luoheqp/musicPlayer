@@ -58,20 +58,27 @@ export const handleChangeMediaMuteState = () => ({
 });
 
 export const handleSetLyricForThisSong = (id) => async (dispatch) => {
-  let {
-    lrc: { lyric = "" },
-  } = await SongApi.getSongLyric(id);
+  try {
+    let {
+      lrc: { lyric = "" },
+    } = await SongApi.getSongLyric(id);
 
-  lyric = lyric.split("\n").map((item) => {
-    return splitLyric(item);
-  });
+    lyric = lyric.split("\n").map((item) => {
+      return splitLyric(item);
+    });
 
-  // 过滤空内容 & 前置时间处理
-  lyric = lyric.filter((item) => item.content);
-  lyric = balanceLyricTime(lyric);
+    // 过滤空内容 & 前置时间处理
+    lyric = lyric.filter((item) => item.content);
+    lyric = balanceLyricTime(lyric);
 
-  dispatch({
-    type: SET_LYRIC_FOR_THIS_SONG,
-    data: lyric,
-  });
+    dispatch({
+      type: SET_LYRIC_FOR_THIS_SONG,
+      data: lyric,
+    });
+  } catch (e) {
+    dispatch({
+      type: SET_LYRIC_FOR_THIS_SONG,
+      data: [],
+    });
+  }
 };
