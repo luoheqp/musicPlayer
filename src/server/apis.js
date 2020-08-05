@@ -33,3 +33,6 @@ Common.postToLogin = ({ phone, password }) =>
 Common.getLoginStatus = () => request.get("/login/status");
 
 Common.getRecommendedPlaylist = () => request.get("/personalized");
+
+Common.getNewMusiclistByArea = ({ type }) =>
+  request.get(`/top/song?type=${type}`);

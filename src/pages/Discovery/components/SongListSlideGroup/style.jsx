@@ -5,7 +5,7 @@ export const SongListSlideGroupContent = styled.div`
 
   .title {
     font-size: 16px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     position: relative;
 
     &::after {
@@ -17,11 +17,6 @@ export const SongListSlideGroupContent = styled.div`
       width: 20%;
       height: 2px;
       background-color: #333;
-    }
-  }
-
-  > .song-list-swiper-content {
-    .swiper-item {
     }
   }
 `;
@@ -38,6 +33,7 @@ export const PlayListItem = styled.div`
       height: 100%;
       object-fit: contain;
       border-radius: 10px;
+      filter: brightness(0.9);
     }
 
     .play-count,

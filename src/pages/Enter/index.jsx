@@ -9,7 +9,7 @@ import Discovery from "@/pages/Discovery";
 
 const HEADER_LISLT = ["discovery", "ground"];
 
-const Enter = (props) => {
+const Enter = () => {
   const [activeHeader, setActiveHeader] = useState(0);
   const [swiperController, setSwiperController] = useState(null);
 

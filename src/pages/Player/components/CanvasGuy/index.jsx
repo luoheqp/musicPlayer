@@ -78,6 +78,9 @@ const CanvasGuy = (props) => {
 
   const handleWindowResize = () => {
     const { current } = outerBoxRef;
+
+    if (!current) return;
+
     canvasRef.current.width = current.offsetWidth;
     canvasRef.current.height = current.offsetHeight;
   };

@@ -10,6 +10,7 @@ const initState = {
   songList: [],
   profile: {},
   recommendedPlaylist: [],
+  newMusicList: [],
 };
 
 // >>>>>> constant
@@ -19,6 +20,7 @@ const SET_SONG_LIST = "SET_SONG_LIST";
 const SET_LOGIN_TOKEN = "SET_LOGIN_TOKEN";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_RECOMMANDED_PLAYLIST = "SET_RECOMMANDED_PLAYLIST";
+const SET_NEW_MUSIC_LIST = "SET_NEW_MUSIC_LIST";
 
 // >>>>>> action
 
@@ -99,6 +101,18 @@ export const handleGetRecommendedPlaylist = () => async (dispatch) => {
   } catch (e) {}
 };
 
+export const handleGetNewMusiclistByArea = ({ type = 0 }) => async (
+  dispatch
+) => {
+  try {
+    const data = await CommonApi.getNewMusiclistByArea({ type });
+    dispatch({
+      type: SET_NEW_MUSIC_LIST,
+      data: data,
+    });
+  } catch (e) {}
+};
+
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case SET_MUSIC_LIST:
@@ -111,6 +125,8 @@ const reducer = (state = initState, action) => {
       return { ...state, profile: action.data };
     case SET_RECOMMANDED_PLAYLIST:
       return { ...state, recommendedPlaylist: action.data };
+    case SET_NEW_MUSIC_LIST:
+      return { ...state, newMusicList: action.data };
     default:
       return state;
   }
