@@ -5,6 +5,7 @@ import { Redirect } from "react-router-dom";
 const Index = lazy(() => import("@/pages/Index"));
 const Login = lazy(() => import("@/pages/Login"));
 const Playground = lazy(() => import("@/pages/Playground"));
+const Enter = lazy(() => import("@/pages/Enter"));
 
 const suspenseComponent = (Component) => (props) => (
   <Suspense fallback={<div>loading</div>}>
@@ -21,17 +22,18 @@ const routes = [
   {
     path: "/index",
     component: suspenseComponent(Index),
-    level: 1,
   },
   {
     path: "/login",
     component: suspenseComponent(Login),
-    level: 2,
   },
   {
     path: "/playground",
     component: suspenseComponent(Playground),
-    level: 1,
+  },
+  {
+    path: "/enter",
+    component: suspenseComponent(Enter),
   },
 ];
 
