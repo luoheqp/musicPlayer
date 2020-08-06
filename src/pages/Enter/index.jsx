@@ -6,8 +6,9 @@ import { EnterContent, Header, Content } from "./style";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.scss";
 import Discovery from "@/pages/Discovery";
+import Casual from "@/pages/Casual";
 
-const HEADER_LISLT = ["discovery", "ground"];
+const HEADER_LISLT = ["discovery", "casual"];
 
 const Enter = () => {
   const [activeHeader, setActiveHeader] = useState(0);
@@ -49,7 +50,9 @@ const Enter = () => {
           <SwiperSlide>
             <Discovery />
           </SwiperSlide>
-          <SwiperSlide>Slide 2</SwiperSlide>
+          <SwiperSlide>
+            <Casual />
+          </SwiperSlide>
         </Swiper>
       </Content>
     </EnterContent>

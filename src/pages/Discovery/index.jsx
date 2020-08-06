@@ -26,11 +26,16 @@ const Discovery = (props) => {
 
   return (
     <DiscoveryContent>
-      <SongListSlideGroup
-        title="Recommended play list"
-        playList={recommendedPlaylist}
-      />
-      <MusicListSlideGroup title="New music list" musicList={newMusicList} />
+      {recommendedPlaylist.length ? (
+        <SongListSlideGroup
+          title="Recommended play list"
+          playList={recommendedPlaylist}
+        />
+      ) : null}
+      
+      {newMusicList.length ? (
+        <MusicListSlideGroup title="New music list" musicList={newMusicList} />
+      ) : null}
     </DiscoveryContent>
   );
 };
