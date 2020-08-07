@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { EnterContent, Header, Content } from "./style";
 
@@ -23,6 +23,12 @@ const Enter = () => {
   const handleChangeActiveSlide = (index) => {
     swiperController.slideTo(index);
   };
+
+  useEffect(() => {
+    if (!swiperController) return;
+
+    handleChangeActiveSlide(1);
+  }, [swiperController]);
 
   return (
     <EnterContent>
