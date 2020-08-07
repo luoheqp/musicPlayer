@@ -5,15 +5,30 @@ import { SongListSlideGroupContent, PlayListItem } from "./style";
 // components
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.scss";
+import Title from "../Title";
 
 const SongListSlideGroup = (props) => {
   const { title, playList } = props;
 
-  const handleReduceNumber = (number) => {};
+  const handleReduceNumber = (number) => {
+    if (number < 1000) {
+      return number;
+    }
+
+    if (number >= 1000 && number < 10000) {
+      return `${Number(number / 1000).toFixed(0)}千`;
+    }
+
+    if (number >= 10000) {
+      return `${Number(number / 10000).toFixed(0)}万`;
+    }
+
+    return number;
+  };
 
   return (
     <SongListSlideGroupContent>
-      <p className="title">{title}</p>
+      <Title title={title} />
 
       <Swiper
         className="song-list-swiper-content"
@@ -27,7 +42,7 @@ const SongListSlideGroup = (props) => {
                 <img src={item.picUrl} alt="" />
                 <span className="play-count">
                   <i className="iconfont icon-3209257-controllaunchplaystarttriangle"></i>
-                  {item.playCount}
+                  {handleReduceNumber(item.playCount)}
                 </span>
                 <span className="disk-count">
                   <i className="iconfont icon-Disk"></i>

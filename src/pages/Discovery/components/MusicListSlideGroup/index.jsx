@@ -5,6 +5,7 @@ import { MusicListSlideGroupContent, MusicList } from "./style";
 // components
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.scss";
+import Title from "../Title";
 
 const MusicListSlideGroup = (props) => {
   const { title, musicList } = props;
@@ -23,26 +24,28 @@ const MusicListSlideGroup = (props) => {
 
   return (
     <MusicListSlideGroupContent>
-      <p className="title">{title}</p>
+      <Title title={title} />
 
       <Swiper
         className="music-list-swiper-content"
         spaceBetween={10}
         slidesPerView={1.1}
       >
-        {musicGroup?.map((item) => (
-          <SwiperSlide className="swiper-item" key={item.id}>
+        {musicGroup?.map((item, index) => (
+          <SwiperSlide className="swiper-item" key={index}>
             <MusicList>
-              {item?.map((item) => (
-                <div className="music-list-item">
+              {item?.map((music) => (
+                <div className="music-list-item" key={music.id}>
                   <div className="cover">
-                    <img src={`${item.album.picUrl}?param=100y100`} alt="" />
+                    <img src={`${music.album.picUrl}?param=100y100`} alt="" />
                   </div>
                   <div className="desc">
-                    <p className="name">{item.name}</p>
-                    <p className="other">{item.alias?.join(" / ")}</p>
+                    <p className="name">{music.name}</p>
+                    <p className="other">{music.alias?.join(" / ")}</p>
                   </div>
-                  <div className="play"></div>
+                  <div className="play">
+                    <i className="iconfont icon-play"></i>
+                  </div>
                 </div>
               ))}
             </MusicList>

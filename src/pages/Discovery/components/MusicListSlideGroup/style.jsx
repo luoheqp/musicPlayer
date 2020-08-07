@@ -2,23 +2,6 @@ import styled from "styled-components";
 
 export const MusicListSlideGroupContent = styled.div`
   padding: 10px;
-
-  .title {
-    font-size: 16px;
-    margin-bottom: 20px;
-    position: relative;
-
-    &::after {
-      content: "";
-      display: inline-block;
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 20%;
-      height: 2px;
-      background-color: #333;
-    }
-  }
 `;
 
 export const MusicList = styled.div`
@@ -61,14 +44,28 @@ export const MusicList = styled.div`
       .other {
         font-size: 12px;
         margin-top: 10px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        &:empty {
+          margin-top: 0;
+        }
       }
     }
 
     .play {
       flex: 0 0 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 50px;
       height: 50px;
-      background-color: #333;
+
+      .iconfont {
+        font-size: 10px;
+        padding: 5px;
+      }
     }
   }
 `;
