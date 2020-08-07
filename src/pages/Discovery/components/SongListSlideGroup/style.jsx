@@ -2,23 +2,6 @@ import styled from "styled-components";
 
 export const SongListSlideGroupContent = styled.div`
   padding: 10px;
-
-  .title {
-    font-size: 16px;
-    margin-bottom: 20px;
-    position: relative;
-
-    &::after {
-      content: "";
-      display: inline-block;
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 20%;
-      height: 2px;
-      background-color: #333;
-    }
-  }
 `;
 
 export const PlayListItem = styled.div`
