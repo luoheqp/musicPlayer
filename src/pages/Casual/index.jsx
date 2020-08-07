@@ -1,19 +1,33 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import useLoading from "@/hooks/useLoading";
 import useInterval from "@/hooks/useInterval";
+import { sleep } from "@/utils";
 import anime from "animejs";
+import { useSelector, useDispatch } from "react-redux";
+import { handleGetPersonalFmList } from "@r/casual/action.js";
 
 import { CasualContent, TheBtn } from "./style.jsx";
 
 let VOICE_FREQUENCY = [196, 220, 246, 261, 293, 329, 349, 392];
 
-const Casual = (props) => {
+const Casual = () => {
+  const dispatch = useDispatch();
+  const { LoadingDom, toggleLoading } = useLoading({
+    init: false,
+    position: "top",
+  });
+
   const audioCtx = useRef();
   const theBtnRef = useRef();
+
+  const casualList = useSelector(({ casual }) => casual.casualList);
 
   const [isTouching, setIsTouching] = useState(false);
 
   const start = useRef(0);
   const direction = useRef(1);
+
+  // 状态重置
   const handleResetConfig = () => {
     setIsTouching(false);
     start.current = 0;
@@ -21,7 +35,7 @@ const Casual = (props) => {
   };
 
   // 触发声音
-  const handleMakeVoice = (frequency) => {
+  const handleMakeVoice = useCallback((frequency) => {
     let oscillator = audioCtx.current.createOscillator();
     let gainNode = audioCtx.current.createGain();
 
@@ -38,10 +52,18 @@ const Casual = (props) => {
     );
     // 1秒后完全停止声音
     oscillator.stop(audioCtx.current.currentTime + 1);
-  };
+  }, []);
 
   // 获取随机的歌曲
-  const handleGetRandomSong = () => {
+  const handleGetRandomSong = useCallback(async () => {
+    toggleLoading(true);
+
+    try {
+      await dispatch(handleGetPersonalFmList());
+    } catch (e) {}
+
+    toggleLoading(false);
+
     anime({
       targets: theBtnRef.current,
       scale: 10,
@@ -49,7 +71,7 @@ const Casual = (props) => {
       easing: "easeInOutQuad",
       duration: 500,
     });
-  };
+  }, []);
 
   // 音频播放 interval
   useInterval(
@@ -98,6 +120,7 @@ const Casual = (props) => {
       >
         <i className="iconfont icon-music-line"></i>
       </TheBtn>
+      {LoadingDom}
     </CasualContent>
   );
 };
