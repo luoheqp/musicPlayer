@@ -1,6 +1,6 @@
-import React, { useRef, useEffect } from "react";
+import React, { useCallback, useState } from "react";
 import ReactDOM from "react-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const LoadingContent = styled.div`
   position: fixed;
@@ -8,15 +8,36 @@ const LoadingContent = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  z-index: 100;
+
+  .loading {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    ${({ pos }) => {
+      switch (pos) {
+        case "top":
+          return css`
+            top: 20%;
+          `;
+        case "bottom":
+          return css`
+            bottom: 20%;
+          `;
+        default:
+          return css`
+            transform: translate(-50%, -50%);
+          `;
+      }
+    }}
+  }
 `;
 
-const Loading = ({ isShowing, close, container }) =>
+const Loading = ({ isShowing, close, container, position }) =>
   isShowing
     ? ReactDOM.createPortal(
-        <LoadingContent>
+        <LoadingContent pos={position}>
           <svg
             version="1.1"
             id="Layer_1"
@@ -27,6 +48,7 @@ const Loading = ({ isShowing, close, container }) =>
             height="30px"
             viewBox="0 0 24 30"
             style={{ enableBackground: "new 0 0 50 50" }}
+            className="loading"
           >
             <rect x="0" y="13" width="4" height="5" fill="#333">
               <animate
@@ -88,30 +110,27 @@ const Loading = ({ isShowing, close, container }) =>
       )
     : null;
 
-const useModal = (initState) => {
-  const isShowing = useRef(false);
+const useLoading = ({ init, position }) => {
+  const [isShowing, setIsShowing] = useState(init || false);
 
-  const handleToggle = () => {
-    isShowing.current = !isShowing.current;
-  };
+  const handleToggle = useCallback((state) => {
+    if (state === undefined) {
+      setIsShowing(!isShowing);
+    } else {
+      setIsShowing(state);
+    }
+  }, []);
 
-  const handleClose = () => {
-    isShowing.current = false;
-  };
-
-  useEffect(() => {
-    isShowing.current = initState;
-  }, [initState]);
-
-  return [
-    Loading({
-      isShowing: isShowing.current,
-      close: handleClose,
+  return {
+    LoadingDom: Loading({
+      isShowing: isShowing,
+      close: () => handleToggle(false),
       container: document.body,
+      position: position,
     }),
-    handleToggle,
-    isShowing.current,
-  ];
+    toggleLoading: handleToggle,
+    showState: isShowing,
+  };
 };
 
-export default useModal;
+export default useLoading;

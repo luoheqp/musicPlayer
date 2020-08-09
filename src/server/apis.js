@@ -3,6 +3,7 @@ import request from "./request";
 export const Song = {};
 export const SongList = {};
 export const Common = {};
+export const Personal = {};
 
 // 根据关键字查询歌曲
 Song.getSongSearchInfoByKeywords = (keywords) =>
@@ -36,3 +37,5 @@ Common.getRecommendedPlaylist = () => request.get("/personalized");
 
 Common.getNewMusiclistByArea = ({ type }) =>
   request.get(`/top/song?type=${type}`);
+
+Personal.getPersonalFmList = () => request.get(`/personal_fm`);
