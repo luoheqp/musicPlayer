@@ -26,11 +26,13 @@ const Discovery = (props) => {
 
   return (
     <DiscoveryContent>
-      <SongListSlideGroup
-        title="Recommended play list"
-        playList={recommendedPlaylist}
-      />
-      <MusicListSlideGroup title="New music list" musicList={newMusicList} />
+      {recommendedPlaylist.length ? (
+        <SongListSlideGroup title="推荐歌单" playList={recommendedPlaylist} />
+      ) : null}
+
+      {newMusicList.length ? (
+        <MusicListSlideGroup title="新歌推送" musicList={newMusicList} />
+      ) : null}
     </DiscoveryContent>
   );
 };
