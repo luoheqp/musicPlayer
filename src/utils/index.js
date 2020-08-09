@@ -1,5 +1,9 @@
 // 格式化时间
-export const formatTime = (timeStemp) => {
+export const formatTime = (timeStemp, isMS = false) => {
+  if (isMS) {
+    timeStemp /= 1000;
+  }
+
   let second = +Number(timeStemp % 60).toFixed();
   let minute = +Number((timeStemp / 60) % 60).toFixed();
   let hour = +Number(timeStemp / 60 / 60).toFixed();
