@@ -108,6 +108,7 @@ const MoveableCardGroup = (props) => {
           ref={(ref) => (index ? (backRef.current = ref) : null)}
         >
           <Card
+            className="swiper-no-swiping"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
