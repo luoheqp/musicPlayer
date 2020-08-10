@@ -45,15 +45,16 @@ const TheBtn = (props) => {
   }, []);
 
   // 获取随机的歌曲
-  const handleGetRandomSong = useCallback(async () => {
-    await musicPowerFull();
-
+  const handleGetRandomSong = useCallback(() => {
     anime({
       targets: theBtnRef.current,
       scale: 10,
       opacity: 0,
       easing: "easeInOutQuad",
       duration: 500,
+      complete: () => {
+        musicPowerFull();
+      },
     });
   }, []);
 
@@ -96,12 +97,15 @@ const TheBtn = (props) => {
   }, []);
 
   return (
-    <TheBtnContent
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      ref={theBtnRef}
-    >
-      <i className="iconfont icon-music-line"></i>
+    <TheBtnContent>
+      <div
+        className="main"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        ref={theBtnRef}
+      >
+        <i className="iconfont icon-music-line"></i>
+      </div>
     </TheBtnContent>
   );
 };

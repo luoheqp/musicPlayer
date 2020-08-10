@@ -5,6 +5,7 @@ import { handleGetPersonalFmList } from "@r/casual/action.js";
 
 // components
 import { CasualContent } from "./style.jsx";
+import { CSSTransition } from "react-transition-group";
 import TheBtn from "./components/TheBtn";
 import MoveableCardGroup from "@/components/MoveableCardGroup";
 
@@ -28,14 +29,12 @@ const Casual = () => {
     toggleLoading(false);
   };
 
-  useEffect(() => {
-    handleGetPersonalFm();
-  }, []);
-
   return (
     <CasualContent>
-      {/* <TheBtn musicPowerFull={handleGetPersonalFm} /> */}
-      <MoveableCardGroup cardGroupInfo={casualList} />
+      {!casualList.length && <TheBtn musicPowerFull={handleGetPersonalFm} />}
+      <CSSTransition unmountOnExit={true} in={casualList.length}>
+        <MoveableCardGroup cardGroupInfo={casualList} />
+      </CSSTransition>
       {LoadingDom}
     </CasualContent>
   );
