@@ -80,14 +80,16 @@ const MoveableCardGroup = (props) => {
   useEffect(() => {
     if (!backRef.current) return;
 
+    // 计算缩放
     let scaleNum = 0.1 * moveProgress + 0.9;
-    scaleNum = scaleNum > 1 ? 1 : scaleNum;
+    scaleNum = Math.min(scaleNum, 1);
 
+    // 计算透明度
     let opacityNum = 0.6 * moveProgress + 0.4;
-    opacityNum = opacityNum > 1 ? 1 : opacityNum;
+    opacityNum = Math.min(opacityNum, 1);
 
-    let translateYNum = -20 * (1 - moveProgress);
-    translateYNum = translateYNum + "px";
+    // 计算偏移
+    let translateYNum = -20 * (1 - moveProgress) + "px";
 
     backRef.current.style.cssText = `transform: scale(${scaleNum}) translateY(${translateYNum}); opacity: ${opacityNum}`;
   }, [moveProgress]);

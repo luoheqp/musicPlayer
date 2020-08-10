@@ -21,6 +21,8 @@ export const MoveableCardGroupContent = styled.div`
       z-index: 0;
       transform: scale(0.9) translateY(-20px);
       transform-origin: top;
+      /* NOTE: 此处动效会有点奇怪 */
+      transition: all .1s linear;
       opacity: 0.4;
     }
   }
@@ -44,9 +46,10 @@ export const Card = styled.div`
   }
 
   > .name {
-    font-size: 24px;
-    line-height: 24px;
+    font-size: 20px;
+    line-height: 26px;
     padding: 10px;
+    padding-bottom: 0;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
@@ -85,6 +88,8 @@ export const Player = styled.div`
   justify-content: center;
 
   .controller {
+    margin: 5px 0;
+
     .player {
       font-size: 20px;
       padding: 10px;
