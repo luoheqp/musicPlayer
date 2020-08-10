@@ -1,4 +1,26 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const MainCardSlideIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(-60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+`;
+
+const BackCardSlideIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(-100px);
+  }
+  100% {
+    opacity: .8;
+    transform: scale(0.9) translateY(-20px);
+  }
+`;
 
 export const MoveableCardGroupContent = styled.div`
   width: 100%;
@@ -15,15 +37,18 @@ export const MoveableCardGroupContent = styled.div`
 
     &:nth-child(1) {
       z-index: 1;
+      /* animation: ${MainCardSlideIn} 0.8s linear forwards; */
     }
 
     &:nth-child(2) {
       z-index: 0;
-      transform: scale(0.9) translateY(-20px);
       transform-origin: top;
+      opacity: .8;
+      transform: scale(0.9) translateY(-20px);
       /* NOTE: 此处动效会有点奇怪 */
-      transition: all .1s linear;
-      opacity: 0.4;
+      transition: all 0.1s linear;
+      animation-delay: 1s;
+      /* animation: ${BackCardSlideIn} 0.8s linear forwards; */
     }
   }
 `;
