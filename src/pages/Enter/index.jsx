@@ -14,7 +14,7 @@ const Enter = () => {
   const [activeHeader, setActiveHeader] = useState(0);
   const [swiperController, setSwiperController] = useState(null);
 
-  // swiper 滑动触发
+  // swiper active change 触发
   const handleSlideChange = ({ activeIndex }) => {
     setActiveHeader(activeIndex);
   };

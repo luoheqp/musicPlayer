@@ -14,7 +14,7 @@ import useLoading from "@/hooks/useLoading";
 import SlidePop from "./components/SlidePop";
 
 const Hello = ({ changeTab }) => {
-  const [LoadingDom, toggleLoading] = useLoading(false);
+  const { LoadingDom, toggleLoading } = useLoading(false);
 
   const dispatch = useDispatch();
   const songCatList = useSelector(({ common }) => common.songCatList);
