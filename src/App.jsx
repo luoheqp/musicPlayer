@@ -13,6 +13,7 @@ import thunk from "redux-thunk";
 
 // components
 import AnimatedSwitch from "@/components/AnimeRouterSwitch";
+import PlayerCore from "@/pages/PlayerCore";
 
 const store = createStore(
   reducer,
@@ -34,6 +35,7 @@ const App = () => {
       <HashRouter>
         <RouterComponent />
       </HashRouter>
+      <PlayerCore />
     </Provider>
   );
 };
