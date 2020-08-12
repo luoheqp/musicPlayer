@@ -14,7 +14,7 @@ import {
 
 const initState = {
   mediaPlayNow: {}, // 当前播放音乐对象
-  playState: false,
+  playState: "init",
   duration: 0, // 总播放时间
   source: undefined,
   currentTime: 0, // 当前播放时间
