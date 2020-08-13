@@ -12,7 +12,7 @@ const SongList = (props) => {
   // state
   const dispatch = useDispatch();
 
-  const listData = useSelector(({ common }) => common.musicList);
+  const listData = useSelector(({ common }) => common.playingMusicList);
   const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
 
   // data
@@ -50,6 +50,8 @@ const SongList = (props) => {
   };
 
   useEffect(() => {
+    if (!listData.length) return;
+
     listData[swiperActive] && handlePlayThisSong(listData[swiperActive].id);
   }, [handlePlayThisSong, listData, swiperActive]);
 
@@ -80,7 +82,7 @@ const SongList = (props) => {
       </CoverList>
       <List>
         <div className="list-wrap">
-          {listData.map((item) => (
+          {listData?.map((item) => (
             <ListItem
               className={`${mediaPlayNow.id === item.id ? "playing" : ""}`}
               key={item.id}
