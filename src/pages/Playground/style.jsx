@@ -9,15 +9,11 @@ export const PlaygroundContent = styled.div`
   justify-content: center;
   flex-direction: column;
 
-  .ball-wrap {
-    width: 100px;
-    height: 200px;
-
-    .ball {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background-color: #333;
-    }
+  .text-area {
+    width: 200px;
+    height: 100px;
+    border: 1px solid #333;
+    box-sizing: border-box;
+    margin-bottom: 40px;
   }
 `;

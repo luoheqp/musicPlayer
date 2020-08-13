@@ -10,7 +10,8 @@ export const SongCollectDesc = styled.div`
 
   .mask-wrap {
     padding: 20px;
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(10px);
+    filter: drop-shadow(0px 0px 10px #ccc);
     color: #fff;
 
     .title {
