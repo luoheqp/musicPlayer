@@ -35,25 +35,23 @@ const SongList = (props) => {
       // let targetObj = handleGetSongPathById(id);
       // handleRefreshMediaNowPlay(targetObj);
       // dispatch(handleChangePlayState('playing'));
-    },
+    }
     // [dispatch, handleGetSongPathById, handleRefreshMediaNowPlay]
   );
 
   return (
     <SongListContent>
-      <List>
-        <div className="list-wrap">
-          {listData.songList?.map((item) => (
-            <ListItem
-              // className={`${mediaPlayNow.id === item.id ? "playing" : ""}`}
-              key={item.id}
-              onClick={() => handlePlayThisSong(item.id)}
-            >
-              {item.name}
-            </ListItem>
-          ))}
-        </div>
-      </List>
+      <div className="list-wrap">
+        {listData?.map((item) => (
+          <ListItem
+            // className={`${mediaPlayNow.id === item.id ? "playing" : ""}`}
+            key={item.id}
+            onClick={() => handlePlayThisSong(item.id)}
+          >
+            {item.name}
+          </ListItem>
+        ))}
+      </div>
     </SongListContent>
   );
 };
