@@ -44,7 +44,7 @@ const handleGetMusicInfo = async (ids) => {
 // 获取指定歌单详情
 export const handleSetSongCollectInfo = (collectId) => async (dispatch) => {
   let {
-    playlist: { trackIds, coverImgUrl, description, id, playCount, tags },
+    playlist: { name, trackIds, coverImgUrl, description, id, playCount, tags },
   } = await SongListApi.getSongList(collectId);
 
   trackIds = trackIds.map((item) => item.id);
@@ -53,7 +53,7 @@ export const handleSetSongCollectInfo = (collectId) => async (dispatch) => {
 
   dispatch({
     type: SET_SONG_COLLECT_INFO,
-    data: { coverImgUrl, description, id, playCount, tags, songList: data },
+    data: { name, coverImgUrl, description, id, playCount, tags, songList: data },
   });
 };
 
