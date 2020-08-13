@@ -7,7 +7,7 @@ import {
   handleChangeMediaCycleMode,
   handleChangeMediaMuteState,
 } from "@r/player/action";
-import { handleSetMusicList } from "@r/common";
+import { handleSetPlayingMusicList } from "@r/common";
 import {
   PlayerControllerContent,
   PlayerStateControl,
@@ -21,7 +21,7 @@ import MusicProgress from "@/pages/Enter/components/MusicProgress";
 const PlayerController = () => {
   const dispatch = useDispatch();
 
-  const listData = useSelector(({ common }) => common.musicList);
+  const listData = useSelector(({ common }) => common.playingMusicList);
   const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
   const cycleMode = useSelector(({ player }) => player.cycleMode);
   const muteState = useSelector(({ player }) => player.muteState);
@@ -66,7 +66,7 @@ const PlayerController = () => {
   };
 
   useEffect(() => {
-    dispatch(handleSetMusicList());
+    dispatch(handleSetPlayingMusicList());
   }, [dispatch]);
 
   return (
