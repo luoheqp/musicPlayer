@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 
 const SlidePop = ({ title, state, close, clickTrigger }) => {
-  const songList = useSelector(({ common }) => common.songList);
+  const songCollectList = useSelector(({ common }) => common.songCollectList);
 
   const handleOnClick = (item) => {
     clickTrigger(item.id);
@@ -20,7 +20,7 @@ const SlidePop = ({ title, state, close, clickTrigger }) => {
           <div className={`main ${value}`}>
             <h3 className="title">{title}</h3>
             <SongCollectList>
-              {songList?.map((item, index) => (
+              {songCollectList?.map((item, index) => (
                 <div
                   className="item"
                   key={index}

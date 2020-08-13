@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { HelloContent } from "./style";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  handleSetMusicList,
+  handleSetPlayingMusicList,
   handleGetSongCatList,
-  handleGetSongList,
+  handleGetSongCollectList,
 } from "@r/common";
 
 // hooks
@@ -26,7 +26,7 @@ const Hello = ({ changeTab }) => {
     setActiveCat(name);
     try {
       toggleLoading();
-      await dispatch(handleGetSongList(name));
+      await dispatch(handleGetSongCollectList(name));
     } catch (e) {}
     toggleLoading();
     setIsSelectCat(true);
@@ -34,7 +34,7 @@ const Hello = ({ changeTab }) => {
 
   const handleUpdateSongList = async (id) => {
     toggleLoading();
-    await dispatch(handleSetMusicList(id));
+    await dispatch(handleSetPlayingMusicList(id));
     toggleLoading();
     changeTab(1);
   };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Transition } from "react-transition-group";
 import { useDispatch } from "react-redux";
-import { handleSetMusicList } from "@r/common";
+import { handleSetPlayingMusicList } from "@r/common";
 import {
   IndexContent,
   Header,
@@ -33,7 +33,7 @@ const Index = (props) => {
   };
 
   useEffect(() => {
-    dispatch(handleSetMusicList());
+    dispatch(handleSetPlayingMusicList());
   }, [dispatch]);
 
   return (
