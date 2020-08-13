@@ -23,10 +23,10 @@ const Playground = (props) => {
 
     document.body.appendChild(textContent);
 
-    const textWidth = textContent.offsetWidth;
+    const textWidth = textContent.offsetWidth + 5;
 
     // 计算和容器的长度比例 设置合理字体大小
-    setFontSize((maxWidth.current / textWidth) * 16);
+    setFontSize(Math.max((maxWidth.current / textWidth) * 16, 16));
 
     document.body.removeChild(textContent);
 
