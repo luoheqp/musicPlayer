@@ -73,7 +73,7 @@ export const typeJudgment = (data, type) => {
 };
 
 // 节流
-export const throttle = function (func, delay) {
+export const throttle = (func, delay) => {
   let prev = Date.now();
 
   return function () {
@@ -86,4 +86,20 @@ export const throttle = function (func, delay) {
       prev = Date.now();
     }
   };
+};
+
+export const reduceNumber = (number) => {
+  if (number < 1000) {
+    return number;
+  }
+
+  if (number >= 1000 && number < 10000) {
+    return `${Number(number / 1000).toFixed(0)}千`;
+  }
+
+  if (number >= 10000) {
+    return `${Number(number / 10000).toFixed(0)}万`;
+  }
+
+  return number;
 };
