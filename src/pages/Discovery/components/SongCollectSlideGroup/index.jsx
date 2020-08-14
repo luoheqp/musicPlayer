@@ -6,13 +6,13 @@ import useLoading from "@/hooks/useLoading";
 import { useDispatch, useSelector } from "react-redux";
 
 // components
-import { SongListSlideGroupContent, PlayListItem } from "./style";
+import { SongCollectSlideGroupContent, PlayListItem } from "./style";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SongCollectPop from "@/components/SongCollectPop";
 import "swiper/swiper.scss";
 import Title from "../Title";
 
-const SongListSlideGroup = (props) => {
+const SongCollectSlideGroup = (props) => {
   const dispatch = useDispatch();
 
   const { title, playList } = props;
@@ -34,7 +34,7 @@ const SongListSlideGroup = (props) => {
 
   return (
     <>
-      <SongListSlideGroupContent>
+      <SongCollectSlideGroupContent>
         <Title title={title} />
 
         <Swiper
@@ -63,7 +63,7 @@ const SongListSlideGroup = (props) => {
             </SwiperSlide>
           ))}
         </Swiper>
-      </SongListSlideGroupContent>
+      </SongCollectSlideGroupContent>
 
       {LoadingDom}
 
@@ -74,4 +74,4 @@ const SongListSlideGroup = (props) => {
   );
 };
 
-export default SongListSlideGroup;
+export default SongCollectSlideGroup;

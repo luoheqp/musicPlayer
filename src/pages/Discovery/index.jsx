@@ -8,7 +8,7 @@ import {
 import { DiscoveryContent } from "./style";
 
 // components
-import SongListSlideGroup from "./components/SongListSlideGroup";
+import SongCollectSlideGroup from "./components/SongCollectSlideGroup";
 import MusicListSlideGroup from "./components/MusicListSlideGroup";
 
 const Discovery = (props) => {
@@ -27,7 +27,7 @@ const Discovery = (props) => {
   return (
     <DiscoveryContent>
       {recommendedPlaylist.length ? (
-        <SongListSlideGroup title="推荐歌单" playList={recommendedPlaylist} />
+        <SongCollectSlideGroup title="推荐歌单" playList={recommendedPlaylist} />
       ) : null}
 
       {newMusicList.length ? (

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const SongListSlideGroupContent = styled.div`
+export const SongCollectSlideGroupContent = styled.div`
   padding: 10px;
 `;
 
