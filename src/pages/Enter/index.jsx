@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 
-import { EnterContent, Header, Content } from "./style";
+import { EnterContent, Content, PlayerControllerContent } from "./style";
 
 // components
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.scss";
 import Discovery from "@/pages/Discovery";
 import Casual from "@/pages/Casual";
-
-const HEADER_LISLT = ["discovery", "casual"];
+import PlayerController from "./components/PlayerController";
+import Header from "./components/Header";
 
 const Enter = () => {
   const [activeHeader, setActiveHeader] = useState(0);
@@ -24,29 +24,15 @@ const Enter = () => {
     swiperController.slideTo(index);
   };
 
-  useEffect(() => {
-    if (!swiperController) return;
+  // useEffect(() => {
+  //   if (!swiperController) return;
 
-    handleChangeActiveSlide(1);
-  }, [swiperController]);
+  //   handleChangeActiveSlide(1);
+  // }, [swiperController]);
 
   return (
     <EnterContent>
-      <Header>
-        <div className="slide-menu iconfont icon-Menu"></div>
-        <ul className="main-menu">
-          {HEADER_LISLT.map((item, index) => (
-            <li
-              className={`menu-item ${index === activeHeader ? "active" : ""}`}
-              key={index}
-              onClick={() => handleChangeActiveSlide(index)}
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
-        <div className="search iconfont icon-chaxun"></div>
-      </Header>
+      <Header toggle={handleChangeActiveSlide} activeHeader={activeHeader} />
       <Content>
         <Swiper
           className="swiper-content"
@@ -61,6 +47,9 @@ const Enter = () => {
           </SwiperSlide>
         </Swiper>
       </Content>
+      <PlayerControllerContent>
+        <PlayerController />
+      </PlayerControllerContent>
     </EnterContent>
   );
 };

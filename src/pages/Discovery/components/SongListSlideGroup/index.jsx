@@ -1,60 +1,76 @@
 import React from "react";
-
-import { SongListSlideGroupContent, PlayListItem } from "./style";
+import { handleSetSongCollectInfo } from "@r/common";
+import { reduceNumber } from "@/utils";
+import useBottomSlidePop from "@/hooks/useBottomSlidePop";
+import useLoading from "@/hooks/useLoading";
+import { useDispatch, useSelector } from "react-redux";
 
 // components
+import { SongListSlideGroupContent, PlayListItem } from "./style";
 import { Swiper, SwiperSlide } from "swiper/react";
+import SongCollectPop from "@/components/SongCollectPop";
 import "swiper/swiper.scss";
 import Title from "../Title";
 
 const SongListSlideGroup = (props) => {
+  const dispatch = useDispatch();
+
   const { title, playList } = props;
 
-  const handleReduceNumber = (number) => {
-    if (number < 1000) {
-      return number;
-    }
+  const { BottomSlidePopDom, toggleBottomSlidePop } = useBottomSlidePop(false);
+  const { LoadingDom, toggleLoading } = useLoading(false);
 
-    if (number >= 1000 && number < 10000) {
-      return `${Number(number / 1000).toFixed(0)}千`;
-    }
+  const songCollectInfo = useSelector(({ common }) => common.songCollectInfo);
 
-    if (number >= 10000) {
-      return `${Number(number / 10000).toFixed(0)}万`;
-    }
+  const handleGetThisSongCollectInfo = async (id) => {
+    toggleLoading(true);
 
-    return number;
+    await dispatch(handleSetSongCollectInfo(id));
+
+    toggleLoading(false);
+
+    toggleBottomSlidePop();
   };
 
   return (
-    <SongListSlideGroupContent>
-      <Title title={title} />
+    <>
+      <SongListSlideGroupContent>
+        <Title title={title} />
 
-      <Swiper
-        className="song-list-swiper-content"
-        spaceBetween={10}
-        slidesPerView={3.3}
-      >
-        {playList?.map((item) => (
-          <SwiperSlide className="swiper-item" key={item.id}>
-            <PlayListItem>
-              <div className="cover-box">
-                <img src={item.picUrl} alt="" />
-                <span className="play-count">
-                  <i className="iconfont icon-3209257-controllaunchplaystarttriangle"></i>
-                  {handleReduceNumber(item.playCount)}
-                </span>
-                <span className="disk-count">
-                  <i className="iconfont icon-Disk"></i>
-                  {item.trackCount}
-                </span>
-              </div>
-              <p className="name">{item.name}</p>
-            </PlayListItem>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </SongListSlideGroupContent>
+        <Swiper
+          className="song-list-swiper-content"
+          spaceBetween={10}
+          slidesPerView={3.3}
+        >
+          {playList?.map((item) => (
+            <SwiperSlide className="swiper-item" key={item.id}>
+              <PlayListItem
+                onClick={() => handleGetThisSongCollectInfo(item.id)}
+              >
+                <div className="cover-box">
+                  <img src={item.picUrl} alt="" />
+                  <span className="play-count">
+                    <i className="iconfont icon-3209257-controllaunchplaystarttriangle"></i>
+                    {reduceNumber(item.playCount)}
+                  </span>
+                  <span className="disk-count">
+                    <i className="iconfont icon-Disk"></i>
+                    {item.trackCount}
+                  </span>
+                </div>
+                <p className="name">{item.name}</p>
+              </PlayListItem>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </SongListSlideGroupContent>
+
+      {LoadingDom}
+
+      {BottomSlidePopDom(
+        <SongCollectPop info={songCollectInfo} toggle={toggleBottomSlidePop} />
+      )}
+    </>
   );
 };
 

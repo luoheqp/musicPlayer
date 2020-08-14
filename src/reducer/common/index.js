@@ -5,18 +5,21 @@ import {
 } from "@/server/apis";
 
 const initState = {
-  musicList: [],
-  songCatList: [],
-  songList: [],
-  profile: {},
-  recommendedPlaylist: [],
-  newMusicList: [],
+  songCollectInfo: {}, // 歌曲列表
+  musicList: [], // 歌曲列表
+  playingMusicList: [], // 正在播放的列表
+  songCatList: [], // 歌曲分类列表
+  songCollectList: [], // 根据分类获取的歌单列表
+  profile: {}, // 个人信息
+  recommendedPlaylist: [], // 推荐歌单列表
+  newMusicList: [], // 新歌推送列表
 };
 
 // >>>>>> constant
-const SET_MUSIC_LIST = "SET_MUSIC_LIST";
+const SET_SONG_COLLECT_INFO = "SET_SONG_COLLECT_INFO";
+const SET_PLAYING_MUSIC_LIST = "SET_PLAYING_MUSIC_LIST";
 const SET_SONG_CAT_LIST = "SET_SONG_CAT_LIST";
-const SET_SONG_LIST = "SET_SONG_LIST";
+const SET_SONG_COLLECT_LIST = "SET_SONG_COLLECT_LIST";
 const SET_LOGIN_TOKEN = "SET_LOGIN_TOKEN";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_RECOMMANDED_PLAYLIST = "SET_RECOMMANDED_PLAYLIST";
@@ -24,16 +27,9 @@ const SET_NEW_MUSIC_LIST = "SET_NEW_MUSIC_LIST";
 
 // >>>>>> action
 
-// 设置播放歌曲列表
-export const handleSetMusicList = (id = 0) => async (dispatch) => {
-  console.log(id);
-
-  let {
-    playlist: { trackIds },
-  } = await SongListApi.getSongList(id || 440434590);
-  let getTrackIds = trackIds.slice(0, 20).map((item) => item.id);
-
-  let { songs } = await SongApi.getSongDetail(getTrackIds);
+// 获取多个音乐详情
+const handleGetMusicInfo = async (ids) => {
+  let { songs } = await SongApi.getSongDetail(ids);
 
   let data = songs.map((item, index) => ({
     name: item.name,
@@ -42,8 +38,37 @@ export const handleSetMusicList = (id = 0) => async (dispatch) => {
     picUrl: item.al.picUrl,
   }));
 
+  return data;
+};
+
+// 获取指定歌单详情
+export const handleSetSongCollectInfo = (collectId) => async (dispatch) => {
+  let {
+    playlist: { name, trackIds, coverImgUrl, description, id, playCount, tags },
+  } = await SongListApi.getSongList(collectId);
+
+  trackIds = trackIds.map((item) => item.id);
+
+  const data = await handleGetMusicInfo(trackIds);
+
   dispatch({
-    type: SET_MUSIC_LIST,
+    type: SET_SONG_COLLECT_INFO,
+    data: { name, coverImgUrl, description, id, playCount, tags, songList: data },
+  });
+};
+
+// 设置播放中的歌曲列表
+export const handleSetPlayingMusicList = (id) => async (dispatch) => {
+  let {
+    playlist: { trackIds },
+  } = await SongListApi.getSongList(id);
+
+  trackIds = trackIds.map((item) => item.id);
+
+  const data = await handleGetMusicInfo(trackIds);
+
+  dispatch({
+    type: SET_PLAYING_MUSIC_LIST,
     data: data,
   });
 };
@@ -59,11 +84,11 @@ export const handleGetSongCatList = () => async (dispatch) => {
 };
 
 // 根据分类获取歌单
-export const handleGetSongList = (cat = "全部") => async (dispatch) => {
+export const handleGetSongCollectList = (cat = "全部") => async (dispatch) => {
   let { playlists = [] } = await SongListApi.getSongListByCat(cat);
 
   dispatch({
-    type: SET_SONG_LIST,
+    type: SET_SONG_COLLECT_LIST,
     data: playlists,
   });
 };
@@ -115,12 +140,14 @@ export const handleGetNewMusiclistByArea = ({ type = 0 }) => async (
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case SET_MUSIC_LIST:
+    case SET_SONG_COLLECT_INFO:
+      return { ...state, songCollectInfo: action.data };
+    case SET_PLAYING_MUSIC_LIST:
       return { ...state, musicList: action.data };
     case SET_SONG_CAT_LIST:
       return { ...state, songCatList: action.data };
-    case SET_SONG_LIST:
-      return { ...state, songList: action.data };
+    case SET_SONG_COLLECT_LIST:
+      return { ...state, songCollectList: action.data };
     case SET_USER_PROFILE:
       return { ...state, profile: action.data };
     case SET_RECOMMANDED_PLAYLIST:
