@@ -1,11 +1,19 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { formatTime } from "@/utils";
 
 // components
 import { MoveableCardGroupContent, Card, AuthorContent, Player } from "./style";
+import {
+  handleChangePlayState,
+  handleSetMediaPlayNow,
+} from "@r/player/action";
 
 const MoveableCardGroup = (props) => {
+  const dispatch = useDispatch();
   const { cardGroupInfo } = props;
+
+  const playState = useSelector(({ player }) => player.playState);
 
   const [groupInfo, setGroupInfo] = useState([]); // 全部数据
   const [showInfo, setShowInfo] = useState([]); // 展示数据 默认展示两张
@@ -77,6 +85,15 @@ const MoveableCardGroup = (props) => {
     }
   };
 
+  const togglePlayState = (item) => {
+    if (playState === "playing") {
+      dispatch(handleChangePlayState("init"));
+    } else {
+      dispatch(handleSetMediaPlayNow(item));
+      dispatch(handleChangePlayState("playing"));
+    }
+  };
+
   useEffect(() => {
     if (!backRef.current) return;
 
@@ -126,7 +143,10 @@ const MoveableCardGroup = (props) => {
             <p className="name">{item.name}</p>
             <Player>
               <div className="controller">
-                <div className="player iconfont icon-play"></div>
+                <div
+                  className="player iconfont icon-play"
+                  onClick={() => togglePlayState(item)}
+                ></div>
               </div>
               <div className="progress">
                 <div className="time">

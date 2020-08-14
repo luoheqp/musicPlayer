@@ -8,6 +8,7 @@ import { CasualContent } from "./style.jsx";
 import { CSSTransition } from "react-transition-group";
 import TheBtn from "./components/TheBtn";
 import MoveableCardGroup from "@/components/MoveableCardGroup";
+import { useCallback } from "react";
 
 const Casual = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const Casual = () => {
     position: "top",
   });
 
-  const handleGetPersonalFm = async () => {
+  const handleGetPersonalFm = useCallback(async () => {
     toggleLoading(true);
 
     try {
@@ -27,12 +28,16 @@ const Casual = () => {
     } catch (e) {}
 
     toggleLoading(false);
-  };
+  }, [dispatch, toggleLoading]);
+
+  useEffect(() => {
+    handleGetPersonalFm();
+  }, [handleGetPersonalFm]);
 
   return (
     <CasualContent>
       {!casualList.length && <TheBtn musicPowerFull={handleGetPersonalFm} />}
-      <CSSTransition unmountOnExit={true} in={casualList.length}>
+      <CSSTransition unmountOnExit={true} in={Boolean(casualList.length)} timeout={0}>
         <MoveableCardGroup cardGroupInfo={casualList} />
       </CSSTransition>
       {LoadingDom}
