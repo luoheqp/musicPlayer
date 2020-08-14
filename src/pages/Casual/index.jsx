@@ -32,7 +32,7 @@ const Casual = () => {
   return (
     <CasualContent>
       {!casualList.length && <TheBtn musicPowerFull={handleGetPersonalFm} />}
-      <CSSTransition unmountOnExit={true} in={casualList.length}>
+      <CSSTransition unmountOnExit={true} in={Boolean(casualList.length)} timeout={0}>
         <MoveableCardGroup cardGroupInfo={casualList} />
       </CSSTransition>
       {LoadingDom}
