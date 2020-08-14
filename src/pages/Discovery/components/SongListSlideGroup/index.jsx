@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { handleSetSongCollectInfo } from "@r/common";
 import { reduceNumber } from "@/utils";
 import useBottomSlidePop from "@/hooks/useBottomSlidePop";
@@ -67,7 +67,9 @@ const SongListSlideGroup = (props) => {
 
       {LoadingDom}
 
-      {BottomSlidePopDom(<SongCollectPop info={songCollectInfo} />)}
+      {BottomSlidePopDom(
+        <SongCollectPop info={songCollectInfo} toggle={toggleBottomSlidePop} />
+      )}
     </>
   );
 };
