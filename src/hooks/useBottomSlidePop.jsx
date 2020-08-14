@@ -15,21 +15,32 @@ export const SlidePopContent = styled.div`
   width: 100vw;
   height: 100vh;
   position: fixed;
-  bottom: 0;
+  top: 0;
+  left: 0;
   z-index: ${({ state }) => (state === "exited" ? -1 : 100)};
-  background-color: ${({ state }) =>
-    state === "exited" || state === "exiting"
-      ? "rgba(0, 0, 0, 0)"
-      : "rgba(0, 0, 0, 0.3)"};
-  transition: background-color 0.2s linear;
+
+  .mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+
+    background-color: ${({ state }) =>
+      state === "exited" || state === "exiting"
+        ? "rgba(0, 0, 0, 0)"
+        : "rgba(0, 0, 0, 0.3)"};
+    transition: background-color 0.2s linear;
+  }
 
   .main {
     width: 100%;
     height: calc(100vh - 56px);
     position: absolute;
     bottom: -1px;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     background-color: #fff;
     overflow-y: auto;
     transform: translateY(100%);
@@ -47,7 +58,8 @@ const BottomSlidePop = ({ isShowing, close, container, children }) =>
   ReactDOM.createPortal(
     <CSSTransition in={isShowing} timeout={200} unmountOnExit={true}>
       {(value) => (
-        <SlidePopContent onClick={close} state={value}>
+        <SlidePopContent state={value}>
+          <div className="mask" onClick={close}></div>
           <div className={`main ${value}`}>{children}</div>
         </SlidePopContent>
       )}
