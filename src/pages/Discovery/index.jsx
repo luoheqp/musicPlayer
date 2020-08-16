@@ -32,9 +32,9 @@ const Discovery = (props) => {
 
   return (
     <DiscoveryContent>
-      {recommendedPlaylist.length ? (
-        <SongCollectSlideGroup title="网友精选" diskList={tenNiceNewDiskList} />
-      ) : null}
+      {/* {tenNiceNewDiskList.length ? (
+        <DiskListSlideGroup title="网友精选" diskList={tenNiceNewDiskList} />
+      ) : null} */}
 
       {recommendedPlaylist.length ? (
         <SongCollectSlideGroup

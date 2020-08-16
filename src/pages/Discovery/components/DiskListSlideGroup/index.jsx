@@ -2,9 +2,10 @@ import React from "react";
 import useBottomSlidePop from "@/hooks/useBottomSlidePop";
 import useLoading from "@/hooks/useLoading";
 import { useDispatch, useSelector } from "react-redux";
+import { handleSetSongCollectInfo } from "@r/common";
 
 // components
-import { DiskListSlideGroupContent } from "./style";
+import { DiskListSlideGroupContent, DiskItem } from "./style";
 import Title from "../Title";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.scss";
@@ -37,15 +38,13 @@ const DiskListSlideGroup = (props) => {
         <Swiper
           className="song-list-swiper-content"
           spaceBetween={10}
-          slidesPerView={3.3}
+          slidesPerView={3}
         >
           {diskList?.map((item) => (
             <SwiperSlide className="swiper-item" key={item.id}>
-              <PlayListItem
-                onClick={() => handleGetThisSongCollectInfo(item.id)}
-              >
+              <DiskItem onClick={() => handleGetThisSongCollectInfo(item.id)}>
                 <div className="cover-box">
-                  <img src={item.picUrl} alt="" />
+                  <img src={`${item.coverImgUrl}?params=200y200`} alt="" />
                   <span className="play-count">
                     <i className="iconfont icon-3209257-controllaunchplaystarttriangle"></i>
                     {item.playCount}
@@ -56,7 +55,7 @@ const DiskListSlideGroup = (props) => {
                   </span>
                 </div>
                 <p className="name">{item.name}</p>
-              </PlayListItem>
+              </DiskItem>
             </SwiperSlide>
           ))}
         </Swiper>
@@ -64,9 +63,10 @@ const DiskListSlideGroup = (props) => {
 
       {LoadingDom}
 
-      {BottomSlidePopDom(
-        <SongCollectPop info={songCollectInfo} toggle={toggleBottomSlidePop} />
-      )}
+      {
+        BottomSlidePopDom()
+        // <SongCollectPop info={songCollectInfo} toggle={toggleBottomSlidePop} />
+      }
     </>
   );
 };
