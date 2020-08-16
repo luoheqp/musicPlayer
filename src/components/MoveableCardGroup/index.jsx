@@ -87,7 +87,7 @@ const MoveableCardGroup = (props) => {
 
   const togglePlayState = (item) => {
     if (playState === "playing") {
-      dispatch(handleChangePlayState("init"));
+      dispatch(handleChangePlayState("ready"));
     } else {
       dispatch(handleSetMediaPlayNow(item));
       dispatch(handleChangePlayState("playing"));
@@ -144,7 +144,7 @@ const MoveableCardGroup = (props) => {
             <Player>
               <div className="controller">
                 <div
-                  className="player iconfont icon-play"
+                  className={`player iconfont ${playState === 'ready' ? 'icon-play' : ''}`}
                   onClick={() => togglePlayState(item)}
                 ></div>
               </div>

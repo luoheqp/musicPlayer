@@ -52,7 +52,7 @@ const PlayerController = () => {
   // 更改当前播放状态 => 暂停 / 开始
   const togglePlayerState = () => {
     dispatch(
-      handleChangePlayState(playState === "playing" ? "init" : "playing")
+      handleChangePlayState(playState === "playing" ? "ready" : "playing")
     );
   };
 
