@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useBottomSlidePop from "@/hooks/useBottomSlidePop";
 import useLoading from "@/hooks/useLoading";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import { handleSetSongCollectInfo } from "@r/common";
 // components
 import { DiskListSlideGroupContent, DiskItem } from "./style";
 import Title from "../Title";
+import SongCollectPop from "@/components/SongCollectPop";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.scss";
 
@@ -16,11 +17,22 @@ const DiskListSlideGroup = (props) => {
   const { title, diskList } = props;
 
   const { BottomSlidePopDom, toggleBottomSlidePop } = useBottomSlidePop(false);
-  const { LoadingDom, toggleLoading } = useLoading(false);
+  const { LoadingDom, toggleLoading } = useLoading({
+    init: false,
+    position: "top",
+  });
 
   const songCollectInfo = useSelector(({ common }) => common.songCollectInfo);
 
+  const [swiperController, setSwiperController] = useState(null);
+
   const handleGetThisSongCollectInfo = async (id) => {
+    diskList.forEach((item, index) => {
+      if (item.id === id) {
+        swiperController.slideTo(index + 2);
+      }
+    });
+
     toggleLoading(true);
 
     await dispatch(handleSetSongCollectInfo(id));
@@ -37,8 +49,11 @@ const DiskListSlideGroup = (props) => {
 
         <Swiper
           className="song-list-swiper-content"
-          spaceBetween={10}
-          slidesPerView={3}
+          spaceBetween={-10}
+          slidesPerView={1.7}
+          centeredSlides={true}
+          loop={true}
+          onSwiper={setSwiperController}
         >
           {diskList?.map((item) => (
             <SwiperSlide className="swiper-item" key={item.id}>
@@ -63,10 +78,9 @@ const DiskListSlideGroup = (props) => {
 
       {LoadingDom}
 
-      {
-        BottomSlidePopDom()
-        // <SongCollectPop info={songCollectInfo} toggle={toggleBottomSlidePop} />
-      }
+      {BottomSlidePopDom(
+        <SongCollectPop info={songCollectInfo} toggle={toggleBottomSlidePop} />
+      )}
     </>
   );
 };

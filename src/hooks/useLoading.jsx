@@ -19,14 +19,15 @@ const LoadingContent = styled.div`
       switch (pos) {
         case "top":
           return css`
-            top: 20%;
+            top: 10%;
           `;
         case "bottom":
           return css`
-            bottom: 20%;
+            bottom: 10%;
           `;
         default:
           return css`
+            top: 50%;
             transform: translate(-50%, -50%);
           `;
       }

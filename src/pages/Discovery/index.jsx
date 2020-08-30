@@ -32,19 +32,19 @@ const Discovery = (props) => {
 
   return (
     <DiscoveryContent>
-      {/* {tenNiceNewDiskList.length ? (
+      {tenNiceNewDiskList.length ? (
         <DiskListSlideGroup title="网友精选" diskList={tenNiceNewDiskList} />
-      ) : null} */}
+      ) : null}
+
+      {newMusicList.length ? (
+        <MusicListSlideGroup title="新歌推送" musicList={newMusicList} />
+      ) : null}
 
       {recommendedPlaylist.length ? (
         <SongCollectSlideGroup
           title="推荐歌单"
           playList={recommendedPlaylist}
         />
-      ) : null}
-
-      {newMusicList.length ? (
-        <MusicListSlideGroup title="新歌推送" musicList={newMusicList} />
       ) : null}
     </DiscoveryContent>
   );

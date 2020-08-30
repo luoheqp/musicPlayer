@@ -2,6 +2,17 @@ import styled from "styled-components";
 
 export const DiskListSlideGroupContent = styled.div`
   padding: 10px;
+
+  .song-list-swiper-content {
+    .swiper-slide {
+      transform: scale(0.8);
+      transition: transform .1s linear;
+    }
+
+    .swiper-slide-active {
+      transform: scale(1);
+    }
+  }
 `;
 
 export const DiskItem = styled.div`
@@ -49,6 +60,7 @@ export const DiskItem = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
+    text-align: center;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
