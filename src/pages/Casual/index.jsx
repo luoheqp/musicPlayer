@@ -30,10 +30,6 @@ const Casual = () => {
     toggleLoading(false);
   }, [dispatch, toggleLoading]);
 
-  useEffect(() => {
-    handleGetPersonalFm();
-  }, [handleGetPersonalFm]);
-
   return (
     <CasualContent>
       {!casualList.length && <TheBtn musicPowerFull={handleGetPersonalFm} />}
