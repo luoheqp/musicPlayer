@@ -35,6 +35,9 @@ Common.getLoginStatus = () => request.get("/login/status");
 
 Common.getRecommendedPlaylist = () => request.get("/personalized");
 
+Common.getTenNiceNewDiskList = () =>
+  request.get("/top/playlist?limit=10&order=new");
+
 Common.getNewMusiclistByArea = ({ type }) =>
   request.get(`/top/song?type=${type}`);
 
