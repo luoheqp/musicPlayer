@@ -6,7 +6,7 @@ export const DiskListSlideGroupContent = styled.div`
   .song-list-swiper-content {
     .swiper-slide {
       transform: scale(0.8);
-      transition: transform .1s linear;
+      transition: transform 0.1s linear;
     }
 
     .swiper-slide-active {
@@ -19,8 +19,6 @@ export const DiskItem = styled.div`
   .cover-box {
     margin-bottom: 5px;
     position: relative;
-    font-size: 12px;
-    color: #fff;
 
     img {
       width: 100%;
@@ -55,13 +53,17 @@ export const DiskItem = styled.div`
   }
 
   .name {
-    font-size: 12px;
+    /* font-size: 12px;
     line-height: 16px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     text-align: center;
     -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    -webkit-box-orient: vertical; */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 `;

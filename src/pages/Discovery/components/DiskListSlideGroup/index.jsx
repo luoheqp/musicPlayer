@@ -8,6 +8,7 @@ import { handleSetSongCollectInfo } from "@r/common";
 import { DiskListSlideGroupContent, DiskItem } from "./style";
 import Title from "../Title";
 import SongCollectPop from "@/components/SongCollectPop";
+import FixableText from "@/components/FixableText";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.scss";
 
@@ -38,7 +39,6 @@ const DiskListSlideGroup = (props) => {
     await dispatch(handleSetSongCollectInfo(id));
 
     toggleLoading(false);
-
     toggleBottomSlidePop();
   };
 
@@ -60,16 +60,19 @@ const DiskListSlideGroup = (props) => {
               <DiskItem onClick={() => handleGetThisSongCollectInfo(item.id)}>
                 <div className="cover-box">
                   <img src={`${item.coverImgUrl}?params=200y200`} alt="" />
-                  <span className="play-count">
+                  {/* <span className="play-count">
                     <i className="iconfont icon-3209257-controllaunchplaystarttriangle"></i>
                     {item.playCount}
                   </span>
                   <span className="disk-count">
                     <i className="iconfont icon-Disk"></i>
                     {item.trackCount}
-                  </span>
+                  </span> */}
+                  <div className="name">
+                    <FixableText text={item.name} max={30} min={16} line={4} />
+                  </div>
                 </div>
-                <p className="name">{item.name}</p>
+                {/* <p className="name">{item.name}</p> */}
               </DiskItem>
             </SwiperSlide>
           ))}

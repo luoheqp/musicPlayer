@@ -36,6 +36,7 @@ export const MusicList = styled.div`
 
       .name {
         font-size: 16px;
+        line-height: 20px;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -43,7 +44,7 @@ export const MusicList = styled.div`
 
       .other {
         font-size: 12px;
-        margin-top: 10px;
+        margin-top: 5px;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
