@@ -3,20 +3,25 @@ import { useSelector, useDispatch } from "react-redux";
 import { formatTime } from "@/utils";
 
 // components
-import { MoveableCardGroupContent, Card, AuthorContent, Player } from "./style";
 import {
-  handleChangePlayState,
-  handleSetMediaPlayNow,
-} from "@r/player/action";
+  MoveableCardGroupContent,
+  Card,
+  AuthorContent,
+  Player,
+  PlayerProgress,
+} from "./style";
+import { handleChangePlayState, handleSetMediaPlayNow } from "@r/player/action";
 
 const MoveableCardGroup = (props) => {
   const dispatch = useDispatch();
   const { cardGroupInfo } = props;
 
   const playState = useSelector(({ player }) => player.playState);
+  const source = useSelector(({ player }) => player.source);
 
   const [groupInfo, setGroupInfo] = useState([]); // 全部数据
   const [showInfo, setShowInfo] = useState([]); // 展示数据 默认展示两张
+  const [currentTime, setCurrentTime] = useState(0); // 展示数据 默认展示两张
 
   const [movePos, setMovePos] = useState({ x: 0, y: 0 }); // 初始点击坐标
   const [currentPos, setCurrentPos] = useState({ x: 0, y: 0 }); // 当前位置
@@ -118,6 +123,12 @@ const MoveableCardGroup = (props) => {
     setGroupInfo(temp);
   }, [cardGroupInfo]);
 
+  useEffect(() => {
+    source.addEventListener("timeupdate", (e) => {
+      setCurrentTime(Number(source.currentTime).toFixed(0));
+    });
+  }, [source]);
+
   return (
     <MoveableCardGroupContent>
       {showInfo?.map((item, index) => (
@@ -144,15 +155,21 @@ const MoveableCardGroup = (props) => {
             <Player>
               <div className="controller">
                 <div
-                  className={`player iconfont ${playState === 'ready' ? 'icon-play' : ''}`}
+                  className={`player iconfont ${
+                    playState === "ready" ? "icon-play2" : "icon--pause"
+                  }`}
                   onClick={() => togglePlayState(item)}
                 ></div>
               </div>
               <div className="progress">
                 <div className="time">
-                  00:00/{formatTime(item.duration, true)}
+                  {formatTime(currentTime)}/{formatTime(item.duration, true)}
                 </div>
-                <div className="line"></div>
+                <PlayerProgress
+                  progress={Number(
+                    (currentTime / (item.duration / 1000)) * 100
+                  ).toFixed(0)}
+                ></PlayerProgress>
               </div>
             </Player>
           </Card>

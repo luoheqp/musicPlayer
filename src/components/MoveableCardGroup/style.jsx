@@ -43,7 +43,7 @@ export const MoveableCardGroupContent = styled.div`
     &:nth-child(2) {
       z-index: 0;
       transform-origin: top;
-      opacity: .8;
+      opacity: 0.8;
       transform: scale(0.9) translateY(-20px);
       /* NOTE: 此处动效会有点奇怪 */
       transition: all 0.1s linear;
@@ -132,12 +132,15 @@ export const Player = styled.div`
       font-size: 12px;
       margin-bottom: 10px;
     }
-
-    .line {
-      width: 80%;
-      height: 2px;
-      background-color: #ccc;
-      border-radius: 1px;
-    }
   }
+`;
+
+export const PlayerProgress = styled.div.attrs(({ progress }) => ({
+  style: {
+    backgroundImage: `linear-gradient(to right, red ${progress}%, #ccc ${progress}%, #ccc 100%)`,
+  },
+}))`
+  width: 80%;
+  height: 2px;
+  border-radius: 1px;
 `;
