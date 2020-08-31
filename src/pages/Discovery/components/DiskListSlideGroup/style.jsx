@@ -27,43 +27,18 @@ export const DiskItem = styled.div`
       border-radius: 10px;
       filter: brightness(0.9);
     }
-
-    .play-count,
-    .disk-count {
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .play-count {
-      right: 5px;
-      top: 5px;
-    }
-
-    .disk-count {
-      left: 5px;
-      bottom: 5px;
-    }
-
-    .iconfont {
-      font-size: 10px;
-      margin-right: 3px;
-    }
   }
 
   .name {
-    /* font-size: 12px;
-    line-height: 16px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    text-align: center;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical; */
+    width: 100%;
+    height: 100%;
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    left: 0%;
+    top: 0%;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
 `;

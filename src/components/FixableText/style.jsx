@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const FixableTextContent = styled.div`
-  width: 100%;
+  width: 90%;
   font-size: ${({ fontSize }) => `${fontSize}px`};
   display: -webkit-box;
   overflow: hidden;

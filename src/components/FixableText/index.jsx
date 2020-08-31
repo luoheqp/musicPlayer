@@ -30,11 +30,9 @@ const FixableText = (props) => {
     size = Math.max(size, min);
     size = Math.min(size, max);
 
-
     // 计算和容器的宽度比例 设置合理字体大小
-    if (size * 2 > textHeight) {
-      
-    }
+    // if (size * 2 > textHeight) {
+    // }
     setFontSize(size);
 
     document.body.removeChild(textContent);

@@ -60,19 +60,10 @@ const DiskListSlideGroup = (props) => {
               <DiskItem onClick={() => handleGetThisSongCollectInfo(item.id)}>
                 <div className="cover-box">
                   <img src={`${item.coverImgUrl}?params=200y200`} alt="" />
-                  {/* <span className="play-count">
-                    <i className="iconfont icon-3209257-controllaunchplaystarttriangle"></i>
-                    {item.playCount}
-                  </span>
-                  <span className="disk-count">
-                    <i className="iconfont icon-Disk"></i>
-                    {item.trackCount}
-                  </span> */}
                   <div className="name">
                     <FixableText text={item.name} max={30} min={16} line={4} />
                   </div>
                 </div>
-                {/* <p className="name">{item.name}</p> */}
               </DiskItem>
             </SwiperSlide>
           ))}
