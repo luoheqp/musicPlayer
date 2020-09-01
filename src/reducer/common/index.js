@@ -38,6 +38,8 @@ const handleGetMusicInfo = async (ids) => {
     id: item.id,
     listPos: index,
     picUrl: item.al.picUrl,
+    artist: item.ar[0].name,
+    about: item.al.name
   }));
 
   return data;

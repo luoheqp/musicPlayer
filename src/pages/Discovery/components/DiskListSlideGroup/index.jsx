@@ -27,6 +27,7 @@ const DiskListSlideGroup = (props) => {
 
   const [swiperController, setSwiperController] = useState(null);
 
+  // 获取指定歌单内容
   const handleGetThisSongCollectInfo = async (id) => {
     diskList.forEach((item, index) => {
       if (item.id === id) {
@@ -53,6 +54,7 @@ const DiskListSlideGroup = (props) => {
           slidesPerView={1.7}
           centeredSlides={true}
           loop={true}
+          watchSlidesProgress={true}
           onSwiper={setSwiperController}
         >
           {diskList?.map((item) => (

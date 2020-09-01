@@ -11,7 +11,7 @@ export const SongListContent = styled.div`
 `;
 
 export const ListItem = styled.div`
-  height: 42px;
+  height: 62px;
   box-sizing: border-box;
   color: #333;
   font-size: 14px;
@@ -23,6 +23,8 @@ export const ListItem = styled.div`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
 
   /* TODO: 实现方式还是有点缺陷 */
   &:hover,
@@ -41,9 +43,20 @@ export const ListItem = styled.div`
       10px 100%,
       0 calc(100% - 10px)
     );
+
+    .order {
+      margin-left: 0;
+    }
   }
 
   &.playing {
     border-color: rgb(0, 108, 255);
+  }
+
+  .order {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 20px;
+    color: #333a;
   }
 `;

@@ -12,15 +12,15 @@ const SongList = (props) => {
   // state
   const dispatch = useDispatch();
 
-  // const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
+  const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
 
   // action
-  // const handleGetSongPathById = useCallback(
-  //   (id) => {
-  //     return listData.filter((item) => item.id === id)[0];
-  //   },
-  //   [listData]
-  // );
+  const handleGetSongPathById = useCallback(
+    (id) => {
+      return listData.filter((item) => item.id === id)[0];
+    },
+    [listData]
+  );
 
   const handleRefreshMediaNowPlay = useCallback(
     (data) => {
@@ -32,23 +32,30 @@ const SongList = (props) => {
   // methods
   const handlePlayThisSong = useCallback(
     (id) => {
-      // let targetObj = handleGetSongPathById(id);
-      // handleRefreshMediaNowPlay(targetObj);
-      // dispatch(handleChangePlayState('playing'));
-    }
-    // [dispatch, handleGetSongPathById, handleRefreshMediaNowPlay]
+      let targetObj = handleGetSongPathById(id);
+      handleRefreshMediaNowPlay(targetObj);
+      dispatch(handleChangePlayState("playing"));
+    },
+    [dispatch, handleGetSongPathById, handleRefreshMediaNowPlay]
   );
 
   return (
     <SongListContent>
       <div className="list-wrap">
-        {listData?.map((item) => (
+        {listData?.map((item, index) => (
           <ListItem
-            // className={`${mediaPlayNow.id === item.id ? "playing" : ""}`}
+            className={`${mediaPlayNow.id === item.id ? "playing" : ""}`}
             key={item.id}
             onClick={() => handlePlayThisSong(item.id)}
           >
-            {item.name}
+            <div className="order">{index + 1}</div>
+            <div className="info">
+              <p>{item.name}</p>
+              <p className="other">
+                {item.artist}
+                {item.about ? ` - ${item.about}` : ""}
+              </p>
+            </div>
           </ListItem>
         ))}
       </div>

@@ -41,7 +41,12 @@ const MusicListSlideGroup = (props) => {
                   </div>
                   <div className="desc">
                     <p className="name">{music.name}</p>
-                    <p className="other">{music.alias?.join(" / ")}</p>
+                    <p className="other">
+                      {music.artists[0].name}{" "}
+                      {music.alias.length ? (
+                        <span className="alias">{music.alias.join(" / ")}</span>
+                      ) : null}
+                    </p>
                   </div>
                   <div className="play">
                     <i className="iconfont icon-play"></i>

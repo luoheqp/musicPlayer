@@ -5,6 +5,8 @@ export const MusicListSlideGroupContent = styled.div`
 `;
 
 export const MusicList = styled.div`
+  border-right: 1px solid #ccc8;
+
   > .music-list-item {
     display: flex;
     align-items: center;
@@ -43,14 +45,21 @@ export const MusicList = styled.div`
       }
 
       .other {
-        font-size: 12px;
         margin-top: 5px;
+        font-size: 12px;
+        line-height: 16px;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
 
         &:empty {
           margin-top: 0;
+        }
+
+        .alias {
+          border-left: 1px solid #333;
+          font-size: 10px;
+          padding-left: 5px;
         }
       }
     }
