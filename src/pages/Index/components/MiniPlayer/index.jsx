@@ -85,10 +85,10 @@ const MiniPlayer = () => {
   };
 
   // audio timeupdate event
-  const handleRefreshProgress = () => {
-    let { currentTime } = audioRef.current;
-    dispatch(handleSetMediaCurrentTime(currentTime));
-  };
+  // const handleRefreshProgress = () => {
+  //   let { currentTime } = audioRef.current;
+  //   dispatch(handleSetMediaCurrentTime(currentTime));
+  // };
 
   // audio ended event
   const handleAudioEnded = () => {
@@ -128,7 +128,7 @@ const MiniPlayer = () => {
         ref={audioRef}
         crossOrigin="anonymous"
         onCanPlay={handleAudioCanPlay}
-        onTimeUpdate={throttle(handleRefreshProgress, 1000)}
+        // onTimeUpdate={throttle(handleRefreshProgress, 1000)}
         onEnded={handleAudioEnded}
       ></audio>
       <MiniPlayerContent>

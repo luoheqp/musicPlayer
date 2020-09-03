@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { handleSetMediaPlayNow, handleChangePlayState } from "@r/player/action";
 
 import { MusicListSlideGroupContent, MusicList } from "./style";
 
@@ -10,7 +12,22 @@ import Title from "../Title";
 const MusicListSlideGroup = (props) => {
   const { title, musicList } = props;
 
+  // state
+  const dispatch = useDispatch();
+
+  const mediaPlayNow = useSelector(({ player }) => player.mediaPlayNow);
+
   const [musicGroup, setMusicGroup] = useState([]);
+
+  // methods
+  const handlePlayThisSong = useCallback(
+    (item) => {
+      dispatch(handleSetMediaPlayNow(item));
+      dispatch(handleChangePlayState("playing"));
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
     let tempList = JSON.parse(JSON.stringify(musicList));
     let temp = [];
@@ -48,8 +65,15 @@ const MusicListSlideGroup = (props) => {
                       ) : null}
                     </p>
                   </div>
-                  <div className="play">
-                    <i className="iconfont icon-play"></i>
+                  <div
+                    className="play"
+                    onClick={() => handlePlayThisSong(music)}
+                  >
+                    <i
+                      className={`${
+                        mediaPlayNow.id === music.id ? "" : "iconfont icon-play"
+                      }`}
+                    ></i>
                   </div>
                 </div>
               ))}

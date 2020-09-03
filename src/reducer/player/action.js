@@ -15,6 +15,8 @@ import {
 import { balanceLyricTime } from "../../utils";
 
 export const handleSetMediaPlayNow = (data) => async (dispatch) => {
+  console.log(data)
+
   const songData = await SongApi.getSongUrl(data.id);
   data.url = songData.url;
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleSetMediaPlayNow, handleChangePlayState } from "@r/player/action";
-import { SongListContent, List, ListItem } from "./style";
+import { SongListContent, ListItem } from "./style";
 
 // components
 import { useCallback } from "react";
