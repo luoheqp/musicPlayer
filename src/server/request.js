@@ -7,6 +7,10 @@ const request = axios.create({
   withCredentials: true, // 网易云 API 特殊字段
 });
 
+request.interceptors.request.use((config) => {
+  return config;
+});
+
 request.interceptors.response.use(
   (res) =>
     new Promise((resolve, reject) => {

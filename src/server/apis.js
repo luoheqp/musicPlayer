@@ -33,12 +33,18 @@ Common.postToLogin = ({ phone, password }) =>
 
 Common.getLoginStatus = () => request.get("/login/status");
 
+// 获取推荐歌单
 Common.getRecommendedPlaylist = () => request.get("/personalized");
 
+// 获取网友精选歌单
 Common.getTenNiceNewDiskList = () =>
   request.get("/top/playlist?limit=10&order=new");
 
+// 获取新歌速递
 Common.getNewMusiclistByArea = ({ type }) =>
   request.get(`/top/song?type=${type}`);
 
+Common.getRecommendedMvList = () => request.get("/personalized/mv");
+
+// 获取私人 FM
 Personal.getPersonalFmList = () => request.get(`/personal_fm`);

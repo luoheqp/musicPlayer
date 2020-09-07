@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import useAxios from "@/hooks/useAxios";
 import {
   handleGetTenNiceNewDiskList,
   handleGetRecommendedPlaylist,
@@ -9,11 +10,14 @@ import {
 import { DiscoveryContent } from "./style";
 
 // components
+import MVListSlideGroup from "./components/MVListSlideGroup";
 import DiskListSlideGroup from "./components/DiskListSlideGroup";
 import SongCollectSlideGroup from "./components/SongCollectSlideGroup";
 import MusicListSlideGroup from "./components/MusicListSlideGroup";
 
 const Discovery = (props) => {
+  const { data: mvListData = [] } = useAxios({ url: "/personal_fm" });
+
   const dispatch = useDispatch();
 
   const tenNiceNewDiskList = useSelector(
@@ -32,6 +36,10 @@ const Discovery = (props) => {
 
   return (
     <DiscoveryContent>
+      {mvListData.length ? (
+        <MVListSlideGroup title="网友精选" mvList={mvListData} />
+      ) : null}
+
       {tenNiceNewDiskList.length ? (
         <DiskListSlideGroup title="网友精选" diskList={tenNiceNewDiskList} />
       ) : null}
