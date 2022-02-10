@@ -15,7 +15,7 @@
     "customize-cra": "^0.9.1",
     "dayjs": "^1.8.31",
     "js-cookie": "^2.2.1",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "postcss-normalize": "^9.0.0",
     "postcss-px-to-viewport": "^1.1.1",
     "react": "^16.13.1",
